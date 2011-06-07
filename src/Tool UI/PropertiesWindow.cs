@@ -28,8 +28,11 @@ namespace DAM
                 textBoxFLHookLogin.Text = AppSettings.Default.setFLHookPassword;
                 checkBoxAutomaticCharClean.Checked = AppSettings.Default.setAutomaticCharClean;
                 checkBoxAutomaticCharWipe.Checked = AppSettings.Default.setAutomaticCharWipe;
+                checkBoxMoveUninterestedChars.Checked = AppSettings.Default.setMoveUninterestedChars;
+                textBoxMoveUninterestedCharsDir.Text = AppSettings.Default.setMoveUninterestedCharsDir;
                 numericUpDown1.Value = AppSettings.Default.setDaysToDeleteInactiveChars;
                 numericUpDown2.Value = AppSettings.Default.setSecsToDeleteUninterestedChars / 60;
+                numericUpDown3.Value = AppSettings.Default.setDaysInactiveToDeleteUninterestedChars;
                 checkBoxUnicode.Checked = AppSettings.Default.setFLHookUnicode;
 
                 textBoxStatisticsDir.Text = AppSettings.Default.setStatisticsDir;
@@ -57,8 +60,11 @@ namespace DAM
                 AppSettings.Default.setFLHookUnicode = checkBoxUnicode.Checked;
                 AppSettings.Default.setAutomaticCharClean = checkBoxAutomaticCharClean.Checked;
                 AppSettings.Default.setAutomaticCharWipe = checkBoxAutomaticCharWipe.Checked;
+                AppSettings.Default.setMoveUninterestedChars = checkBoxMoveUninterestedChars.Checked;
+                AppSettings.Default.setMoveUninterestedCharsDir = textBoxMoveUninterestedCharsDir.Text;
                 AppSettings.Default.setDaysToDeleteInactiveChars = numericUpDown1.Value;
                 AppSettings.Default.setSecsToDeleteUninterestedChars = numericUpDown2.Value * 60;
+                AppSettings.Default.setDaysInactiveToDeleteUninterestedChars = numericUpDown3.Value;
                 AppSettings.Default.setStatisticsDir = textBoxStatisticsDir.Text;
                 AppSettings.Default.setStatsFactions = textBoxStatsFactions.Text;
 
@@ -69,7 +75,7 @@ namespace DAM
                 AppSettings.Default.setReportVisitErrors = checkBoxReportVisitError.Checked;
                 AppSettings.Default.setCheckDefaultLights = checkBoxCheckDefaultLights.Checked;
                 AppSettings.Default.Save();
-            } 
+            }
             this.Close();
         }
 
@@ -105,6 +111,16 @@ namespace DAM
             if (result == DialogResult.OK)
             {
                 textBoxFLDir.Text = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
+        private void UninterestedCharsDirButton_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.SelectedPath = textBoxMoveUninterestedCharsDir.Text;
+            DialogResult result = folderBrowserDialog1.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                textBoxMoveUninterestedCharsDir.Text = folderBrowserDialog1.SelectedPath;
             }
         }
 

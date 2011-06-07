@@ -447,20 +447,34 @@ namespace DAM
                         double lastOnlineDaysAgo = DateTime.Now.Subtract(charRecord.LastOnLine).TotalDays;
                         if (lastOnlineDaysAgo > (double)AppSettings.Default.setDaysToDeleteInactiveChars)
                         {
-                            // Delete the character via FLHook too.
-                            if (flsk.IsConnected())
-                                flsk.CmdDeleteChar(charRecord.CharName);
-                            File.Delete(charFilePath);
+                            if (!AppSettings.Default.setMoveUninterestedChars)
+                            {
+                                // Delete the character via FLHook too.
+                                if (flsk.IsConnected())
+                                    flsk.CmdDeleteChar(charRecord.CharName);
+                                File.Delete(charFilePath);
+                            }
+                            else
+                            {
+                                moveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir);
+                            }
                             charRecord.IsDeleted = true;
                             inactiveChars++;
                         }
-                        else if (lastOnlineDaysAgo > 7
+                        else if (lastOnlineDaysAgo > (uint)AppSettings.Default.setDaysInactiveToDeleteUninterestedChars
                             && charRecord.OnLineSecs < (uint)AppSettings.Default.setSecsToDeleteUninterestedChars)
                         {
-                            // Delete the character via FLHook too.
-                            if (flsk.IsConnected())
-                                flsk.CmdDeleteChar(charRecord.CharName);
-                            File.Delete(charFilePath);
+                            if (!AppSettings.Default.setMoveUninterestedChars)
+                            {
+                                // Delete the character via FLHook too.
+                                if (flsk.IsConnected())
+                                    flsk.CmdDeleteChar(charRecord.CharName);
+                                File.Delete(charFilePath);
+                            }
+                            else
+                            {
+                                moveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir);
+                            }
                             charRecord.IsDeleted = true;
                             uninterestedChars++;
                         }
@@ -484,6 +498,25 @@ namespace DAM
         }
 
         /// <summary>
+        /// Moves one single char-file to an other directory.
+        /// Also creates the acc-folder in toPath if necessary.
+        /// </summary>
+        /// <param name="charFile">char-file to move</param>
+        /// <param name="toPath">the destination</param>
+        public static void moveChar(String charFile, String toPath)
+        {
+            String[] oldName;
+            String newFileName;
+
+            oldName = charFile.Split('\\', '/');
+            newFileName = toPath + "\\" + oldName[oldName.Length - 2] + "\\" + oldName[oldName.Length - 1];
+
+            if (!Directory.Exists(toPath + "\\" + oldName[oldName.Length - 2]))
+                Directory.CreateDirectory(toPath + "\\" + oldName[oldName.Length - 2]);
+            File.Move(charFile, newFileName);
+        }
+
+        /// <summary>
         /// Scan a player's account directory and update the data in the database.
         /// </summary>
         /// <param name="dataSet">The database to update. This should contain both the CharacterList and BanList</param>
@@ -495,7 +528,7 @@ namespace DAM
             int filesUpdated = 0;
             string accDirPath = AppSettings.Default.setAccountDir + "\\" + accDir;
 
-            if (!Directory.Exists(accDirPath))
+            if (!Directory.Exists(accDirPath) || !File.Exists(accDirPath + "\\name"))
                 return 0;
 
             // Check and update the account ban information. Remove bans for deleted accounts

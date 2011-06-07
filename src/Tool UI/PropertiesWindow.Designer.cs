@@ -35,6 +35,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBoxCheckDefaultLights = new System.Windows.Forms.CheckBox();
             this.checkBoxCheckDefaultEngine = new System.Windows.Forms.CheckBox();
             this.checkBoxCheckDefaultPowerPlant = new System.Windows.Forms.CheckBox();
             this.checkBoxReportVisitError = new System.Windows.Forms.CheckBox();
@@ -72,7 +73,11 @@
             this.label11 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.textBoxStatisticsDir = new System.Windows.Forms.TextBox();
-            this.checkBoxCheckDefaultLights = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxMoveUninterestedChars = new System.Windows.Forms.CheckBox();
+            this.textBoxMoveUninterestedCharsDir = new System.Windows.Forms.TextBox();
+            this.UninterestedCharsDirButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -82,11 +87,12 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxFLHookPort)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(495, 346);
+            this.button1.Location = new System.Drawing.Point(495, 367);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 15;
@@ -96,7 +102,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(414, 346);
+            this.button2.Location = new System.Drawing.Point(414, 367);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 16;
@@ -111,7 +117,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(558, 328);
+            this.tabControl1.Size = new System.Drawing.Size(558, 349);
             this.tabControl1.TabIndex = 17;
             // 
             // tabPage1
@@ -120,13 +126,18 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(550, 302);
+            this.tabPage1.Size = new System.Drawing.Size(550, 323);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Page 1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.UninterestedCharsDirButton);
+            this.groupBox2.Controls.Add(this.textBoxMoveUninterestedCharsDir);
+            this.groupBox2.Controls.Add(this.checkBoxMoveUninterestedChars);
+            this.groupBox2.Controls.Add(this.numericUpDown3);
+            this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.checkBoxCheckDefaultLights);
             this.groupBox2.Controls.Add(this.checkBoxCheckDefaultEngine);
             this.groupBox2.Controls.Add(this.checkBoxCheckDefaultPowerPlant);
@@ -153,15 +164,25 @@
             this.groupBox2.Controls.Add(this.accountDirButton);
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(537, 290);
+            this.groupBox2.Size = new System.Drawing.Size(537, 311);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Files";
             // 
+            // checkBoxCheckDefaultLights
+            // 
+            this.checkBoxCheckDefaultLights.AutoSize = true;
+            this.checkBoxCheckDefaultLights.Location = new System.Drawing.Point(392, 265);
+            this.checkBoxCheckDefaultLights.Name = "checkBoxCheckDefaultLights";
+            this.checkBoxCheckDefaultLights.Size = new System.Drawing.Size(134, 17);
+            this.checkBoxCheckDefaultLights.TabIndex = 34;
+            this.checkBoxCheckDefaultLights.Text = "Check for default lights";
+            this.checkBoxCheckDefaultLights.UseVisualStyleBackColor = true;
+            // 
             // checkBoxCheckDefaultEngine
             // 
             this.checkBoxCheckDefaultEngine.AutoSize = true;
-            this.checkBoxCheckDefaultEngine.Location = new System.Drawing.Point(186, 263);
+            this.checkBoxCheckDefaultEngine.Location = new System.Drawing.Point(186, 288);
             this.checkBoxCheckDefaultEngine.Name = "checkBoxCheckDefaultEngine";
             this.checkBoxCheckDefaultEngine.Size = new System.Drawing.Size(142, 17);
             this.checkBoxCheckDefaultEngine.TabIndex = 33;
@@ -171,7 +192,7 @@
             // checkBoxCheckDefaultPowerPlant
             // 
             this.checkBoxCheckDefaultPowerPlant.AutoSize = true;
-            this.checkBoxCheckDefaultPowerPlant.Location = new System.Drawing.Point(186, 240);
+            this.checkBoxCheckDefaultPowerPlant.Location = new System.Drawing.Point(186, 265);
             this.checkBoxCheckDefaultPowerPlant.Name = "checkBoxCheckDefaultPowerPlant";
             this.checkBoxCheckDefaultPowerPlant.Size = new System.Drawing.Size(165, 17);
             this.checkBoxCheckDefaultPowerPlant.TabIndex = 32;
@@ -181,7 +202,7 @@
             // checkBoxReportVisitError
             // 
             this.checkBoxReportVisitError.AutoSize = true;
-            this.checkBoxReportVisitError.Location = new System.Drawing.Point(9, 263);
+            this.checkBoxReportVisitError.Location = new System.Drawing.Point(9, 288);
             this.checkBoxReportVisitError.Name = "checkBoxReportVisitError";
             this.checkBoxReportVisitError.Size = new System.Drawing.Size(129, 17);
             this.checkBoxReportVisitError.TabIndex = 31;
@@ -191,7 +212,7 @@
             // checkBoxAutomaticFixCharFiles
             // 
             this.checkBoxAutomaticFixCharFiles.AutoSize = true;
-            this.checkBoxAutomaticFixCharFiles.Location = new System.Drawing.Point(9, 240);
+            this.checkBoxAutomaticFixCharFiles.Location = new System.Drawing.Point(9, 265);
             this.checkBoxAutomaticFixCharFiles.Name = "checkBoxAutomaticFixCharFiles";
             this.checkBoxAutomaticFixCharFiles.Size = new System.Drawing.Size(170, 17);
             this.checkBoxAutomaticFixCharFiles.TabIndex = 30;
@@ -201,16 +222,16 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(240, 215);
+            this.label9.Location = new System.Drawing.Point(240, 241);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(201, 13);
+            this.label9.Size = new System.Drawing.Size(167, 13);
             this.label9.TabIndex = 29;
-            this.label9.Text = "minutes time online and older than 7 days";
+            this.label9.Text = "minutes time online and older than";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(230, 191);
+            this.label8.Location = new System.Drawing.Point(230, 217);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 28;
@@ -218,7 +239,7 @@
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(186, 213);
+            this.numericUpDown2.Location = new System.Drawing.Point(186, 239);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -230,7 +251,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(179, 188);
+            this.numericUpDown1.Location = new System.Drawing.Point(179, 214);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -253,7 +274,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 191);
+            this.label7.Location = new System.Drawing.Point(6, 217);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(162, 13);
             this.label7.TabIndex = 25;
@@ -262,7 +283,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 215);
+            this.label2.Location = new System.Drawing.Point(6, 241);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(174, 13);
             this.label2.TabIndex = 24;
@@ -283,9 +304,9 @@
             this.checkBoxAutomaticCharWipe.AutoSize = true;
             this.checkBoxAutomaticCharWipe.Location = new System.Drawing.Point(9, 165);
             this.checkBoxAutomaticCharWipe.Name = "checkBoxAutomaticCharWipe";
-            this.checkBoxAutomaticCharWipe.Size = new System.Drawing.Size(216, 17);
+            this.checkBoxAutomaticCharWipe.Size = new System.Drawing.Size(222, 17);
             this.checkBoxAutomaticCharWipe.TabIndex = 22;
-            this.checkBoxAutomaticCharWipe.Text = "Automatically delete inactive characters ";
+            this.checkBoxAutomaticCharWipe.Text = "Automatically remove inactive characters ";
             this.checkBoxAutomaticCharWipe.UseVisualStyleBackColor = true;
             // 
             // checkBoxChangedOnly
@@ -530,27 +551,70 @@
             this.textBoxStatisticsDir.Size = new System.Drawing.Size(487, 20);
             this.textBoxStatisticsDir.TabIndex = 33;
             // 
-            // checkBoxCheckDefaultLights
+            // label13
             // 
-            this.checkBoxCheckDefaultLights.AutoSize = true;
-            this.checkBoxCheckDefaultLights.Location = new System.Drawing.Point(392, 240);
-            this.checkBoxCheckDefaultLights.Name = "checkBoxCheckDefaultLights";
-            this.checkBoxCheckDefaultLights.Size = new System.Drawing.Size(134, 17);
-            this.checkBoxCheckDefaultLights.TabIndex = 34;
-            this.checkBoxCheckDefaultLights.Text = "Check for default lights";
-            this.checkBoxCheckDefaultLights.UseVisualStyleBackColor = true;
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(467, 241);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 13);
+            this.label13.TabIndex = 35;
+            this.label13.Text = "days";
+            // 
+            // numericUpDown3
+            // 
+            this.numericUpDown3.Location = new System.Drawing.Point(413, 239);
+            this.numericUpDown3.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.numericUpDown3.Name = "numericUpDown3";
+            this.numericUpDown3.Size = new System.Drawing.Size(48, 20);
+            this.numericUpDown3.TabIndex = 36;
+            this.numericUpDown3.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            // 
+            // checkBoxMoveUninterestedChars
+            // 
+            this.checkBoxMoveUninterestedChars.AutoSize = true;
+            this.checkBoxMoveUninterestedChars.Location = new System.Drawing.Point(9, 188);
+            this.checkBoxMoveUninterestedChars.Name = "checkBoxMoveUninterestedChars";
+            this.checkBoxMoveUninterestedChars.Size = new System.Drawing.Size(206, 17);
+            this.checkBoxMoveUninterestedChars.TabIndex = 37;
+            this.checkBoxMoveUninterestedChars.Text = "Don\'t delete characters move them to:";
+            this.checkBoxMoveUninterestedChars.UseVisualStyleBackColor = true;
+            // 
+            // textBoxMoveUninterestedCharsDir
+            // 
+            this.textBoxMoveUninterestedCharsDir.Location = new System.Drawing.Point(221, 185);
+            this.textBoxMoveUninterestedCharsDir.Name = "textBoxMoveUninterestedCharsDir";
+            this.textBoxMoveUninterestedCharsDir.Size = new System.Drawing.Size(275, 20);
+            this.textBoxMoveUninterestedCharsDir.TabIndex = 38;
+            // 
+            // UninterestedCharsDirButton
+            // 
+            this.UninterestedCharsDirButton.Location = new System.Drawing.Point(502, 182);
+            this.UninterestedCharsDirButton.Name = "UninterestedCharsDirButton";
+            this.UninterestedCharsDirButton.Size = new System.Drawing.Size(29, 23);
+            this.UninterestedCharsDirButton.TabIndex = 39;
+            this.UninterestedCharsDirButton.Text = "...";
+            this.UninterestedCharsDirButton.UseVisualStyleBackColor = true;
+            this.UninterestedCharsDirButton.Click += new System.EventHandler(this.UninterestedCharsDirButton_Click);
             // 
             // PropertiesWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 381);
+            this.ClientSize = new System.Drawing.Size(582, 396);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(590, 415);
-            this.MinimumSize = new System.Drawing.Size(590, 415);
+            this.MaximumSize = new System.Drawing.Size(590, 430);
+            this.MinimumSize = new System.Drawing.Size(590, 430);
             this.Name = "PropertiesWindow";
             this.Text = "Properties";
             this.Load += new System.EventHandler(this.PropertiesWindow_Load);
@@ -566,6 +630,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.textBoxFLHookPort)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -616,6 +681,11 @@
         private System.Windows.Forms.CheckBox checkBoxReportVisitError;
         private System.Windows.Forms.CheckBox checkBoxAutomaticFixCharFiles;
         private System.Windows.Forms.CheckBox checkBoxCheckDefaultLights;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.TextBox textBoxMoveUninterestedCharsDir;
+        private System.Windows.Forms.CheckBox checkBoxMoveUninterestedChars;
+        private System.Windows.Forms.Button UninterestedCharsDirButton;
 
     }
 }
