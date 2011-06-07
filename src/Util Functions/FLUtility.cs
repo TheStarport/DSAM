@@ -499,21 +499,51 @@ namespace DAM
 
         /// <summary>
         /// Moves one single char-file to an other directory.
-        /// Also creates the acc-folder in toPath if necessary.
+        /// Also creates the account-directory in toPath if necessary.
         /// </summary>
         /// <param name="charFile">char-file to move</param>
         /// <param name="toPath">the destination</param>
-        public static void moveChar(String charFile, String toPath)
+        /// <param name="log">The LogRecorderInterface</param>
+        public static void moveChar(String charFile, String toPath, LogRecorderInterface log)
         {
             String[] oldName;
             String newFileName;
 
+            // extracts the freelancer-id-directory from the full-path
             oldName = charFile.Split('\\', '/');
+            // oldName.Length - 1 = charfile
+            // oldName.Length - 2 = account-directory
             newFileName = toPath + "\\" + oldName[oldName.Length - 2] + "\\" + oldName[oldName.Length - 1];
 
+            // create the freelancer-id-directory if it doesn't exist
             if (!Directory.Exists(toPath + "\\" + oldName[oldName.Length - 2]))
                 Directory.CreateDirectory(toPath + "\\" + oldName[oldName.Length - 2]);
-            File.Move(charFile, newFileName);
+
+            try
+            {
+                if (File.Exists(newFileName)) // check to prevent an exception because of a existing file
+                    File.Move(newFileName, newFileName + ".bak"); // make a backup if something goes wrong
+                File.Move(charFile, newFileName); // move the charfile..
+                // no file-exists-check because it doesn't throw an exception
+                File.Delete(newFileName + ".bak"); // delete the backup
+            }
+            catch (Exception ex)
+            {
+                log.AddLog("Error (" + ex.Message + ") while moveing: " + charFile + "!");
+                log.AddLog(ex.StackTrace);
+
+                try
+                {
+                    if (File.Exists(newFileName + ".bak")) // try to revert the backup (something has gone wrong)
+                        File.Move(newFileName + ".bak", newFileName);
+                }
+                catch (Exception ex2)
+                {
+                    log.AddLog("Error (" + ex.Message + ") trying to fix the previous error with " + charFile + "! Your old charfile should be at *charfilename*.bak");
+                    log.AddLog(ex2.StackTrace);
+                }
+            }
+
         }
 
         /// <summary>
