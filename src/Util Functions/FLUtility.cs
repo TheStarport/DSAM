@@ -456,7 +456,7 @@ namespace DAM
                             }
                             else
                             {
-                                moveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir);
+                                moveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir, log);
                             }
                             charRecord.IsDeleted = true;
                             inactiveChars++;
@@ -473,7 +473,7 @@ namespace DAM
                             }
                             else
                             {
-                                moveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir);
+                                moveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir, log);
                             }
                             charRecord.IsDeleted = true;
                             uninterestedChars++;
@@ -587,11 +587,12 @@ namespace DAM
             // Check and update login id information.
             try
             {
-                string[] loginFiles = Directory.GetFiles(accDirPath, "login_????????.ini");
+                string[] loginFiles = Directory.GetFiles(accDirPath, "login_*.ini");
                 foreach (string loginFilePath in loginFiles)
                 {
                     DamDataSet.LoginIDListRow loginIDRecord = dataSet.LoginIDList.NewLoginIDListRow();
-                    string loginID = loginFilePath.Substring(loginFilePath.Length - 12).Substring(0, 8);
+                    string filename = new FileInfo(loginFilePath).Name;
+                    string loginID = filename.Substring(6, filename.Length - 10);
                     DateTime accessTime = File.GetLastWriteTime(loginFilePath);
                     dataSet.LoginIDList.AddLoginIDListRow(accDir, loginID, accessTime);
                 }
