@@ -1638,6 +1638,7 @@
             // 
             // banSelectedButton
             // 
+            this.banSelectedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.banSelectedButton.Location = new System.Drawing.Point(332, 404);
             this.banSelectedButton.Name = "banSelectedButton";
             this.banSelectedButton.Size = new System.Drawing.Size(127, 23);
@@ -1648,6 +1649,7 @@
             // 
             // deleteSelectedButton
             // 
+            this.deleteSelectedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.deleteSelectedButton.Location = new System.Drawing.Point(332, 433);
             this.deleteSelectedButton.Name = "deleteSelectedButton";
             this.deleteSelectedButton.Size = new System.Drawing.Size(127, 23);
