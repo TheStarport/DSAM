@@ -12,3 +12,4 @@ If you make changes to this software and would like them incorporated into the o
 
 Item hash algorithm from flhash.exe by sherlog@t-online.de (2003-06-11)
 Faction hash algorithm from flfachash.exe by Haenlomal (October 2006)
+Serveral changes by M1C (2011)

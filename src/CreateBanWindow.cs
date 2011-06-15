@@ -52,12 +52,16 @@ namespace DAM
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            appServices.BanAccount(accDir, accID, richTextBox1.Text, dateTimePickerStartDate.Value, calcEndDate());
+            if (accDir != string.Empty)
+                appServices.BanAccount(accDir, accID, richTextBox1.Text, dateTimePickerStartDate.Value, calcEndDate());
+
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 

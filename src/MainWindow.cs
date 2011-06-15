@@ -391,11 +391,35 @@ namespace DAM
         private DamDataSet.CharacterListRow GetCharRecordBySelectedRow()
         {
             // Get the deleted for the currently selected player in the character list.
-            if (charListDataGridView.SelectedRows.Count != 1)
+            if (charListDataGridView.SelectedRows.Count == 0)
                 return null;
 
             string charFilePath = (string)charListDataGridView.SelectedRows[0].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
             return dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePath);
+        }
+
+        /// <summary>
+        /// Get all character list entrys of the currently selected rows
+        /// in the table.
+        /// </summary>
+        /// <returns>The entrys or null if an entry was not selected</returns>
+        private DamDataSet.CharacterListRow[] GetAllCharRecordsBySelectedRows()
+        {
+            // don't enter the loop if only one is selected
+            if (charListDataGridView.SelectedRows.Count == 1)
+                return new DamDataSet.CharacterListRow[] { GetCharRecordBySelectedRow() };
+
+            // array to save all selected rows
+            DamDataSet.CharacterListRow[] selectedRows = new DamDataSet.CharacterListRow[charListDataGridView.SelectedRows.Count];
+            string charFilePath;
+
+            for(int i = 0; i < selectedRows.Length; i++)
+            {
+                charFilePath = (string)charListDataGridView.SelectedRows[i].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
+                selectedRows[i]= dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePath);
+            }
+
+            return selectedRows;
         }
 
         /// <summary>
@@ -1128,7 +1152,7 @@ namespace DAM
         /// </summary>
         private void addEquipmentButton_Click(object sender, EventArgs e)
         {
-            if (piEquipmentGrid.SelectedRows.Count != 1)
+            if (piEquipmentGrid.SelectedRows.Count == 0)
                 return;
 
             new AddEquipmentWindow(gameData, dataSetUI.PIEquipmentTable, null).ShowDialog(this);
@@ -1139,7 +1163,7 @@ namespace DAM
         /// </summary>
         private void changeEquipmentButton_Click(object sender, EventArgs e)
         {
-            if (piEquipmentGrid.SelectedRows.Count != 1)
+            if (piEquipmentGrid.SelectedRows.Count == 0)
                 return;
 
             UIDataSet.PIEquipmentTableRow item = (UIDataSet.PIEquipmentTableRow)((DataRowView)piEquipmentGrid.SelectedRows[0].DataBoundItem).Row;
@@ -1533,8 +1557,8 @@ namespace DAM
             Cursor.Current = Cursors.WaitCursor;
 
             // Record the currently selected rows.
-            DamDataSet.CharacterListRow selectedCharRecord = GetCharRecordBySelectedRow();
-
+            DamDataSet.CharacterListRow[] selectedCharRecords = GetAllCharRecordsBySelectedRows();
+            
             if (!checkBoxFilterDeleted.Checked)
             {
                 filter += "(IsDeleted = 'false')";
@@ -1649,11 +1673,14 @@ namespace DAM
             foreach (DataGridViewRow row in charListDataGridView.Rows)
             {
                 DamDataSet.CharacterListRow charRecord = (DamDataSet.CharacterListRow)((DataRowView)row.DataBoundItem).Row;
-                if (charRecord == selectedCharRecord)
+                for (int i = 0; i < selectedCharRecords.Length; i++)
                 {
-                    row.Selected = true;
-                    charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
-                    break;
+                    if (charRecord == selectedCharRecords[i])
+                    {
+                        row.Selected = true;
+                        charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
+                        break;
+                    }
                 }
             }
 
@@ -1813,6 +1840,7 @@ namespace DAM
         /// </summary>
         private void timerPeriodicTasks_Tick(object sender, EventArgs e)
         {
+            charListDataGridView_SelectionChanged(this, EventArgs.Empty);
             int load = 0;
             bool npcSpawnEnabled = false;
             string upTime = "";
@@ -1896,7 +1924,27 @@ namespace DAM
                 GetDataAccess().CommitChanges(dataSetPlayerInfo, this);
                 ReportProgress(0, "OK");
                 charListDataGridView.SelectionChanged -= charListDataGridView_SelectionChanged;
+
+                // save all selected rows
+                DamDataSet.CharacterListRow[] selectedCharRecords = GetAllCharRecordsBySelectedRows();
+                // change the data in the list
                 dataSetPlayerInfo.AcceptChanges();
+                // Now find the previously selected character and reselect it if possible.
+                foreach (DataGridViewRow row in charListDataGridView.Rows)
+                {
+                    DamDataSet.CharacterListRow charRecord = (DamDataSet.CharacterListRow)((DataRowView)row.DataBoundItem).Row;
+                    for (int i = 0; i < selectedCharRecords.Length; i++)
+                    {
+                        if (charRecord == selectedCharRecords[i])
+                        {
+                            row.Selected = true;
+                            charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
+                            break;
+                        }
+                    }
+                }
+                charListDataGridView.Invalidate();
+
                 charListDataGridView.SelectionChanged += charListDataGridView_SelectionChanged;
                 dbUpdatesPending = 0;
                 toolStripDBPending.Text = String.Format("{0}", dbUpdatesPending);
@@ -2135,6 +2183,75 @@ namespace DAM
 
             FLUtility.SetPlayerInfoAdminNote(AppSettings.Default.setAccountDir, charRecord.CharPath,
                 richTextBoxPlayerInfoAdminText.Text);
+        }
+
+        /// <summary>
+        /// Handles clicks on the ban-all-selected-button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void banSelectedButton_Click(object sender, EventArgs e)
+        {
+            DamDataSet.CharacterListRow[] charRecords = GetAllCharRecordsBySelectedRows();
+            Hashtable accs = new Hashtable(charRecords.Length);
+
+            string accDir;
+            string accID;
+
+            // Let the user input the ban-infos
+            CreateBanWindow createBanWindow = new CreateBanWindow(this, string.Empty, string.Empty, dataSetPlayerInfo, null);
+            DialogResult result = createBanWindow.ShowDialog();
+
+            // user decided to don't ban them..
+            if (result == DialogResult.Cancel)
+                return;
+
+            // ban all saved accounts
+            foreach (DamDataSet.CharacterListRow acc in charRecords)
+            {
+                // extract the data
+                accID = (string)acc.AccID;
+                accDir = (string)acc.AccDir;
+                
+                if(accs.ContainsKey(accDir))
+                    continue;
+                accs.Add(accDir, null);
+
+                // ban the account and save the data which was entered by the user
+                BanAccount(accDir,
+                           accID,
+                           createBanWindow.richTextBox1.Text,
+                           createBanWindow.dateTimePickerStartDate.Value,
+                           createBanWindow.dateTimePickerStartDate.Value.AddDays((int)createBanWindow.numericUpDownDuration.Value));
+            }
+
+            // show the ban in the player info (data collection on the right)
+            updatePlayerInfoTimer.Start();
+
+            // output the final message
+            MessageBox.Show(string.Format("Banned {0} chars on {1} accounts!", charRecords.Length, accs.Count),
+                            "Multiban succsessfull",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+        }
+
+        /// <summary>
+        /// Handles clicks on the delete-all-selected-button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void deleteSelectedButton_Click(object sender, EventArgs e)
+        {
+            DamDataSet.CharacterListRow[] charRecords = GetAllCharRecordsBySelectedRows();
+            
+            if (MessageBox.Show(this, "Are you sure you want to delete " + charRecords.Length + " players?", "Delete Players?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+                return;
+
+            for (int i = 0; i < charRecords.Length; i++)
+            {
+                DeleteChar(charRecords[i].CharName, charRecords[i].CharPath);
+            }
+            updatePlayerInfoTimer.Start();
         }
     }
 }

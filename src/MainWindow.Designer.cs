@@ -174,6 +174,8 @@
             this.timerFilter = new System.Windows.Forms.Timer(this.components);
             this.timerDBSave = new System.Windows.Forms.Timer(this.components);
             this.timerShutdown = new System.Windows.Forms.Timer(this.components);
+            this.banSelectedButton = new System.Windows.Forms.Button();
+            this.deleteSelectedButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1356,6 +1358,7 @@
             this.charListDataGridView.AllowUserToAddRows = false;
             this.charListDataGridView.AllowUserToDeleteRows = false;
             this.charListDataGridView.AllowUserToOrderColumns = true;
+            this.charListDataGridView.AllowUserToResizeRows = false;
             this.charListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -1376,7 +1379,6 @@
             this.isDeletedDataGridViewCheckBoxColumn1});
             this.charListDataGridView.DataSource = this.characterListBindingSource;
             this.charListDataGridView.Location = new System.Drawing.Point(12, 34);
-            this.charListDataGridView.MultiSelect = false;
             this.charListDataGridView.Name = "charListDataGridView";
             this.charListDataGridView.ReadOnly = true;
             this.charListDataGridView.RowHeadersVisible = false;
@@ -1634,11 +1636,33 @@
             // 
             this.timerShutdown.Tick += new System.EventHandler(this.timerShutdown_Tick);
             // 
+            // banSelectedButton
+            // 
+            this.banSelectedButton.Location = new System.Drawing.Point(332, 404);
+            this.banSelectedButton.Name = "banSelectedButton";
+            this.banSelectedButton.Size = new System.Drawing.Size(127, 23);
+            this.banSelectedButton.TabIndex = 20;
+            this.banSelectedButton.Text = "Ban all selected";
+            this.banSelectedButton.UseVisualStyleBackColor = true;
+            this.banSelectedButton.Click += new System.EventHandler(this.banSelectedButton_Click);
+            // 
+            // deleteSelectedButton
+            // 
+            this.deleteSelectedButton.Location = new System.Drawing.Point(332, 433);
+            this.deleteSelectedButton.Name = "deleteSelectedButton";
+            this.deleteSelectedButton.Size = new System.Drawing.Size(127, 23);
+            this.deleteSelectedButton.TabIndex = 21;
+            this.deleteSelectedButton.Text = "Delete all selected";
+            this.deleteSelectedButton.UseVisualStyleBackColor = true;
+            this.deleteSelectedButton.Click += new System.EventHandler(this.deleteSelectedButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 546);
+            this.Controls.Add(this.deleteSelectedButton);
+            this.Controls.Add(this.banSelectedButton);
             this.Controls.Add(this.checkBoxFilterSameAccount);
             this.Controls.Add(this.checkBoxFilterSameLoginID);
             this.Controls.Add(this.checkBoxFilterSameIP);
@@ -1835,6 +1859,8 @@
         private System.Windows.Forms.RichTextBox richTextBoxPlayerInfoPlayerText;
         private System.Windows.Forms.Button buttonPlayerInfoSaveAdminText;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button banSelectedButton;
+        private System.Windows.Forms.Button deleteSelectedButton;
     }
 }
 
