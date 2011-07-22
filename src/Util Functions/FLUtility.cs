@@ -602,6 +602,35 @@ namespace DAM
                 log.AddLog(String.Format("Error '{0}' when reading login info {1}", ex.Message, accDirPath));
             }
 
+            // Read flhookuser.ini information.
+            // used to store HwIDs/LoginIDs on the HHC-Server
+            try
+            {
+                string hookini = accDirPath + "\\flhookuser.ini";
+                DateTime accessTime = File.GetLastWriteTime(hookini);
+                if (File.Exists(hookini))
+                {
+                    string[] lines = File.ReadAllLines(hookini);
+                    Int32 tmp = 0;
+                    foreach (string line in lines)
+                    {
+                        if (line.StartsWith("HardwareID="))
+                        {
+                            // tmp will be 0 if parsing fails
+                            Int32.TryParse(line.Substring(11), out tmp);
+                            break;
+                        }
+                    }
+                    // don't add accs without LoginID
+                    if (tmp != 0)
+                        dataSet.LoginIDList.AddLoginIDListRow(accDir, tmp.ToString(), accessTime);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.AddLog(String.Format("Error '{0}' when reading login/flhookuser info {1}", ex.Message, accDirPath));
+            }
+
             // Check for new/updated charfiles
             string[] charFiles = Directory.GetFiles(accDirPath, "??-????????.fl");
             foreach (string charFilePath in charFiles)
