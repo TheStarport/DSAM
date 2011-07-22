@@ -37,6 +37,7 @@ namespace DAM
 
                 textBoxStatisticsDir.Text = AppSettings.Default.setStatisticsDir;
                 textBoxStatsFactions.Text = AppSettings.Default.setStatsFactions;
+                numericUpDownHistoryHorizon.Value = AppSettings.Default.setHistoryHorizon;
 
                 checkBoxAutomaticFixCharFiles.Checked = AppSettings.Default.setAutomaticFixErrors;
                 checkBoxCheckDefaultEngine.Checked = AppSettings.Default.setCheckDefaultEngine;
@@ -65,9 +66,10 @@ namespace DAM
                 AppSettings.Default.setDaysToDeleteInactiveChars = numericUpDown1.Value;
                 AppSettings.Default.setSecsToDeleteUninterestedChars = numericUpDown2.Value * 60;
                 AppSettings.Default.setDaysInactiveToDeleteUninterestedChars = numericUpDown3.Value;
+
                 AppSettings.Default.setStatisticsDir = textBoxStatisticsDir.Text;
                 AppSettings.Default.setStatsFactions = textBoxStatsFactions.Text;
-
+                AppSettings.Default.setHistoryHorizon = (int)numericUpDownHistoryHorizon.Value;
 
                 AppSettings.Default.setAutomaticFixErrors = checkBoxAutomaticFixCharFiles.Checked;
                 AppSettings.Default.setCheckDefaultEngine = checkBoxCheckDefaultEngine.Checked;

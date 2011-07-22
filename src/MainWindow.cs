@@ -1975,8 +1975,7 @@ namespace DAM
                     if (da.MakeActiveCharacterHistoryNeeded())
                     {
                         bgWkr.ReportProgress(30, "Cleaning up history database...");
-                        //TODO: history horizon might be put to an editable gui field
-                        da.CleanUpCharacterHistory(120);
+                        da.CleanUpCharacterHistory(AppSettings.Default.setHistoryHorizon);
                         bgWkr.ReportProgress(30, "Saving history database...");
                         da.MakeActiveCharacterHistory();
                         if (!bgWkr.CancellationPending)
