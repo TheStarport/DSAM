@@ -17,6 +17,8 @@ using Microsoft.Win32;
 
 // TODO: Player location statistics
 // TODO: Player in space randomiser
+// TODO: Generator for NPC-Weapons-Layouts out of one player-file
+// TODO: Generator for mpnewcharacter.fl out of one player-file
 
 namespace DAM
 {
@@ -425,6 +427,7 @@ namespace DAM
         /// <summary>
         /// Load a character file and display it in the player information tabs
         /// </summary>
+        delegate void UpdatePlayerInfoDelegate();
         public void UpdatePlayerInfo()
         {
             // Reset the UI.
@@ -578,11 +581,11 @@ namespace DAM
                     DateTime startTime = DateTime.Now;
                     GetDataAccess().GetIPListByAccDir(ds.IPList, charRecord.AccDir);
                     foreach (DamDataSet.IPListRow row in ds.IPList)
-                        piIPAddresses.Text += String.Format("{0} {1}\r\n", row.IP, row.AccessTime);
+                        piIPAddresses.Text += String.Format("IP:      {0}: {1}\r\n", row.AccessTime, row.IP);
 
                     GetDataAccess().GetLoginIDListByAccDir(ds.LoginIDList, charRecord.AccDir);
                     foreach (DamDataSet.LoginIDListRow row in ds.LoginIDList)
-                        piIPAddresses.Text += String.Format("{0} {1}\r\n", row.LoginID, row.AccessTime);
+                        piIPAddresses.Text += String.Format("LoginID: {0}: {1}\r\n", row.AccessTime, row.LoginID);
                 }
                 
                 // Load the char file if it exists.
@@ -1558,6 +1561,15 @@ namespace DAM
 
             // Record the currently selected rows.
             DamDataSet.CharacterListRow[] selectedCharRecords = GetAllCharRecordsBySelectedRows();
+
+            // save the scroll position
+            int scrollPos = charListDataGridView.FirstDisplayedScrollingRowIndex;
+            DamDataSet.CharacterListRow scrollChar = null;
+            if (scrollPos != -1)
+            {
+                string charFilePath = (string)charListDataGridView.Rows[scrollPos].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
+                scrollChar = dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePath);
+            }
             
             if (!checkBoxFilterDeleted.Checked)
             {
@@ -1675,14 +1687,25 @@ namespace DAM
                 DamDataSet.CharacterListRow charRecord = (DamDataSet.CharacterListRow)((DataRowView)row.DataBoundItem).Row;
                 for (int i = 0; i < selectedCharRecords.Length; i++)
                 {
-                    if (charRecord == selectedCharRecords[i])
+                    if (charRecord.CharPath == selectedCharRecords[i].CharPath)
                     {
                         row.Selected = true;
-                        charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
                         break;
                     }
+                    else
+                    {
+                        row.Selected = false;
+                    }
+                }
+                if (scrollChar != null && charRecord.CharPath == scrollChar.CharPath)
+                {
+                    charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
+                    scrollPos = -1;
                 }
             }
+            // restore the scroll-position
+            if (scrollPos != -1 && scrollPos < charListDataGridView.RowCount)
+                charListDataGridView.FirstDisplayedScrollingRowIndex = scrollPos;
 
             Cursor.Current = Cursors.Default;
 
@@ -1925,25 +1948,46 @@ namespace DAM
                 ReportProgress(0, "OK");
                 charListDataGridView.SelectionChanged -= charListDataGridView_SelectionChanged;
 
+                // save the scroll position
+                int scrollPos = charListDataGridView.FirstDisplayedScrollingRowIndex;
+                DamDataSet.CharacterListRow scrollChar = null;
+                if (scrollPos != -1)
+                {
+                    string charFilePath = (string)charListDataGridView.Rows[scrollPos].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
+                    scrollChar = dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePath);
+                }
+
                 // save all selected rows
                 DamDataSet.CharacterListRow[] selectedCharRecords = GetAllCharRecordsBySelectedRows();
+
                 // change the data in the list
                 dataSetPlayerInfo.AcceptChanges();
+
                 // Now find the previously selected character and reselect it if possible.
                 foreach (DataGridViewRow row in charListDataGridView.Rows)
                 {
                     DamDataSet.CharacterListRow charRecord = (DamDataSet.CharacterListRow)((DataRowView)row.DataBoundItem).Row;
                     for (int i = 0; i < selectedCharRecords.Length; i++)
                     {
-                        if (charRecord == selectedCharRecords[i])
+                        if (charRecord.CharPath == selectedCharRecords[i].CharPath)
                         {
                             row.Selected = true;
-                            charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
                             break;
                         }
+                        else
+                        {
+                            row.Selected = false;
+                        }
+                    }
+                    if (scrollChar != null && charRecord.CharPath == scrollChar.CharPath)
+                    {
+                        charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
+                        scrollPos = -1;
                     }
                 }
-                charListDataGridView.Invalidate();
+                // restore the scroll-position
+                if (scrollPos != -1 && scrollPos < charListDataGridView.RowCount)
+                    charListDataGridView.FirstDisplayedScrollingRowIndex = scrollPos;
 
                 charListDataGridView.SelectionChanged += charListDataGridView_SelectionChanged;
                 dbUpdatesPending = 0;
@@ -2205,33 +2249,39 @@ namespace DAM
             if (result == DialogResult.Cancel)
                 return;
 
-            // ban all saved accounts
-            foreach (DamDataSet.CharacterListRow acc in charRecords)
-            {
-                // extract the data
-                accID = (string)acc.AccID;
-                accDir = (string)acc.AccDir;
-                
-                if(accs.ContainsKey(accDir))
-                    continue;
-                accs.Add(accDir, null);
+            Thread banThread = new Thread(
+                delegate()
+                {
+                    // ban all saved accounts
+                    foreach (DamDataSet.CharacterListRow acc in charRecords)
+                    {
+                        // extract the data
+                        accID = (string)acc.AccID;
+                        accDir = (string)acc.AccDir;
 
-                // ban the account and save the data which was entered by the user
-                BanAccount(accDir,
-                           accID,
-                           createBanWindow.richTextBox1.Text,
-                           createBanWindow.dateTimePickerStartDate.Value,
-                           createBanWindow.dateTimePickerStartDate.Value.AddDays((int)createBanWindow.numericUpDownDuration.Value));
-            }
+                        if(accs.ContainsKey(accDir))
+                            continue;
+                        accs.Add(accDir, null);
 
-            // show the ban in the player info (data collection on the right)
-            updatePlayerInfoTimer.Start();
+                        // ban the account and save the data which was entered by the user
+                        BanAccount(accDir,
+                                   accID,
+                                   createBanWindow.richTextBox1.Text,
+                                   createBanWindow.dateTimePickerStartDate.Value,
+                                   createBanWindow.dateTimePickerStartDate.Value.AddDays((int)createBanWindow.numericUpDownDuration.Value));
+                    }
 
-            // output the final message
-            MessageBox.Show(string.Format("Banned {0} chars on {1} accounts!", charRecords.Length, accs.Count),
-                            "Multiban succsessfull",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
+                    // show the ban in the player info (data collection on the right)
+                    UpdatePlayerInfoDelegate updatePlayerInfo = new UpdatePlayerInfoDelegate(this.UpdatePlayerInfo);
+                    this.Invoke(updatePlayerInfo);
+
+                    // output the final message
+                    MessageBox.Show(string.Format("Banned {0} chars on {1} accounts!", charRecords.Length, accs.Count),
+                                    "Multiban succsessfull",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                });
+            banThread.Start();
         }
 
         /// <summary>
@@ -2245,12 +2295,67 @@ namespace DAM
             
             if (MessageBox.Show(this, "Are you sure you want to delete " + charRecords.Length + " players?", "Delete Players?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
                 return;
+            
+            Thread deleteThread = new Thread(
+            	delegate()
+            	{
+                    for (int i = 0; i < charRecords.Length; i++)
+                    {
+                        DeleteChar(charRecords[i].CharName, charRecords[i].CharPath);
+                    }
+                    // show that the char is deleted in the player info (data collection on the right)
+                    UpdatePlayerInfoDelegate updatePlayerInfo = new UpdatePlayerInfoDelegate(this.UpdatePlayerInfo);
+                    this.Invoke(updatePlayerInfo);
+                    // output the final message
 
-            for (int i = 0; i < charRecords.Length; i++)
-            {
-                DeleteChar(charRecords[i].CharName, charRecords[i].CharPath);
-            }
-            updatePlayerInfoTimer.Start();
+                    MessageBox.Show(string.Format("Deleted {0} chars!", charRecords.Length),
+                                    "Multidelete succsessfull",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                });
+            deleteThread.Start();
+        }
+
+        /// <summary>
+        /// Handles clicks on the unbanban-all-selected-button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void unbanSelectedButton_Click(object sender, EventArgs e)
+        {
+            DamDataSet.CharacterListRow[] charRecords = GetAllCharRecordsBySelectedRows();
+            Hashtable accs = new Hashtable(charRecords.Length);
+
+            string accDir;
+
+            Thread unbanThread = new Thread(
+                delegate()
+                {
+                    // ban all saved accounts
+                    foreach (DamDataSet.CharacterListRow acc in charRecords)
+                    {
+                        // extract the data
+                        accDir = (string)acc.AccDir;
+
+                        if (accs.ContainsKey(accDir))
+                            continue;
+                        accs.Add(accDir, null);
+
+                        // ban the account and save the data which was entered by the user
+                        UnbanAccount(accDir);
+                    }
+
+                    // show the ban in the player info (data collection on the right)
+                    UpdatePlayerInfoDelegate updatePlayerInfo = new UpdatePlayerInfoDelegate(this.UpdatePlayerInfo);
+                    this.Invoke(updatePlayerInfo);
+
+                    // output the final message
+                    MessageBox.Show(string.Format("Unbanned {0} chars on {1} accounts!", charRecords.Length, accs.Count),
+                                    "Multiunban succsessfull",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                });
+            unbanThread.Start();
         }
     }
 }
