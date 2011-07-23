@@ -513,8 +513,10 @@ namespace DAM
             richTextBoxPlayerInfoAdminText.Clear();
             buttonPlayerInfoSaveAdminText.Enabled = false;
 
+            buttonAddCompleteMap.Enabled = false;
+
             DamDataSet.CharacterListRow charRecord = GetCharRecordBySelectedRow();
-            if (charRecord == null)
+            if (charRecord == null || charListDataGridView.SelectedRows.Count != 1)
                 return;
 
             // Rescan the account to ensure the database is in an accurate state.
@@ -525,6 +527,8 @@ namespace DAM
             openDirButton.Enabled = true;
             reloadFileButton.Enabled = true;
             saveFileManualButton.Enabled = true;
+
+            buttonAddCompleteMap.Enabled = true;
 
             if (!charRecord.IsDeleted)
             {
@@ -736,7 +740,7 @@ namespace DAM
         private DamDataSet.CharacterListRow selectedCharRecord = null;
         private void charListDataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            if (charListDataGridView.FirstDisplayedCell == null && selectedCharRecord != null)
+            if ((charListDataGridView.FirstDisplayedCell == null || charListDataGridView.SelectedRows.Count != 1) && selectedCharRecord != null)
             {
                 selectedCharRecord = null;
                 updatePlayerInfoTimer.Start();
@@ -1384,7 +1388,7 @@ namespace DAM
             foreach (DamDataSet.CharacterListRow charRecord in charRecords)
             {
                 if (!flHookCmdr.CmdBan(charRecord.CharName))
-                    MessageBox.Show(this, "Warning flhook command failed \"" + flHookCmdr.LastCmdError + "\". Creating ban file in account anyway.", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Warning flhook command failed \"" + flHookCmdr.LastCmdError + "\". Creating ban file in account anyway.", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 break;
             }
 
@@ -1396,7 +1400,7 @@ namespace DAM
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, "Create ban file failed '" + ex.Message + "'", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Create ban file failed '" + ex.Message + "'", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -1421,7 +1425,7 @@ namespace DAM
             {
                 if (!flHookCmdr.CmdUnban(charRecord.CharName))
                 {
-                    MessageBox.Show(this, "Warning flhook command failed \"" + flHookCmdr.LastCmdError + "\". Removing ban file from account anyway.", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Warning flhook command failed \"" + flHookCmdr.LastCmdError + "\". Removing ban file from account anyway.", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 break;
             }
@@ -1430,7 +1434,8 @@ namespace DAM
             string banFilePath = AppSettings.Default.setAccountDir + "\\" + accDir + Path.DirectorySeparatorChar + "banned";
             try
             {
-                File.Delete(banFilePath);
+                if(File.Exists(banFilePath))
+                    File.Delete(banFilePath);
             }
             catch {}
         }
@@ -1444,9 +1449,14 @@ namespace DAM
         {
             if (!flHookCmdr.CmdDeleteChar(charName))
             {
-                MessageBox.Show(this, "Warning flhook command failed '" + flHookCmdr.LastCmdError + "'. Deleting player file from account anyway.", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Warning flhook command failed '" + flHookCmdr.LastCmdError + "'. Deleting player file from account anyway.", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            try { File.Delete(AppSettings.Default.setAccountDir + "\\" + charPath); }
+            try
+            {
+                charPath = AppSettings.Default.setAccountDir + "\\" + charPath;
+                if (File.Exists(charPath))
+                    File.Delete(charPath);
+            }
             catch { }
         }
 
