@@ -385,6 +385,8 @@ namespace DAM
             rescanAccountFilesToolStripMenuItem.Enabled = true;
             bgWkr = null;
 
+            SelectionInfo selection = SaveSelection();
+
             DamDataSet dds = (DamDataSet)e.Result;
             dataSetPlayerInfo.BanList.Clear();
             dataSetPlayerInfo.Merge(dds.BanList);
@@ -392,6 +394,8 @@ namespace DAM
             dataSetPlayerInfo.CharacterList.Merge(dds.CharacterList);
             dataSetPlayerInfo.AcceptChanges();
             ReportProgress(0,"OK");
+
+            RestoreSelection(selection);
         }
 
         /// <summary>
@@ -1568,17 +1572,7 @@ namespace DAM
 
             Cursor.Current = Cursors.WaitCursor;
 
-            // Record the currently selected rows.
-            DamDataSet.CharacterListRow[] selectedCharRecords = GetAllCharRecordsBySelectedRows();
-
-            // save the scroll position
-            int scrollPos = charListDataGridView.FirstDisplayedScrollingRowIndex;
-            DamDataSet.CharacterListRow scrollChar = null;
-            if (scrollPos != -1)
-            {
-                string charFilePath = (string)charListDataGridView.Rows[scrollPos].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
-                scrollChar = dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePath);
-            }
+            SelectionInfo selection = SaveSelection();
             
             if (!checkBoxFilterDeleted.Checked)
             {
@@ -1690,31 +1684,7 @@ namespace DAM
 
             characterListBindingSource.Filter = filter;
 
-            // Now find the previously selected character and reselect it if possible.
-            foreach (DataGridViewRow row in charListDataGridView.Rows)
-            {
-                DamDataSet.CharacterListRow charRecord = (DamDataSet.CharacterListRow)((DataRowView)row.DataBoundItem).Row;
-                for (int i = 0; i < selectedCharRecords.Length; i++)
-                {
-                    if (charRecord.CharPath == selectedCharRecords[i].CharPath)
-                    {
-                        row.Selected = true;
-                        break;
-                    }
-                    else
-                    {
-                        row.Selected = false;
-                    }
-                }
-                if (scrollChar != null && charRecord.CharPath == scrollChar.CharPath)
-                {
-                    charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
-                    scrollPos = -1;
-                }
-            }
-            // restore the scroll-position
-            if (scrollPos != -1 && scrollPos < charListDataGridView.RowCount)
-                charListDataGridView.FirstDisplayedScrollingRowIndex = scrollPos;
+            RestoreSelection(selection);
 
             Cursor.Current = Cursors.Default;
 
@@ -1957,46 +1927,10 @@ namespace DAM
                 ReportProgress(0, "OK");
                 charListDataGridView.SelectionChanged -= charListDataGridView_SelectionChanged;
 
-                // save the scroll position
-                int scrollPos = charListDataGridView.FirstDisplayedScrollingRowIndex;
-                DamDataSet.CharacterListRow scrollChar = null;
-                if (scrollPos != -1)
-                {
-                    string charFilePath = (string)charListDataGridView.Rows[scrollPos].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
-                    scrollChar = dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePath);
-                }
-
-                // save all selected rows
-                DamDataSet.CharacterListRow[] selectedCharRecords = GetAllCharRecordsBySelectedRows();
-
+                SelectionInfo selection = SaveSelection();
                 // change the data in the list
                 dataSetPlayerInfo.AcceptChanges();
-
-                // Now find the previously selected character and reselect it if possible.
-                foreach (DataGridViewRow row in charListDataGridView.Rows)
-                {
-                    DamDataSet.CharacterListRow charRecord = (DamDataSet.CharacterListRow)((DataRowView)row.DataBoundItem).Row;
-                    for (int i = 0; i < selectedCharRecords.Length; i++)
-                    {
-                        if (charRecord.CharPath == selectedCharRecords[i].CharPath)
-                        {
-                            row.Selected = true;
-                            break;
-                        }
-                        else
-                        {
-                            row.Selected = false;
-                        }
-                    }
-                    if (scrollChar != null && charRecord.CharPath == scrollChar.CharPath)
-                    {
-                        charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
-                        scrollPos = -1;
-                    }
-                }
-                // restore the scroll-position
-                if (scrollPos != -1 && scrollPos < charListDataGridView.RowCount)
-                    charListDataGridView.FirstDisplayedScrollingRowIndex = scrollPos;
+                RestoreSelection(selection);
 
                 charListDataGridView.SelectionChanged += charListDataGridView_SelectionChanged;
                 dbUpdatesPending = 0;
@@ -2121,6 +2055,10 @@ namespace DAM
         public void FilterOnAccDir(string accDir)
         {
             textBoxFilter.Text = accDir;
+
+            // select the first char so the user can see more informations on the right
+            if (charListDataGridView.Rows.Count != 0)
+                charListDataGridView.Rows[0].Selected = true;
         }
 
         /// <summary>
@@ -2375,6 +2313,81 @@ namespace DAM
                     }
                 });
             unbanThread.Start();
+        }
+
+        /// <summary>
+        /// Struct to store selections and the scroll position in the main-window and load them later
+        /// Needed because the selection is reset on updates
+        /// used by SaveSelection- and RestoreSelection-Methods
+        /// </summary>
+        private struct SelectionInfo
+        {
+            public string[] selectedCharPaths;
+
+            public int scrollPos;
+            public string scrollCharPath;
+        }
+
+        /// <summary>
+        /// Saves the selected rows and the scroll position
+        /// </summary>
+        /// <returns>a SelectionInfo that contains the data (used by RestoreSelection-Method)</returns>
+        private SelectionInfo SaveSelection()
+        {
+            SelectionInfo info = new SelectionInfo();
+
+            // save the scroll position
+            info.scrollPos = charListDataGridView.FirstDisplayedScrollingRowIndex;
+            if (info.scrollPos != -1)
+            {
+                string charFilePath = (string)charListDataGridView.Rows[info.scrollPos].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
+                info.scrollCharPath = charFilePath;
+            }
+
+            // save all selected rows
+            DamDataSet.CharacterListRow[] selectedChars = GetAllCharRecordsBySelectedRows();
+            info.selectedCharPaths = new string[selectedChars.Length];
+
+            // TODO: GetAllCharRecordsBySelectedRows() has already the CharPath, doubled work here..
+            for (int i = 0; i < selectedChars.Length; i++)
+            {
+                info.selectedCharPaths[i] = selectedChars[i].CharPath;
+            }
+
+            return info;
+        }
+
+        /// <summary>
+        /// Restores the selected rows and the scroll position saved by SaveSelection-Method
+        /// </summary>
+        /// <param name="info">the info to restore</param>
+        private void RestoreSelection(SelectionInfo info)
+        {
+            // Now find the previously selected characters and reselect them if possible.
+            foreach (DataGridViewRow row in charListDataGridView.Rows)
+            {
+                DamDataSet.CharacterListRow charRecord = (DamDataSet.CharacterListRow)((DataRowView)row.DataBoundItem).Row;
+                for (int i = 0; i < info.selectedCharPaths.Length; i++)
+                {
+                    if (charRecord.CharPath == info.selectedCharPaths[i])
+                    {
+                        row.Selected = true;
+                        break;
+                    }
+                    else
+                    {
+                        row.Selected = false;
+                    }
+                }
+                if (info.scrollCharPath != null && charRecord.CharPath == info.scrollCharPath)
+                {
+                    charListDataGridView.FirstDisplayedScrollingRowIndex = row.Index;
+                    info.scrollPos = -1;
+                }
+            }
+            // restore the scroll-position
+            if (info.scrollPos != -1 && info.scrollPos < charListDataGridView.RowCount)
+                charListDataGridView.FirstDisplayedScrollingRowIndex = info.scrollPos;
         }
     }
 }
