@@ -463,7 +463,7 @@ namespace DAM
         /// </summary>
         /// <param name="accID">The login ID to search for.</param>
         /// <returns>DataSet containing LoginID records</returns>
-        public void GetLoginIDListByLoginID(DamDataSet.LoginIDListDataTable dsTable, string[] loginIDs)
+        public void GetLoginIDListByLoginID(DamDataSet.LoginIDListDataTable dsTable, params string[] loginIDs)
         {
             dsTable.Clear();
             if (loginIDs.Length == 0)
@@ -476,9 +476,25 @@ namespace DAM
                     query += " OR";
                 query += " LoginID = '" + loginIDs[i] + "'";
             }
+            query += "";
 
             SQLiteDataAdapter adpt = new SQLiteDataAdapter(query, GetConnection());
             adpt.Fill(dsTable);
+        }
+
+        /// <summary>
+        /// Get the latest LoginID
+        /// </summary>
+        /// <param name="accDir">The account dir</param>
+        /// <returns>The row with the lastest loginID, null if no loginID exists</returns>
+        public DamDataSet.LoginIDListRow GetLatestLoginIDRowByAccDir(string accDir)
+        {
+            SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM LoginIDList WHERE AccDir ='" + accDir + "' ORDER BY AccessTime DESC LIMIT 0,1", GetConnection());
+            DamDataSet.LoginIDListDataTable dsTable = new DamDataSet.LoginIDListDataTable();
+            adpt.Fill(dsTable);
+            if (dsTable.Count == 0)
+                return null;
+            return dsTable[0];
         }
 
         /// <summary>

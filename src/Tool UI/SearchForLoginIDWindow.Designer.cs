@@ -35,13 +35,14 @@
             this.buttonSearch = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.buttonShowAccount = new System.Windows.Forms.Button();
             this.accDirDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.accessTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.loginIDListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.damDataSet = new DAM.DamDataSet();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonShowAccount = new System.Windows.Forms.Button();
             this.iPListBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.checkBoxOnlyNewest = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loginIDListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.damDataSet)).BeginInit();
@@ -77,7 +78,7 @@
             // buttonClose
             // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonClose.Location = new System.Drawing.Point(498, 376);
+            this.buttonClose.Location = new System.Drawing.Point(498, 369);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(75, 23);
             this.buttonClose.TabIndex = 3;
@@ -100,32 +101,12 @@
             this.accDirDataGridViewTextBoxColumn,
             this.accessTimeDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.loginIDListBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(15, 55);
+            this.dataGridView1.Location = new System.Drawing.Point(15, 68);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(558, 315);
+            this.dataGridView1.Size = new System.Drawing.Size(558, 295);
             this.dataGridView1.TabIndex = 4;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 39);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Matching Accounts";
-            // 
-            // buttonShowAccount
-            // 
-            this.buttonShowAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonShowAccount.Location = new System.Drawing.Point(400, 376);
-            this.buttonShowAccount.Name = "buttonShowAccount";
-            this.buttonShowAccount.Size = new System.Drawing.Size(92, 23);
-            this.buttonShowAccount.TabIndex = 13;
-            this.buttonShowAccount.Text = "Show Account";
-            this.buttonShowAccount.UseVisualStyleBackColor = true;
-            this.buttonShowAccount.Click += new System.EventHandler(this.buttonShowAccount_Click);
             // 
             // accDirDataGridViewTextBoxColumn
             // 
@@ -152,16 +133,47 @@
             this.damDataSet.Locale = new System.Globalization.CultureInfo("");
             this.damDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 52);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(99, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Matching Accounts";
+            // 
+            // buttonShowAccount
+            // 
+            this.buttonShowAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonShowAccount.Location = new System.Drawing.Point(400, 369);
+            this.buttonShowAccount.Name = "buttonShowAccount";
+            this.buttonShowAccount.Size = new System.Drawing.Size(92, 23);
+            this.buttonShowAccount.TabIndex = 13;
+            this.buttonShowAccount.Text = "Show Account";
+            this.buttonShowAccount.UseVisualStyleBackColor = true;
+            this.buttonShowAccount.Click += new System.EventHandler(this.buttonShowAccount_Click);
+            // 
             // iPListBindingSource
             // 
             this.iPListBindingSource.DataMember = "IPList";
             this.iPListBindingSource.DataSource = this.damDataSet;
             // 
+            // checkBoxOnlyNewest
+            // 
+            this.checkBoxOnlyNewest.AutoSize = true;
+            this.checkBoxOnlyNewest.Location = new System.Drawing.Point(15, 32);
+            this.checkBoxOnlyNewest.Name = "checkBoxOnlyNewest";
+            this.checkBoxOnlyNewest.Size = new System.Drawing.Size(162, 17);
+            this.checkBoxOnlyNewest.TabIndex = 14;
+            this.checkBoxOnlyNewest.Text = "Search only newest Login ID";
+            this.checkBoxOnlyNewest.UseVisualStyleBackColor = true;
+            // 
             // SearchForAccountsByLoginIDWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 411);
+            this.ClientSize = new System.Drawing.Size(585, 404);
+            this.Controls.Add(this.checkBoxOnlyNewest);
             this.Controls.Add(this.buttonShowAccount);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridView1);
@@ -195,5 +207,6 @@
         private System.Windows.Forms.BindingSource loginIDListBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn accDirDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn accessTimeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.CheckBox checkBoxOnlyNewest;
     }
 }

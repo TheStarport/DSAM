@@ -24,9 +24,22 @@ namespace DAM.Tool_UI
         {
             label2.Text = "Matching Accounts - Searching";
 
-            string[] ids = new string[1];
-            ids[0] = FLUtility.EscapeLikeExpressionString(textBox1.Text);
-            dataAccess.GetLoginIDListByLoginID(damDataSet.LoginIDList, ids);
+            string loginid = FLUtility.EscapeLikeExpressionString(textBox1.Text);
+            dataAccess.GetLoginIDListByLoginID(damDataSet.LoginIDList, loginid);
+
+            if (checkBoxOnlyNewest.Checked)
+            {
+                for (int i = 0; i < damDataSet.LoginIDList.Count; i++)
+                {
+                    DamDataSet.LoginIDListRow row = damDataSet.LoginIDList[i];
+                    if (dataAccess.GetLatestLoginIDRowByAccDir(row.AccDir).LoginID != row.LoginID)
+                    {
+                        damDataSet.LoginIDList.RemoveLoginIDListRow(row);
+                        i--;
+                    }
+                }
+            }
+
             label2.Text = "Matching Accounts";
         }
 
