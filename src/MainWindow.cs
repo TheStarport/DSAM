@@ -1521,7 +1521,11 @@ namespace DAM
             RescanAccountFiles();
         }
 
-        private void textBoxFilter_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Updates the text filter.
+        /// Called by textBoxFilter and all search-checkboxes (checkBoxSearch*) on value changes
+        /// </summary>
+        private void updateTextFilter(object sender, EventArgs e)
         {
             timerFilter.Start();
             if (textBoxFilter.Text.Length > 0)
@@ -1592,15 +1596,36 @@ namespace DAM
             if (textBoxFilter.Text.Length > 0)
             {
                 string filterText = textBoxFilter.Text;
+                bool first = true;
                 if (filter != null)
                     filter += " AND ";
-                filter += "("
-                + "(CharName LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')"
-                + " OR (AccID LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')"
-                + " OR (Location LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')"
-                + " OR (Ship LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')"
-                + " OR (CharPath LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')"
-                + ")";
+                if (checkBoxSearchCharname.Checked)
+                {
+                    filter += (first ? "(" : " OR ") + "(CharName LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                    first = false;
+                }
+                if (checkBoxSearchAccID.Checked)
+                {
+                    filter += (first ? "(" : " OR ") + "(AccID LIKE '%"    + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                    first = false;
+                }
+                if (checkBoxSearchLocation.Checked)
+                {
+                    filter += (first ? "(" : " OR ") + "(Location LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                    first = false;
+                }
+                if (checkBoxSearchShip.Checked)
+                {
+                    filter += (first ? "(" : " OR ") + "(Ship LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                    first = false;
+                }
+                if (checkBoxSearchCharPath.Checked)
+                {
+                    filter += (first ? "(" : " OR ") + "(CharPath LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                    first = false;
+                }
+                if (checkBoxSearchCharname.Checked || checkBoxSearchAccID.Checked || checkBoxSearchLocation.Checked || checkBoxSearchShip.Checked || checkBoxSearchCharPath.Checked)
+                    filter += ")";
             }
             else if (checkBoxFilterSameAccount.Checked)
             {
@@ -2065,6 +2090,12 @@ namespace DAM
         public void FilterOnAccDir(string accDir)
         {
             textBoxFilter.Text = accDir;
+
+            checkBoxSearchCharname.Checked = false;
+            checkBoxSearchLocation.Checked = false;
+            checkBoxSearchShip.Checked = false;
+            checkBoxSearchAccID.Checked = false;
+            checkBoxSearchCharPath.Checked = true;
 
             // select the first char so the user can see more informations on the right
             if (charListDataGridView.Rows.Count != 0)

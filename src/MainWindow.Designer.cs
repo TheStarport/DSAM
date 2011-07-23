@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.changeShipButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxFilter = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.buttonAddCompleteMap = new System.Windows.Forms.Button();
@@ -156,7 +154,6 @@
             this.isDeletedDataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.characterListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataSetPlayerInfo = new DAM.DamDataSet();
-            this.checkBoxFilterDeleted = new System.Windows.Forms.CheckBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
@@ -167,13 +164,22 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripHookState = new System.Windows.Forms.ToolStripStatusLabel();
             this.updatePlayerInfoTimer = new System.Windows.Forms.Timer(this.components);
-            this.checkBoxFilterSameIP = new System.Windows.Forms.CheckBox();
             this.timerPeriodicTasks = new System.Windows.Forms.Timer(this.components);
-            this.checkBoxFilterSameLoginID = new System.Windows.Forms.CheckBox();
-            this.checkBoxFilterSameAccount = new System.Windows.Forms.CheckBox();
             this.timerFilter = new System.Windows.Forms.Timer(this.components);
             this.timerDBSave = new System.Windows.Forms.Timer(this.components);
             this.timerShutdown = new System.Windows.Forms.Timer(this.components);
+            this.groupBoxFilter = new System.Windows.Forms.GroupBox();
+            this.checkBoxSearchCharPath = new System.Windows.Forms.CheckBox();
+            this.checkBoxSearchShip = new System.Windows.Forms.CheckBox();
+            this.checkBoxSearchLocation = new System.Windows.Forms.CheckBox();
+            this.checkBoxSearchAccID = new System.Windows.Forms.CheckBox();
+            this.checkBoxSearchCharname = new System.Windows.Forms.CheckBox();
+            this.checkBoxFilterSameAccount = new System.Windows.Forms.CheckBox();
+            this.checkBoxFilterSameLoginID = new System.Windows.Forms.CheckBox();
+            this.checkBoxFilterSameIP = new System.Windows.Forms.CheckBox();
+            this.checkBoxFilterDeleted = new System.Windows.Forms.CheckBox();
+            this.textBoxFilter = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.banSelectedButton = new System.Windows.Forms.Button();
             this.deleteSelectedButton = new System.Windows.Forms.Button();
             this.unbanSelectedButton = new System.Windows.Forms.Button();
@@ -199,6 +205,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.characterListBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSetPlayerInfo)).BeginInit();
             this.statusStrip1.SuspendLayout();
+            this.groupBoxFilter.SuspendLayout();
             this.SuspendLayout();
             // 
             // changeShipButton
@@ -210,25 +217,6 @@
             this.changeShipButton.Text = "Change";
             this.changeShipButton.UseVisualStyleBackColor = true;
             this.changeShipButton.Click += new System.EventHandler(this.changeShipButton_Click);
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 410);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Filter";
-            // 
-            // textBoxFilter
-            // 
-            this.textBoxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxFilter.Location = new System.Drawing.Point(42, 407);
-            this.textBoxFilter.Name = "textBoxFilter";
-            this.textBoxFilter.Size = new System.Drawing.Size(133, 20);
-            this.textBoxFilter.TabIndex = 3;
-            this.textBoxFilter.TextChanged += new System.EventHandler(this.textBoxFilter_TextChanged);
             // 
             // tabControl1
             // 
@@ -1384,7 +1372,7 @@
             this.charListDataGridView.ReadOnly = true;
             this.charListDataGridView.RowHeadersVisible = false;
             this.charListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.charListDataGridView.Size = new System.Drawing.Size(447, 367);
+            this.charListDataGridView.Size = new System.Drawing.Size(447, 318);
             this.charListDataGridView.TabIndex = 11;
             this.charListDataGridView.SelectionChanged += new System.EventHandler(this.charListDataGridView_SelectionChanged);
             // 
@@ -1495,18 +1483,6 @@
             this.dataSetPlayerInfo.Locale = new System.Globalization.CultureInfo("");
             this.dataSetPlayerInfo.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // checkBoxFilterDeleted
-            // 
-            this.checkBoxFilterDeleted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxFilterDeleted.AutoSize = true;
-            this.checkBoxFilterDeleted.Location = new System.Drawing.Point(12, 433);
-            this.checkBoxFilterDeleted.Name = "checkBoxFilterDeleted";
-            this.checkBoxFilterDeleted.Size = new System.Drawing.Size(144, 17);
-            this.checkBoxFilterDeleted.TabIndex = 13;
-            this.checkBoxFilterDeleted.Text = "Show deleted characters";
-            this.checkBoxFilterDeleted.UseVisualStyleBackColor = true;
-            this.checkBoxFilterDeleted.CheckedChanged += new System.EventHandler(this.checkBoxFilterDeleted_CheckedChanged);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1582,46 +1558,10 @@
             this.updatePlayerInfoTimer.Interval = 1;
             this.updatePlayerInfoTimer.Tick += new System.EventHandler(this.updatePlayerInfoTimer_Tick);
             // 
-            // checkBoxFilterSameIP
-            // 
-            this.checkBoxFilterSameIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxFilterSameIP.AutoSize = true;
-            this.checkBoxFilterSameIP.Location = new System.Drawing.Point(12, 479);
-            this.checkBoxFilterSameIP.Name = "checkBoxFilterSameIP";
-            this.checkBoxFilterSameIP.Size = new System.Drawing.Size(163, 17);
-            this.checkBoxFilterSameIP.TabIndex = 17;
-            this.checkBoxFilterSameIP.Text = "Show accounts with same IP";
-            this.checkBoxFilterSameIP.UseVisualStyleBackColor = true;
-            this.checkBoxFilterSameIP.CheckedChanged += new System.EventHandler(this.checkBoxFilterSameIP_CheckedChanged);
-            // 
             // timerPeriodicTasks
             // 
             this.timerPeriodicTasks.Interval = 10000;
             this.timerPeriodicTasks.Tick += new System.EventHandler(this.timerPeriodicTasks_Tick);
-            // 
-            // checkBoxFilterSameLoginID
-            // 
-            this.checkBoxFilterSameLoginID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxFilterSameLoginID.AutoSize = true;
-            this.checkBoxFilterSameLoginID.Location = new System.Drawing.Point(12, 502);
-            this.checkBoxFilterSameLoginID.Name = "checkBoxFilterSameLoginID";
-            this.checkBoxFilterSameLoginID.Size = new System.Drawing.Size(193, 17);
-            this.checkBoxFilterSameLoginID.TabIndex = 18;
-            this.checkBoxFilterSameLoginID.Text = "Show accounts with same Login ID";
-            this.checkBoxFilterSameLoginID.UseVisualStyleBackColor = true;
-            this.checkBoxFilterSameLoginID.CheckedChanged += new System.EventHandler(this.checkBoxFilterSameLoginID_CheckedChanged);
-            // 
-            // checkBoxFilterSameAccount
-            // 
-            this.checkBoxFilterSameAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxFilterSameAccount.AutoSize = true;
-            this.checkBoxFilterSameAccount.Location = new System.Drawing.Point(12, 456);
-            this.checkBoxFilterSameAccount.Name = "checkBoxFilterSameAccount";
-            this.checkBoxFilterSameAccount.Size = new System.Drawing.Size(172, 17);
-            this.checkBoxFilterSameAccount.TabIndex = 19;
-            this.checkBoxFilterSameAccount.Text = "Show all characters in account";
-            this.checkBoxFilterSameAccount.UseVisualStyleBackColor = true;
-            this.checkBoxFilterSameAccount.CheckedChanged += new System.EventHandler(this.checkBoxFilterSameAcc_CheckedChanged);
             // 
             // timerFilter
             // 
@@ -1637,12 +1577,161 @@
             // 
             this.timerShutdown.Tick += new System.EventHandler(this.timerShutdown_Tick);
             // 
+            // groupBoxFilter
+            // 
+            this.groupBoxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupBoxFilter.Controls.Add(this.checkBoxSearchCharPath);
+            this.groupBoxFilter.Controls.Add(this.checkBoxSearchShip);
+            this.groupBoxFilter.Controls.Add(this.checkBoxSearchLocation);
+            this.groupBoxFilter.Controls.Add(this.checkBoxSearchAccID);
+            this.groupBoxFilter.Controls.Add(this.checkBoxSearchCharname);
+            this.groupBoxFilter.Controls.Add(this.checkBoxFilterSameAccount);
+            this.groupBoxFilter.Controls.Add(this.checkBoxFilterSameLoginID);
+            this.groupBoxFilter.Controls.Add(this.checkBoxFilterSameIP);
+            this.groupBoxFilter.Controls.Add(this.checkBoxFilterDeleted);
+            this.groupBoxFilter.Controls.Add(this.textBoxFilter);
+            this.groupBoxFilter.Controls.Add(this.label2);
+            this.groupBoxFilter.Location = new System.Drawing.Point(12, 358);
+            this.groupBoxFilter.Name = "groupBoxFilter";
+            this.groupBoxFilter.Size = new System.Drawing.Size(331, 159);
+            this.groupBoxFilter.TabIndex = 23;
+            this.groupBoxFilter.TabStop = false;
+            this.groupBoxFilter.Text = "Filter";
+            // 
+            // checkBoxSearchCharPath
+            // 
+            this.checkBoxSearchCharPath.AutoSize = true;
+            this.checkBoxSearchCharPath.Checked = true;
+            this.checkBoxSearchCharPath.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSearchCharPath.Location = new System.Drawing.Point(12, 137);
+            this.checkBoxSearchCharPath.Name = "checkBoxSearchCharPath";
+            this.checkBoxSearchCharPath.Size = new System.Drawing.Size(106, 17);
+            this.checkBoxSearchCharPath.TabIndex = 30;
+            this.checkBoxSearchCharPath.Text = "Search Charpath";
+            this.checkBoxSearchCharPath.UseVisualStyleBackColor = true;
+            this.checkBoxSearchCharPath.CheckedChanged += new System.EventHandler(this.updateTextFilter);
+            // 
+            // checkBoxSearchShip
+            // 
+            this.checkBoxSearchShip.AutoSize = true;
+            this.checkBoxSearchShip.Checked = true;
+            this.checkBoxSearchShip.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSearchShip.Location = new System.Drawing.Point(12, 114);
+            this.checkBoxSearchShip.Name = "checkBoxSearchShip";
+            this.checkBoxSearchShip.Size = new System.Drawing.Size(84, 17);
+            this.checkBoxSearchShip.TabIndex = 29;
+            this.checkBoxSearchShip.Text = "Search Ship";
+            this.checkBoxSearchShip.UseVisualStyleBackColor = true;
+            this.checkBoxSearchShip.CheckedChanged += new System.EventHandler(this.updateTextFilter);
+            // 
+            // checkBoxSearchLocation
+            // 
+            this.checkBoxSearchLocation.AutoSize = true;
+            this.checkBoxSearchLocation.Checked = true;
+            this.checkBoxSearchLocation.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSearchLocation.Location = new System.Drawing.Point(12, 91);
+            this.checkBoxSearchLocation.Name = "checkBoxSearchLocation";
+            this.checkBoxSearchLocation.Size = new System.Drawing.Size(104, 17);
+            this.checkBoxSearchLocation.TabIndex = 28;
+            this.checkBoxSearchLocation.Text = "Search Location";
+            this.checkBoxSearchLocation.UseVisualStyleBackColor = true;
+            this.checkBoxSearchLocation.CheckedChanged += new System.EventHandler(this.updateTextFilter);
+            // 
+            // checkBoxSearchAccID
+            // 
+            this.checkBoxSearchAccID.AutoSize = true;
+            this.checkBoxSearchAccID.Checked = true;
+            this.checkBoxSearchAccID.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSearchAccID.Location = new System.Drawing.Point(12, 68);
+            this.checkBoxSearchAccID.Name = "checkBoxSearchAccID";
+            this.checkBoxSearchAccID.Size = new System.Drawing.Size(117, 17);
+            this.checkBoxSearchAccID.TabIndex = 27;
+            this.checkBoxSearchAccID.Text = "Search Account ID";
+            this.checkBoxSearchAccID.UseVisualStyleBackColor = true;
+            this.checkBoxSearchAccID.CheckedChanged += new System.EventHandler(this.updateTextFilter);
+            // 
+            // checkBoxSearchCharname
+            // 
+            this.checkBoxSearchCharname.AutoSize = true;
+            this.checkBoxSearchCharname.Checked = true;
+            this.checkBoxSearchCharname.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSearchCharname.Location = new System.Drawing.Point(12, 45);
+            this.checkBoxSearchCharname.Name = "checkBoxSearchCharname";
+            this.checkBoxSearchCharname.Size = new System.Drawing.Size(111, 17);
+            this.checkBoxSearchCharname.TabIndex = 26;
+            this.checkBoxSearchCharname.Text = "Search Charname";
+            this.checkBoxSearchCharname.UseVisualStyleBackColor = true;
+            this.checkBoxSearchCharname.CheckedChanged += new System.EventHandler(this.updateTextFilter);
+            // 
+            // checkBoxFilterSameAccount
+            // 
+            this.checkBoxFilterSameAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxFilterSameAccount.AutoSize = true;
+            this.checkBoxFilterSameAccount.Location = new System.Drawing.Point(129, 64);
+            this.checkBoxFilterSameAccount.Name = "checkBoxFilterSameAccount";
+            this.checkBoxFilterSameAccount.Size = new System.Drawing.Size(172, 17);
+            this.checkBoxFilterSameAccount.TabIndex = 25;
+            this.checkBoxFilterSameAccount.Text = "Show all characters in account";
+            this.checkBoxFilterSameAccount.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxFilterSameLoginID
+            // 
+            this.checkBoxFilterSameLoginID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxFilterSameLoginID.AutoSize = true;
+            this.checkBoxFilterSameLoginID.Location = new System.Drawing.Point(129, 110);
+            this.checkBoxFilterSameLoginID.Name = "checkBoxFilterSameLoginID";
+            this.checkBoxFilterSameLoginID.Size = new System.Drawing.Size(193, 17);
+            this.checkBoxFilterSameLoginID.TabIndex = 24;
+            this.checkBoxFilterSameLoginID.Text = "Show accounts with same Login ID";
+            this.checkBoxFilterSameLoginID.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxFilterSameIP
+            // 
+            this.checkBoxFilterSameIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxFilterSameIP.AutoSize = true;
+            this.checkBoxFilterSameIP.Location = new System.Drawing.Point(129, 87);
+            this.checkBoxFilterSameIP.Name = "checkBoxFilterSameIP";
+            this.checkBoxFilterSameIP.Size = new System.Drawing.Size(163, 17);
+            this.checkBoxFilterSameIP.TabIndex = 23;
+            this.checkBoxFilterSameIP.Text = "Show accounts with same IP";
+            this.checkBoxFilterSameIP.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxFilterDeleted
+            // 
+            this.checkBoxFilterDeleted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxFilterDeleted.AutoSize = true;
+            this.checkBoxFilterDeleted.Location = new System.Drawing.Point(129, 41);
+            this.checkBoxFilterDeleted.Name = "checkBoxFilterDeleted";
+            this.checkBoxFilterDeleted.Size = new System.Drawing.Size(144, 17);
+            this.checkBoxFilterDeleted.TabIndex = 22;
+            this.checkBoxFilterDeleted.Text = "Show deleted characters";
+            this.checkBoxFilterDeleted.UseVisualStyleBackColor = true;
+            // 
+            // textBoxFilter
+            // 
+            this.textBoxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxFilter.Location = new System.Drawing.Point(43, 15);
+            this.textBoxFilter.Name = "textBoxFilter";
+            this.textBoxFilter.Size = new System.Drawing.Size(279, 20);
+            this.textBoxFilter.TabIndex = 21;
+            this.textBoxFilter.TextChanged += new System.EventHandler(this.updateTextFilter);
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 20;
+            this.label2.Text = "Text";
+            // 
             // banSelectedButton
             // 
             this.banSelectedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.banSelectedButton.Location = new System.Drawing.Point(332, 404);
+            this.banSelectedButton.Location = new System.Drawing.Point(349, 358);
             this.banSelectedButton.Name = "banSelectedButton";
-            this.banSelectedButton.Size = new System.Drawing.Size(127, 23);
+            this.banSelectedButton.Size = new System.Drawing.Size(110, 23);
             this.banSelectedButton.TabIndex = 20;
             this.banSelectedButton.Text = "Ban all selected";
             this.banSelectedButton.UseVisualStyleBackColor = true;
@@ -1651,9 +1740,9 @@
             // deleteSelectedButton
             // 
             this.deleteSelectedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.deleteSelectedButton.Location = new System.Drawing.Point(332, 462);
+            this.deleteSelectedButton.Location = new System.Drawing.Point(349, 416);
             this.deleteSelectedButton.Name = "deleteSelectedButton";
-            this.deleteSelectedButton.Size = new System.Drawing.Size(127, 23);
+            this.deleteSelectedButton.Size = new System.Drawing.Size(110, 23);
             this.deleteSelectedButton.TabIndex = 21;
             this.deleteSelectedButton.Text = "Delete all selected";
             this.deleteSelectedButton.UseVisualStyleBackColor = true;
@@ -1662,9 +1751,9 @@
             // unbanSelectedButton
             // 
             this.unbanSelectedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.unbanSelectedButton.Location = new System.Drawing.Point(332, 433);
+            this.unbanSelectedButton.Location = new System.Drawing.Point(349, 387);
             this.unbanSelectedButton.Name = "unbanSelectedButton";
-            this.unbanSelectedButton.Size = new System.Drawing.Size(127, 23);
+            this.unbanSelectedButton.Size = new System.Drawing.Size(110, 23);
             this.unbanSelectedButton.TabIndex = 22;
             this.unbanSelectedButton.Text = "Unban all seleted";
             this.unbanSelectedButton.UseVisualStyleBackColor = true;
@@ -1675,26 +1764,21 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(952, 546);
+            this.Controls.Add(this.groupBoxFilter);
             this.Controls.Add(this.unbanSelectedButton);
             this.Controls.Add(this.deleteSelectedButton);
             this.Controls.Add(this.banSelectedButton);
-            this.Controls.Add(this.checkBoxFilterSameAccount);
-            this.Controls.Add(this.checkBoxFilterSameLoginID);
-            this.Controls.Add(this.checkBoxFilterSameIP);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.checkBoxFilterDeleted);
             this.Controls.Add(this.charListDataGridView);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.textBoxFilter);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(780, 300);
+            this.MinimumSize = new System.Drawing.Size(968, 584);
             this.Name = "MainWindow";
             this.Text = "DS Account Manager";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1723,6 +1807,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataSetPlayerInfo)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBoxFilter.ResumeLayout(false);
+            this.groupBoxFilter.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1730,8 +1816,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBoxFilter;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -1778,7 +1862,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button deletePlayerButton;
-        private System.Windows.Forms.CheckBox checkBoxFilterDeleted;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button kickPlayerButton;
         private System.Windows.Forms.TextBox piOnline;
@@ -1833,7 +1916,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.RichTextBox richTextBoxLog;
-        private System.Windows.Forms.CheckBox checkBoxFilterSameIP;
         private System.Windows.Forms.DataGridViewTextBoxColumn charNameDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn rankDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn moneyDataGridViewTextBoxColumn1;
@@ -1852,8 +1934,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripDBPending;
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
         private System.Windows.Forms.Timer timerPeriodicTasks;
-        private System.Windows.Forms.CheckBox checkBoxFilterSameLoginID;
-        private System.Windows.Forms.CheckBox checkBoxFilterSameAccount;
         private System.Windows.Forms.Timer timerFilter;
         private UIDataSet dataSetUI;
         private System.Windows.Forms.Timer timerDBSave;
@@ -1874,6 +1954,18 @@
         private System.Windows.Forms.RichTextBox richTextBoxPlayerInfoPlayerText;
         private System.Windows.Forms.Button buttonPlayerInfoSaveAdminText;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.GroupBox groupBoxFilter;
+        private System.Windows.Forms.CheckBox checkBoxSearchCharname;
+        private System.Windows.Forms.CheckBox checkBoxFilterSameAccount;
+        private System.Windows.Forms.CheckBox checkBoxFilterSameLoginID;
+        private System.Windows.Forms.CheckBox checkBoxFilterSameIP;
+        private System.Windows.Forms.CheckBox checkBoxFilterDeleted;
+        private System.Windows.Forms.TextBox textBoxFilter;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox checkBoxSearchCharPath;
+        private System.Windows.Forms.CheckBox checkBoxSearchShip;
+        private System.Windows.Forms.CheckBox checkBoxSearchLocation;
+        private System.Windows.Forms.CheckBox checkBoxSearchAccID;
         private System.Windows.Forms.Button banSelectedButton;
         private System.Windows.Forms.Button deleteSelectedButton;
         private System.Windows.Forms.Button unbanSelectedButton;
