@@ -403,7 +403,7 @@ namespace DAM
         /// <returns>DataSet containing IP records</returns>
         public void GetIPListByAccDir(DamDataSet.IPListDataTable dsTable, string accDir)
         {
-            SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM IPList WHERE AccDir ='" + accDir + "'", GetConnection());
+            SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM IPList WHERE AccDir ='" + accDir + "' ORDER BY AccessTime DESC, IP", GetConnection());
             dsTable.Clear();
             adpt.Fill(dsTable);
         }
@@ -453,7 +453,7 @@ namespace DAM
         /// <returns>DataSet containing LoginID records</returns>
         public void GetLoginIDListByAccDir(DamDataSet.LoginIDListDataTable dsTable, string accDir)
         {
-            SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM LoginIDList WHERE AccDir ='" + accDir + "'", GetConnection());
+            SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM LoginIDList WHERE AccDir ='" + accDir + "' ORDER BY AccessTime DESC, LoginID", GetConnection());
             dsTable.Clear();
             adpt.Fill(dsTable);
         }
