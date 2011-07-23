@@ -302,8 +302,17 @@ namespace DAM
             timerPeriodicTasks.Start();
             timerDBSave.Start();
 
-            if (MessageBox.Show(this, "Update the player database now?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
-                return;
+            switch (AppSettings.Default.setShowUpdateDatabase)
+            {
+                case 0: // Ask
+                    if (MessageBox.Show(this, "Update the player database now?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+                        return; // Don't Update
+                    break;
+                case 1: // Update
+                    break;
+                case 2: // Don't update
+                    return;
+            }
 
             // Start the load data background worker.
             RescanAccountFiles();
@@ -1308,7 +1317,7 @@ namespace DAM
         /// </summary>
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!forceExit && MessageBox.Show(this, "Are you sure you want to quit?", "Close Application?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+            if (!forceExit && (AppSettings.Default.setShowQuitMsg && MessageBox.Show(this, "Are you sure you want to quit?", "Close Application?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes))
             {
                 e.Cancel = true;
                 return;
@@ -2275,11 +2284,14 @@ namespace DAM
                     UpdatePlayerInfoDelegate updatePlayerInfo = new UpdatePlayerInfoDelegate(this.UpdatePlayerInfo);
                     this.Invoke(updatePlayerInfo);
 
-                    // output the final message
-                    MessageBox.Show(string.Format("Banned {0} chars on {1} accounts!", charRecords.Length, accs.Count),
-                                    "Multiban succsessfull",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
+                    if (AppSettings.Default.setShowMultibanSucc)
+                    {
+                        // output the final message
+                        MessageBox.Show(string.Format("Banned {0} chars on {1} accounts!", charRecords.Length, accs.Count),
+                                        "Multiban succsessfull",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+                    }
                 });
             banThread.Start();
         }
@@ -2303,15 +2315,19 @@ namespace DAM
                     {
                         DeleteChar(charRecords[i].CharName, charRecords[i].CharPath);
                     }
+
                     // show that the char is deleted in the player info (data collection on the right)
                     UpdatePlayerInfoDelegate updatePlayerInfo = new UpdatePlayerInfoDelegate(this.UpdatePlayerInfo);
                     this.Invoke(updatePlayerInfo);
-                    // output the final message
 
-                    MessageBox.Show(string.Format("Deleted {0} chars!", charRecords.Length),
-                                    "Multidelete succsessfull",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
+                    if (AppSettings.Default.setShowMultideleteSucc)
+                    {
+                        // output the final message
+                        MessageBox.Show(string.Format("Deleted {0} chars!", charRecords.Length),
+                                        "Multidelete succsessfull",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+                    }
                 });
             deleteThread.Start();
         }
@@ -2349,11 +2365,14 @@ namespace DAM
                     UpdatePlayerInfoDelegate updatePlayerInfo = new UpdatePlayerInfoDelegate(this.UpdatePlayerInfo);
                     this.Invoke(updatePlayerInfo);
 
-                    // output the final message
-                    MessageBox.Show(string.Format("Unbanned {0} chars on {1} accounts!", charRecords.Length, accs.Count),
-                                    "Multiunban succsessfull",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
+                    if (AppSettings.Default.setShowMultiunbanSucc)
+                    {
+                        // output the final message
+                        MessageBox.Show(string.Format("Unbanned {0} chars on {1} accounts!", charRecords.Length, accs.Count),
+                                        "Multiunban succsessfull",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+                    }
                 });
             unbanThread.Start();
         }

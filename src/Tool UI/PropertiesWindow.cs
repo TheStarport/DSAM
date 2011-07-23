@@ -44,6 +44,12 @@ namespace DAM
                 checkBoxCheckDefaultPowerPlant.Checked = AppSettings.Default.setCheckDefaultPowerPlant;
                 checkBoxReportVisitError.Checked = AppSettings.Default.setReportVisitErrors;
                 checkBoxCheckDefaultLights.Checked = AppSettings.Default.setCheckDefaultLights;
+
+                checkBoxShowQuitMsg.Checked = AppSettings.Default.setShowQuitMsg;
+                domainUpDownUpdatePlayerDatabase.SelectedIndex = AppSettings.Default.setShowUpdateDatabase;
+                checkBoxShowMultibanSucc.Checked = AppSettings.Default.setShowMultibanSucc;
+                checkBoxShowMultiunbanSucc.Checked = AppSettings.Default.setShowMultiunbanSucc;
+                checkBoxShowMultideleteSucc.Checked = AppSettings.Default.setShowMultideleteSucc;
             }
         }
 
@@ -76,6 +82,13 @@ namespace DAM
                 AppSettings.Default.setCheckDefaultPowerPlant = checkBoxCheckDefaultPowerPlant.Checked;
                 AppSettings.Default.setReportVisitErrors = checkBoxReportVisitError.Checked;
                 AppSettings.Default.setCheckDefaultLights = checkBoxCheckDefaultLights.Checked;
+
+                AppSettings.Default.setShowQuitMsg = checkBoxShowQuitMsg.Checked;
+                AppSettings.Default.setShowUpdateDatabase = domainUpDownUpdatePlayerDatabase.SelectedIndex;
+                AppSettings.Default.setShowMultibanSucc = checkBoxShowMultibanSucc.Checked;
+                AppSettings.Default.setShowMultiunbanSucc = checkBoxShowMultiunbanSucc.Checked;
+                AppSettings.Default.setShowMultideleteSucc = checkBoxShowMultideleteSucc.Checked;
+
                 AppSettings.Default.Save();
             }
             this.Close();
