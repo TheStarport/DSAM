@@ -346,7 +346,6 @@
   <ItemGroup>
     <Content Include="103.ico" />
     <Content Include="Readme.txt" />
-    <Content Include="System.Data.SQLite.DLL" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
