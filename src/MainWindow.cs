@@ -598,7 +598,7 @@ namespace DAM
                     DateTime startTime = DateTime.Now;
                     GetDataAccess().GetIPListByAccDir(ds.IPList, charRecord.AccDir);
                     foreach (DamDataSet.IPListRow row in ds.IPList)
-                        piIPAddresses.Text += String.Format("IP:      {0}: {1}\r\n", row.AccessTime, row.IP);
+                        piIPAddresses.Text += String.Format("IP: {0}: {1}\r\n", row.AccessTime, row.IP);
 
                     GetDataAccess().GetLoginIDListByAccDir(ds.LoginIDList, charRecord.AccDir);
                     foreach (DamDataSet.LoginIDListRow row in ds.LoginIDList)
@@ -1597,35 +1597,36 @@ namespace DAM
             {
                 string filterText = textBoxFilter.Text;
                 bool first = true;
-                if (filter != null)
-                    filter += " AND ";
-                if (checkBoxSearchCharname.Checked)
-                {
-                    filter += (first ? "(" : " OR ") + "(CharName LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                    first = false;
-                }
-                if (checkBoxSearchAccID.Checked)
-                {
-                    filter += (first ? "(" : " OR ") + "(AccID LIKE '%"    + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                    first = false;
-                }
-                if (checkBoxSearchLocation.Checked)
-                {
-                    filter += (first ? "(" : " OR ") + "(Location LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                    first = false;
-                }
-                if (checkBoxSearchShip.Checked)
-                {
-                    filter += (first ? "(" : " OR ") + "(Ship LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                    first = false;
-                }
-                if (checkBoxSearchCharPath.Checked)
-                {
-                    filter += (first ? "(" : " OR ") + "(CharPath LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                    first = false;
-                }
                 if (checkBoxSearchCharname.Checked || checkBoxSearchAccID.Checked || checkBoxSearchLocation.Checked || checkBoxSearchShip.Checked || checkBoxSearchCharPath.Checked)
+                {
+                    filter += " AND ";
+                    if (checkBoxSearchCharname.Checked)
+                    {
+                        filter += (first ? "(" : " OR ") + "(CharName LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                        first = false;
+                    }
+                    if (checkBoxSearchAccID.Checked)
+                    {
+                        filter += (first ? "(" : " OR ") + "(AccID LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                        first = false;
+                    }
+                    if (checkBoxSearchLocation.Checked)
+                    {
+                        filter += (first ? "(" : " OR ") + "(Location LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                        first = false;
+                    }
+                    if (checkBoxSearchShip.Checked)
+                    {
+                        filter += (first ? "(" : " OR ") + "(Ship LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                        first = false;
+                    }
+                    if (checkBoxSearchCharPath.Checked)
+                    {
+                        filter += (first ? "(" : " OR ") + "(CharPath LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
+                        first = false;
+                    }
                     filter += ")";
+                }
             }
             else if (checkBoxFilterSameAccount.Checked)
             {

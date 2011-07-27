@@ -1217,7 +1217,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(952, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(960, 24);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1227,20 +1227,20 @@
             this.propertiesToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // propertiesToolStripMenuItem
             // 
             this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.propertiesToolStripMenuItem.Text = "Properties";
             this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -1257,67 +1257,67 @@
             this.rescanAccountFilesToolStripMenuItem,
             this.reloadGameDataToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "Tools";
             // 
             // bannedPlayersToolStripMenuItem
             // 
             this.bannedPlayersToolStripMenuItem.Name = "bannedPlayersToolStripMenuItem";
-            this.bannedPlayersToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.bannedPlayersToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.bannedPlayersToolStripMenuItem.Text = "Banned Players";
             this.bannedPlayersToolStripMenuItem.Click += new System.EventHandler(this.bannedPlayersToolStripMenuItem_Click);
             // 
             // statisticsToolStripMenuItem
             // 
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.statisticsToolStripMenuItem.Text = "Statistics";
             this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
             // 
             // searchIPtoolStripMenuItem
             // 
             this.searchIPtoolStripMenuItem.Name = "searchIPtoolStripMenuItem";
-            this.searchIPtoolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.searchIPtoolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.searchIPtoolStripMenuItem.Text = "Search IP";
             this.searchIPtoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // searchLoginIDToolStripMenuItem
             // 
             this.searchLoginIDToolStripMenuItem.Name = "searchLoginIDToolStripMenuItem";
-            this.searchLoginIDToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.searchLoginIDToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.searchLoginIDToolStripMenuItem.Text = "Search Login ID";
             this.searchLoginIDToolStripMenuItem.Click += new System.EventHandler(this.searchLoginIDToolStripMenuItem_Click);
             // 
             // itemListToolStripMenuItem
             // 
             this.itemListToolStripMenuItem.Name = "itemListToolStripMenuItem";
-            this.itemListToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.itemListToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.itemListToolStripMenuItem.Text = "Item List";
             this.itemListToolStripMenuItem.Click += new System.EventHandler(this.hashcodeListToolStripMenuItem_Click);
             // 
             // fLFileEditorToolStripMenuItem
             // 
             this.fLFileEditorToolStripMenuItem.Name = "fLFileEditorToolStripMenuItem";
-            this.fLFileEditorToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.fLFileEditorToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.fLFileEditorToolStripMenuItem.Text = "FL File Editor";
             this.fLFileEditorToolStripMenuItem.Click += new System.EventHandler(this.fLFileEditorToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
             // 
             // rescanAccountFilesToolStripMenuItem
             // 
             this.rescanAccountFilesToolStripMenuItem.Name = "rescanAccountFilesToolStripMenuItem";
-            this.rescanAccountFilesToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.rescanAccountFilesToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.rescanAccountFilesToolStripMenuItem.Text = "Rescan Account Files";
             this.rescanAccountFilesToolStripMenuItem.Click += new System.EventHandler(this.rescanAccountFilesToolStripMenuItem_Click);
             // 
             // reloadGameDataToolStripMenuItem
             // 
             this.reloadGameDataToolStripMenuItem.Name = "reloadGameDataToolStripMenuItem";
-            this.reloadGameDataToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.reloadGameDataToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.reloadGameDataToolStripMenuItem.Text = "Reload Game Data";
             this.reloadGameDataToolStripMenuItem.Click += new System.EventHandler(this.reloadGameDataToolStripMenuItem_Click);
             // 
@@ -1327,18 +1327,18 @@
             this.toolStripSeparator5,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(123, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -1494,9 +1494,9 @@
             this.toolStripDBPending,
             this.toolStripStatusLabel1,
             this.toolStripHookState});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 524);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 528);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(952, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(960, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1522,7 +1522,7 @@
             // toolStripStatusLabelStatus
             // 
             this.toolStripStatusLabelStatus.Name = "toolStripStatusLabelStatus";
-            this.toolStripStatusLabelStatus.Size = new System.Drawing.Size(508, 17);
+            this.toolStripStatusLabelStatus.Size = new System.Drawing.Size(539, 17);
             this.toolStripStatusLabelStatus.Spring = true;
             this.toolStripStatusLabelStatus.Text = "-";
             this.toolStripStatusLabelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1530,26 +1530,26 @@
             // toolStripStatusLabel4
             // 
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(108, 17);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(99, 17);
             this.toolStripStatusLabel4.Text = "DB Pending Writes:";
             // 
             // toolStripDBPending
             // 
             this.toolStripDBPending.Name = "toolStripDBPending";
-            this.toolStripDBPending.Size = new System.Drawing.Size(12, 17);
+            this.toolStripDBPending.Size = new System.Drawing.Size(11, 17);
             this.toolStripDBPending.Text = "-";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Margin = new System.Windows.Forms.Padding(6, 3, 0, 2);
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(84, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(72, 17);
             this.toolStripStatusLabel1.Text = "Hook Comms:";
             // 
             // toolStripHookState
             // 
             this.toolStripHookState.Name = "toolStripHookState";
-            this.toolStripHookState.Size = new System.Drawing.Size(12, 17);
+            this.toolStripHookState.Size = new System.Drawing.Size(11, 17);
             this.toolStripHookState.Text = "-";
             this.toolStripHookState.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             // 
@@ -1667,7 +1667,7 @@
             // 
             this.checkBoxFilterSameAccount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxFilterSameAccount.AutoSize = true;
-            this.checkBoxFilterSameAccount.Location = new System.Drawing.Point(129, 64);
+            this.checkBoxFilterSameAccount.Location = new System.Drawing.Point(129, 68);
             this.checkBoxFilterSameAccount.Name = "checkBoxFilterSameAccount";
             this.checkBoxFilterSameAccount.Size = new System.Drawing.Size(172, 17);
             this.checkBoxFilterSameAccount.TabIndex = 25;
@@ -1678,7 +1678,7 @@
             // 
             this.checkBoxFilterSameLoginID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxFilterSameLoginID.AutoSize = true;
-            this.checkBoxFilterSameLoginID.Location = new System.Drawing.Point(129, 110);
+            this.checkBoxFilterSameLoginID.Location = new System.Drawing.Point(129, 114);
             this.checkBoxFilterSameLoginID.Name = "checkBoxFilterSameLoginID";
             this.checkBoxFilterSameLoginID.Size = new System.Drawing.Size(193, 17);
             this.checkBoxFilterSameLoginID.TabIndex = 24;
@@ -1689,7 +1689,7 @@
             // 
             this.checkBoxFilterSameIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxFilterSameIP.AutoSize = true;
-            this.checkBoxFilterSameIP.Location = new System.Drawing.Point(129, 87);
+            this.checkBoxFilterSameIP.Location = new System.Drawing.Point(129, 91);
             this.checkBoxFilterSameIP.Name = "checkBoxFilterSameIP";
             this.checkBoxFilterSameIP.Size = new System.Drawing.Size(163, 17);
             this.checkBoxFilterSameIP.TabIndex = 23;
@@ -1700,7 +1700,7 @@
             // 
             this.checkBoxFilterDeleted.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxFilterDeleted.AutoSize = true;
-            this.checkBoxFilterDeleted.Location = new System.Drawing.Point(129, 41);
+            this.checkBoxFilterDeleted.Location = new System.Drawing.Point(129, 45);
             this.checkBoxFilterDeleted.Name = "checkBoxFilterDeleted";
             this.checkBoxFilterDeleted.Size = new System.Drawing.Size(144, 17);
             this.checkBoxFilterDeleted.TabIndex = 22;
@@ -1763,7 +1763,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(952, 546);
+            this.ClientSize = new System.Drawing.Size(960, 550);
             this.Controls.Add(this.groupBoxFilter);
             this.Controls.Add(this.unbanSelectedButton);
             this.Controls.Add(this.deleteSelectedButton);
