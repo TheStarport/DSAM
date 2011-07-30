@@ -2098,6 +2098,8 @@ namespace DAM
             checkBoxSearchAccID.Checked = false;
             checkBoxSearchCharPath.Checked = true;
 
+            Application.DoEvents();
+
             // select the first char so the user can see more informations on the right
             if (charListDataGridView.Rows.Count != 0)
                 charListDataGridView.Rows[0].Selected = true;

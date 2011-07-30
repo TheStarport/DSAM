@@ -1673,6 +1673,7 @@
             this.checkBoxFilterSameAccount.TabIndex = 25;
             this.checkBoxFilterSameAccount.Text = "Show all characters in account";
             this.checkBoxFilterSameAccount.UseVisualStyleBackColor = true;
+            this.checkBoxFilterSameAccount.CheckedChanged += new System.EventHandler(this.checkBoxFilterSameAcc_CheckedChanged);
             // 
             // checkBoxFilterSameLoginID
             // 
@@ -1684,6 +1685,7 @@
             this.checkBoxFilterSameLoginID.TabIndex = 24;
             this.checkBoxFilterSameLoginID.Text = "Show accounts with same Login ID";
             this.checkBoxFilterSameLoginID.UseVisualStyleBackColor = true;
+            this.checkBoxFilterSameLoginID.CheckedChanged += new System.EventHandler(this.checkBoxFilterSameLoginID_CheckedChanged);
             // 
             // checkBoxFilterSameIP
             // 
@@ -1695,6 +1697,7 @@
             this.checkBoxFilterSameIP.TabIndex = 23;
             this.checkBoxFilterSameIP.Text = "Show accounts with same IP";
             this.checkBoxFilterSameIP.UseVisualStyleBackColor = true;
+            this.checkBoxFilterSameIP.CheckedChanged += new System.EventHandler(this.checkBoxFilterSameIP_CheckedChanged);
             // 
             // checkBoxFilterDeleted
             // 
@@ -1706,6 +1709,7 @@
             this.checkBoxFilterDeleted.TabIndex = 22;
             this.checkBoxFilterDeleted.Text = "Show deleted characters";
             this.checkBoxFilterDeleted.UseVisualStyleBackColor = true;
+            this.checkBoxFilterDeleted.CheckedChanged += new System.EventHandler(this.checkBoxFilterDeleted_CheckedChanged);
             // 
             // textBoxFilter
             // 
