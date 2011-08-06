@@ -1667,13 +1667,7 @@ namespace DAM
                         // Construct filter to show all matching accounts
                         if (filter != null)
                             filter += " AND ";
-                        filter += "(";
-                        for (int i = 0; i < accDirs.Count; i++)
-                        {
-                            if (i != 0) filter += " OR";
-                            filter += " (AccDir = '" + accDirs[i] + "')";
-                        }
-                        filter += ")";
+                        filter += "(AccDir IN ('" + String.Join("', '", accDirs.ToArray()) + "'))";
                     }
                 }
             }
@@ -1707,13 +1701,7 @@ namespace DAM
                         // Construct filter to show all matching accounts
                         if (filter != null)
                             filter += " AND ";
-                        filter += "(";
-                        for (int i = 0; i < accDirs.Count; i++)
-                        {
-                            if (i != 0) filter += " OR";
-                            filter += " (AccDir = '" + accDirs[i] + "')";
-                        }
-                        filter += ")";
+                        filter += "(AccDir IN ('" + String.Join("', '", accDirs.ToArray()) + "'))";
                     }
                 }
             }
