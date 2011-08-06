@@ -1580,17 +1580,17 @@ namespace DAM
         private void FilterUpdate(object sender, EventArgs e)
         {
             timerFilter.Stop();
-            string filter = null;
 
             DateTime startTime = DateTime.Now;
 
             Cursor.Current = Cursors.WaitCursor;
 
             SelectionInfo selection = SaveSelection();
-            
+
+            string filter = null;
             if (!checkBoxFilterDeleted.Checked)
             {
-                filter += "(IsDeleted = 'false')";
+                filter = "(IsDeleted = 'false')";
             }
 
             if (textBoxFilter.Text.Length > 0)
@@ -1599,7 +1599,8 @@ namespace DAM
                 bool first = true;
                 if (checkBoxSearchCharname.Checked || checkBoxSearchAccID.Checked || checkBoxSearchLocation.Checked || checkBoxSearchShip.Checked || checkBoxSearchCharPath.Checked)
                 {
-                    filter += " AND ";
+                    if (filter != null)
+                        filter += " AND ";
                     if (checkBoxSearchCharname.Checked)
                     {
                         filter += (first ? "(" : " OR ") + "(CharName LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
