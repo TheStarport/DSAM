@@ -1580,62 +1580,63 @@ namespace DAM
         private void FilterUpdate(object sender, EventArgs e)
         {
             timerFilter.Stop();
-
+            List<string> parts = new List<string>(10);
+            StringBuilder tmp = new StringBuilder(500);
             DateTime startTime = DateTime.Now;
-
             Cursor.Current = Cursors.WaitCursor;
-
             SelectionInfo selection = SaveSelection();
 
-            string filter = null;
             if (!checkBoxFilterDeleted.Checked)
             {
-                filter = "(IsDeleted = 'false')";
+                parts.Add("(IsDeleted = 'false')");
             }
 
             if (textBoxFilter.Text.Length > 0)
             {
                 string filterText = textBoxFilter.Text;
-                bool first = true;
                 if (checkBoxSearchCharname.Checked || checkBoxSearchAccID.Checked || checkBoxSearchLocation.Checked || checkBoxSearchShip.Checked || checkBoxSearchCharPath.Checked)
                 {
-                    if (filter != null)
-                        filter += " AND ";
+                    List<string> filterParts = new List<string>();
+
                     if (checkBoxSearchCharname.Checked)
                     {
-                        filter += (first ? "(" : " OR ") + "(CharName LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                        first = false;
+                        filterParts.Add("(CharName LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')");
                     }
                     if (checkBoxSearchAccID.Checked)
                     {
-                        filter += (first ? "(" : " OR ") + "(AccID LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                        first = false;
+                        filterParts.Add("(AccID LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')");
                     }
                     if (checkBoxSearchLocation.Checked)
                     {
-                        filter += (first ? "(" : " OR ") + "(Location LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                        first = false;
+                        filterParts.Add("(Location LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')");
                     }
                     if (checkBoxSearchShip.Checked)
                     {
-                        filter += (first ? "(" : " OR ") + "(Ship LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                        first = false;
+                        filterParts.Add("(Ship LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')");
                     }
                     if (checkBoxSearchCharPath.Checked)
                     {
-                        filter += (first ? "(" : " OR ") + "(CharPath LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')";
-                        first = false;
+                        filterParts.Add("(CharPath LIKE '%" + FLUtility.EscapeLikeExpressionString(filterText) + "%')");
                     }
-                    filter += ")";
+
+                    tmp.Append('(');
+                    for (int i = 0; i < filterParts.Count - 1; i++)
+                    {
+                        tmp.Append(filterParts[i]);
+                        tmp.Append(" OR ");
+                    }
+                    tmp.Append(filterParts[filterParts.Count - 1]);
+                    tmp.Append(')');
+
+                    parts.Add(tmp.ToString());
+                    tmp = new StringBuilder(500);
                 }
             }
             else if (checkBoxFilterSameAccount.Checked)
             {
                 if (selectedCharRecord != null)
                 {
-                    if (filter != null)
-                        filter += " AND ";
-                    filter += "(AccDir = '" + FLUtility.EscapeEqualsExpressionString(selectedCharRecord.AccDir) + "')";
+                    parts.Add("(AccDir = '" + FLUtility.EscapeEqualsExpressionString(selectedCharRecord.AccDir) + "')");
                 }
             }
             else if (checkBoxFilterSameIP.Checked)
@@ -1666,9 +1667,7 @@ namespace DAM
                         }
 
                         // Construct filter to show all matching accounts
-                        if (filter != null)
-                            filter += " AND ";
-                        filter += "(AccDir IN ('" + String.Join("', '", accDirs.ToArray()) + "'))";
+                        parts.Add("(AccDir IN ('" + String.Join("', '", accDirs.ToArray()) + "'))");
                     }
                 }
             }
@@ -1700,14 +1699,21 @@ namespace DAM
                         }
 
                         // Construct filter to show all matching accounts
-                        if (filter != null)
-                            filter += " AND ";
-                        filter += "(AccDir IN ('" + String.Join("', '", accDirs.ToArray()) + "'))";
+                        parts.Add("(AccDir IN ('" + String.Join("', '", accDirs.ToArray()) + "'))");
                     }
                 }
             }
 
-            characterListBindingSource.Filter = filter;
+
+            // put all the parts together
+            for (int i = 0; i < parts.Count - 1; i++)
+            {
+                tmp.Append(parts[i]);
+                tmp.Append(" AND ");
+            }
+            tmp.Append(parts[parts.Count - 1]);
+
+            characterListBindingSource.Filter = tmp.ToString();
 
             RestoreSelection(selection);
 
@@ -2087,7 +2093,7 @@ namespace DAM
             checkBoxSearchAccID.Checked = false;
             checkBoxSearchCharPath.Checked = true;
 
-            Application.DoEvents();
+            FilterUpdate(null, EventArgs.Empty);
 
             // select the first char so the user can see more informations on the right
             if (charListDataGridView.Rows.Count != 0)
