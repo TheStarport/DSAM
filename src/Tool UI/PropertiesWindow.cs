@@ -178,7 +178,7 @@ namespace DAM
             item = listBoxStatPlayerListShow.SelectedItem;
 
             // nothing selected
-            if (item == null)
+            if (item == null || listBoxStatPlayerListShow.Items.Count == 1)
                 return;
 
             listBoxStatPlayerListShow.Items.Remove(item);
