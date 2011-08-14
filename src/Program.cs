@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Diagnostics;
 using Microsoft.Win32;
 
 
@@ -35,6 +36,16 @@ namespace DAM
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainWindow());
+            }
+        }
+
+        public static void ApplyProcessorAffinity()
+        {
+            ProcessThreadCollection threads = Process.GetCurrentProcess().Threads;
+            IntPtr mask = (IntPtr)AppSettings.Default.setProcessorAffinity;
+            foreach (ProcessThread thread in threads)
+            {
+                thread.ProcessorAffinity = mask;
             }
         }
     }

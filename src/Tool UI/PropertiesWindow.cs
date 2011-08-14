@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace DAM
 {
@@ -52,6 +53,8 @@ namespace DAM
                 checkBoxShowMultiunbanSucc.Checked = AppSettings.Default.setShowMultiunbanSucc;
                 checkBoxShowMultideleteSucc.Checked = AppSettings.Default.setShowMultideleteSucc;
                 checkBoxFilterWaitEnter.Checked = AppSettings.Default.setFilterWaitForEnter;
+
+                LoadProcessorAffinity();
             }
         }
 
@@ -92,6 +95,9 @@ namespace DAM
                 AppSettings.Default.setShowMultiunbanSucc = checkBoxShowMultiunbanSucc.Checked;
                 AppSettings.Default.setShowMultideleteSucc = checkBoxShowMultideleteSucc.Checked;
                 AppSettings.Default.setFilterWaitForEnter = checkBoxFilterWaitEnter.Checked;
+
+                SaveProcessorAffinity();
+                Program.ApplyProcessorAffinity();
 
                 AppSettings.Default.Save();
             }
@@ -153,6 +159,33 @@ namespace DAM
             }
         }
 
+        #region Prcoessor Affinity
+
+        private void LoadProcessorAffinity()
+        {
+            int procCount = Environment.ProcessorCount;
+            BitArray bits = new BitArray(BitConverter.GetBytes(AppSettings.Default.setProcessorAffinity));
+            for (int i = 0; i < procCount; i++)
+            {
+                checkedListBoxProcessors.Items.Add("Core " + (i+1));
+                checkedListBoxProcessors.SetItemChecked(i, bits[i]);
+            }
+        }
+
+        private void SaveProcessorAffinity()
+        {
+            int procCount = Environment.ProcessorCount;
+            BitArray bits = new BitArray(procCount);
+            for (int i = 0; i < procCount; i++)
+            {
+                bits[i] = checkedListBoxProcessors.GetItemChecked(i);
+            }
+            int[] tmp = new int[1];
+            bits.CopyTo(tmp, 0);
+            AppSettings.Default.setProcessorAffinity = tmp[0];
+        }
+
+        #endregion
 
         #region Stat Player List Settings
 

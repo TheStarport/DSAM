@@ -1882,6 +1882,7 @@ namespace DAM
         private void timerPeriodicTasks_Tick(object sender, EventArgs e)
         {
             charListDataGridView_SelectionChanged(this, EventArgs.Empty);
+            Program.ApplyProcessorAffinity();
             int load = 0;
             bool npcSpawnEnabled = false;
             string upTime = "";

@@ -418,5 +418,17 @@ namespace DAM {
                 this["setStatPlayerListDontShowFields"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2147483647")]
+        public int setProcessorAffinity {
+            get {
+                return ((int)(this["setProcessorAffinity"]));
+            }
+            set {
+                this["setProcessorAffinity"] = value;
+            }
+        }
     }
 }

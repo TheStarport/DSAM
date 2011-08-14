@@ -101,5 +101,8 @@
     <Setting Name="setStatPlayerListDontShowFields" Type="System.String" Scope="User">
       <Value Profile="(Default)">ID;IP;Ping;Loss;lag;fluct;saturation;TxQueue</Value>
     </Setting>
+    <Setting Name="setProcessorAffinity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2147483647</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
