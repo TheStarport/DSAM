@@ -1536,6 +1536,14 @@ namespace DAM
             }
         }
 
+        private void textBoxFilter_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (AppSettings.Default.setFilterWaitForEnter && e.KeyCode != Keys.Enter)
+                return;
+
+            updateTextFilter(sender, EventArgs.Empty);
+        }
+
         private void checkBoxFilterSameAcc_CheckedChanged(object sender, EventArgs e)
         {
             timerFilter.Start();

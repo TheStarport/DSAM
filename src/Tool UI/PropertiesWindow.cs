@@ -50,6 +50,7 @@ namespace DAM
                 checkBoxShowMultibanSucc.Checked = AppSettings.Default.setShowMultibanSucc;
                 checkBoxShowMultiunbanSucc.Checked = AppSettings.Default.setShowMultiunbanSucc;
                 checkBoxShowMultideleteSucc.Checked = AppSettings.Default.setShowMultideleteSucc;
+                checkBoxFilterWaitEnter.Checked = AppSettings.Default.setFilterWaitForEnter;
             }
         }
 
@@ -88,6 +89,7 @@ namespace DAM
                 AppSettings.Default.setShowMultibanSucc = checkBoxShowMultibanSucc.Checked;
                 AppSettings.Default.setShowMultiunbanSucc = checkBoxShowMultiunbanSucc.Checked;
                 AppSettings.Default.setShowMultideleteSucc = checkBoxShowMultideleteSucc.Checked;
+                AppSettings.Default.setFilterWaitForEnter = checkBoxFilterWaitEnter.Checked;
 
                 AppSettings.Default.Save();
             }
