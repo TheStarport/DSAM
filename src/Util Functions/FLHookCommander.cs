@@ -62,6 +62,11 @@ namespace DAM
            public string ip;
            public int ping;
            public string system;
+           public int loss;
+           public int lag;
+           public int ping_fluct;
+           public int saturation;
+           public int txqueue;
         }
         public Dictionary<int, PlayerInfo> playerInfoList;
 
@@ -296,13 +301,18 @@ namespace DAM
                           ParseLine(reply, out keys, out values);
 
                           // Message arrives in response to playerinfo command.
-                          // charname=? clientid=? ip=? host=? ping=? base=? system=?
+                          // charname=? clientid=? loss=? lag=? sat=? ping_fluct=?
                           PlayerInfo info = new PlayerInfo();
                           info.charname = values[0];
                           info.id = Convert.ToInt32(values[1]);
                           info.ip = values[2];
                           info.ping = Convert.ToInt32(values[4]);
                           info.system = values[6];
+                          info.loss = Convert.ToInt32(values[2]);
+                          info.lag = Convert.ToInt32(values[3]);
+                          info.ping_fluct = Convert.ToInt32(values[4]);
+                          info.saturation = Convert.ToInt32(values[5]);
+                          info.txqueue = Convert.ToInt32(values[6]);
                           playerInfoList.Add(info.id, info);
                        }
                     }

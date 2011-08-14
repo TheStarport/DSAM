@@ -64,8 +64,10 @@ namespace DAM
         private void GenerateOnlinePlayerStats(LogRecorderInterface log)
         {
             //***** assemble the sorted lists for both tables ...
-            SortedDictionary<string, string> char_list = new SortedDictionary<string, string>();
+            SortedDictionary<string, FLHookSocket.PlayerInfo> char_list = new SortedDictionary<string, FLHookSocket.PlayerInfo>();
             SortedDictionary<string, List<string>> system_list = new SortedDictionary<string, List<string>>();
+            string[] playerlistFields = AppSettings.Default.setStatPlayerListShowFields.Split(';');
+            bool column0 = true;
             int slots_in_use = -1;
             lock (m_flHookCmdr.playerInfoList)
             {
@@ -76,8 +78,8 @@ namespace DAM
                     string character = HtmlEncode(kvp.Value.charname);
                     if (character != "-")
                     {
-                        string system = HtmlEncode(m_gameData.GetItemDescByNickNameX(kvp.Value.system));
-                       char_list.Add(character, system);
+                       string system = HtmlEncode(m_gameData.GetItemDescByNickNameX(kvp.Value.system));
+                       char_list.Add(character, kvp.Value);
                        if (!system_list.ContainsKey(system))
                        {
                           system_list.Add(system, new List<string>());
@@ -96,10 +98,48 @@ namespace DAM
             contents += "<i>used slots: " + String.Format("{0}", slots_in_use) + " </i><br><br><br><br>";
             contents += "<size=5><b><u>Characters by Name</u></b></size><br><br>";
             contents += "<table width=\"90%\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\">";
-            contents += "<tr><th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">Character</font></th><th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">System</font></th></tr>";
-            foreach (KeyValuePair<string, string> kvp in char_list)
+            contents += "<tr>";
+            foreach (string field in playerlistFields)
             {
-                contents += "<tr><td class=\"column0\">" + kvp.Key + "</td><td class=\"column1\">" + kvp.Value + "</td></tr>";
+                if(column0)
+                    contents += "<th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">";
+                else
+                    contents += "<th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">";
+                contents += field;
+                contents += "</font></th>";
+                column0 = !column0;
+            }
+            column0 = true;
+            contents += "</tr>";
+            foreach (KeyValuePair<string, FLHookSocket.PlayerInfo> kvp in char_list)
+            {
+                contents += "<tr>";
+
+                foreach (string field in playerlistFields)
+                {
+                    string toAdd = string.Empty;
+                    switch(field)
+                    {
+                        case "Character":  toAdd = kvp.Key; break;
+                        case "System":     toAdd = m_gameData.GetItemDescByNickNameX(kvp.Value.system); break;
+                        case "ID":         toAdd = kvp.Value.id.ToString();         break;
+                        case "IP":         toAdd = kvp.Value.ip.ToString();         break;
+                        case "Ping":       toAdd = kvp.Value.ping.ToString();       break;
+                        case "Loss":       toAdd = kvp.Value.loss.ToString();       break;
+                        case "Fluct":      toAdd = kvp.Value.ping_fluct.ToString(); break;
+                        case "Saturation": toAdd = kvp.Value.saturation.ToString(); break;
+                        case "TxQuene":    toAdd = kvp.Value.saturation.ToString(); break;
+                    }
+
+                    toAdd = HtmlEncode(toAdd);
+
+                    contents += "<td class=\"column" + (column0 ? "0" : "1") + "\">";
+                    contents += toAdd;
+                    contents += "</td>";
+                    column0 = !column0;
+                }
+
+                contents += "</tr>";
             }
             contents += "</table><br><br><br><br>";
             contents += "<size=5><b><u>Characters by System</u></b></size><br><br>";

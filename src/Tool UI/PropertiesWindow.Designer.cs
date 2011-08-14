@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Label label18;
+            System.Windows.Forms.Label label17;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PropertiesWindow));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
@@ -90,6 +92,15 @@
             this.domainUpDownUpdatePlayerDatabase = new System.Windows.Forms.DomainUpDown();
             this.checkBoxShowQuitMsg = new System.Windows.Forms.CheckBox();
             this.checkBoxFilterWaitEnter = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.buttonStatPlayerListDown = new System.Windows.Forms.Button();
+            this.buttonStatPlayerListUp = new System.Windows.Forms.Button();
+            this.buttonStatPlayerListDontShow = new System.Windows.Forms.Button();
+            this.buttonStatPlayerListShow = new System.Windows.Forms.Button();
+            this.listBoxStatPlayerListShow = new System.Windows.Forms.ListBox();
+            this.listBoxStatPlayerListDontShow = new System.Windows.Forms.ListBox();
+            label18 = new System.Windows.Forms.Label();
+            label17 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -103,6 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHistoryHorizon)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -564,17 +576,18 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.groupBox5);
             this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.textBoxStatsFactions);
             this.groupBox3.Controls.Add(this.numericUpDownHistoryHorizon);
             this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.textBoxStatsFactions);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.button3);
             this.groupBox3.Controls.Add(this.textBoxStatisticsDir);
             this.groupBox3.Location = new System.Drawing.Point(7, 7);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(537, 196);
+            this.groupBox3.Size = new System.Drawing.Size(537, 331);
             this.groupBox3.TabIndex = 36;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "HTML Statistics Output";
@@ -582,7 +595,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(142, 171);
+            this.label15.Location = new System.Drawing.Point(142, 303);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(29, 13);
             this.label15.TabIndex = 41;
@@ -590,7 +603,7 @@
             // 
             // numericUpDownHistoryHorizon
             // 
-            this.numericUpDownHistoryHorizon.Location = new System.Drawing.Point(88, 169);
+            this.numericUpDownHistoryHorizon.Location = new System.Drawing.Point(88, 301);
             this.numericUpDownHistoryHorizon.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -613,7 +626,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 171);
+            this.label14.Location = new System.Drawing.Point(6, 303);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(76, 13);
             this.label14.TabIndex = 38;
@@ -760,6 +773,97 @@
             this.checkBoxFilterWaitEnter.Text = "Wait for ENTER to start the filter";
             this.checkBoxFilterWaitEnter.UseVisualStyleBackColor = true;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.buttonStatPlayerListDown);
+            this.groupBox5.Controls.Add(this.buttonStatPlayerListUp);
+            this.groupBox5.Controls.Add(label18);
+            this.groupBox5.Controls.Add(this.buttonStatPlayerListDontShow);
+            this.groupBox5.Controls.Add(this.buttonStatPlayerListShow);
+            this.groupBox5.Controls.Add(this.listBoxStatPlayerListShow);
+            this.groupBox5.Controls.Add(label17);
+            this.groupBox5.Controls.Add(this.listBoxStatPlayerListDontShow);
+            this.groupBox5.Location = new System.Drawing.Point(6, 168);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(372, 127);
+            this.groupBox5.TabIndex = 50;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Player online list";
+            // 
+            // buttonStatPlayerListDown
+            // 
+            this.buttonStatPlayerListDown.Location = new System.Drawing.Point(339, 91);
+            this.buttonStatPlayerListDown.Name = "buttonStatPlayerListDown";
+            this.buttonStatPlayerListDown.Size = new System.Drawing.Size(25, 25);
+            this.buttonStatPlayerListDown.TabIndex = 57;
+            this.buttonStatPlayerListDown.Text = "\\/";
+            this.buttonStatPlayerListDown.UseVisualStyleBackColor = true;
+            this.buttonStatPlayerListDown.Click += new System.EventHandler(this.buttonStatPlayerListDown_Click);
+            // 
+            // buttonStatPlayerListUp
+            // 
+            this.buttonStatPlayerListUp.Location = new System.Drawing.Point(339, 34);
+            this.buttonStatPlayerListUp.Name = "buttonStatPlayerListUp";
+            this.buttonStatPlayerListUp.Size = new System.Drawing.Size(25, 25);
+            this.buttonStatPlayerListUp.TabIndex = 56;
+            this.buttonStatPlayerListUp.Text = "/\\";
+            this.buttonStatPlayerListUp.UseVisualStyleBackColor = true;
+            this.buttonStatPlayerListUp.Click += new System.EventHandler(this.buttonStatPlayerListUp_Click);
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new System.Drawing.Point(210, 18);
+            label18.Name = "label18";
+            label18.Size = new System.Drawing.Size(37, 13);
+            label18.TabIndex = 55;
+            label18.Text = "Show:";
+            // 
+            // buttonStatPlayerListDontShow
+            // 
+            this.buttonStatPlayerListDontShow.Location = new System.Drawing.Point(132, 79);
+            this.buttonStatPlayerListDontShow.Name = "buttonStatPlayerListDontShow";
+            this.buttonStatPlayerListDontShow.Size = new System.Drawing.Size(75, 23);
+            this.buttonStatPlayerListDontShow.TabIndex = 54;
+            this.buttonStatPlayerListDontShow.Text = "<==";
+            this.buttonStatPlayerListDontShow.UseVisualStyleBackColor = true;
+            this.buttonStatPlayerListDontShow.Click += new System.EventHandler(this.buttonStatPlayerListDontShow_Click);
+            // 
+            // buttonStatPlayerListShow
+            // 
+            this.buttonStatPlayerListShow.Location = new System.Drawing.Point(132, 48);
+            this.buttonStatPlayerListShow.Name = "buttonStatPlayerListShow";
+            this.buttonStatPlayerListShow.Size = new System.Drawing.Size(75, 23);
+            this.buttonStatPlayerListShow.TabIndex = 53;
+            this.buttonStatPlayerListShow.Text = "==>";
+            this.buttonStatPlayerListShow.UseVisualStyleBackColor = true;
+            this.buttonStatPlayerListShow.Click += new System.EventHandler(this.buttonStatPlayerListShow_Click);
+            // 
+            // listBoxStatPlayerListShow
+            // 
+            this.listBoxStatPlayerListShow.FormattingEnabled = true;
+            this.listBoxStatPlayerListShow.Location = new System.Drawing.Point(213, 34);
+            this.listBoxStatPlayerListShow.Name = "listBoxStatPlayerListShow";
+            this.listBoxStatPlayerListShow.Size = new System.Drawing.Size(120, 82);
+            this.listBoxStatPlayerListShow.TabIndex = 52;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new System.Drawing.Point(3, 18);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(65, 13);
+            label17.TabIndex = 51;
+            label17.Text = "Don\'t Show:";
+            // 
+            // listBoxStatPlayerListDontShow
+            // 
+            this.listBoxStatPlayerListDontShow.FormattingEnabled = true;
+            this.listBoxStatPlayerListDontShow.Location = new System.Drawing.Point(6, 34);
+            this.listBoxStatPlayerListDontShow.Name = "listBoxStatPlayerListDontShow";
+            this.listBoxStatPlayerListDontShow.Size = new System.Drawing.Size(120, 82);
+            this.listBoxStatPlayerListDontShow.TabIndex = 50;
+            // 
             // PropertiesWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -791,6 +895,8 @@
             this.tabPage3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -858,6 +964,13 @@
         private System.Windows.Forms.CheckBox checkBoxShowMultiunbanSucc;
         private System.Windows.Forms.CheckBox checkBoxShowMultibanSucc;
         private System.Windows.Forms.CheckBox checkBoxFilterWaitEnter;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button buttonStatPlayerListDown;
+        private System.Windows.Forms.Button buttonStatPlayerListUp;
+        private System.Windows.Forms.Button buttonStatPlayerListDontShow;
+        private System.Windows.Forms.Button buttonStatPlayerListShow;
+        private System.Windows.Forms.ListBox listBoxStatPlayerListShow;
+        private System.Windows.Forms.ListBox listBoxStatPlayerListDontShow;
 
     }
 }

@@ -394,5 +394,29 @@ namespace DAM {
                 this["setFilterWaitForEnter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Character;System")]
+        public string setStatPlayerListShowFields {
+            get {
+                return ((string)(this["setStatPlayerListShowFields"]));
+            }
+            set {
+                this["setStatPlayerListShowFields"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ID;IP;Ping;Loss;lag;fluct;saturation;TxQueue")]
+        public string setStatPlayerListDontShowFields {
+            get {
+                return ((string)(this["setStatPlayerListDontShowFields"]));
+            }
+            set {
+                this["setStatPlayerListDontShowFields"] = value;
+            }
+        }
     }
 }

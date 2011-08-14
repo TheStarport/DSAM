@@ -38,6 +38,7 @@ namespace DAM
                 textBoxStatisticsDir.Text = AppSettings.Default.setStatisticsDir;
                 textBoxStatsFactions.Text = AppSettings.Default.setStatsFactions;
                 numericUpDownHistoryHorizon.Value = AppSettings.Default.setHistoryHorizon;
+                LoadStatPlayerListSettings();
 
                 checkBoxAutomaticFixCharFiles.Checked = AppSettings.Default.setAutomaticFixErrors;
                 checkBoxCheckDefaultEngine.Checked = AppSettings.Default.setCheckDefaultEngine;
@@ -77,6 +78,7 @@ namespace DAM
                 AppSettings.Default.setStatisticsDir = textBoxStatisticsDir.Text;
                 AppSettings.Default.setStatsFactions = textBoxStatsFactions.Text;
                 AppSettings.Default.setHistoryHorizon = (int)numericUpDownHistoryHorizon.Value;
+                SaveStatPlayerListSettings();
 
                 AppSettings.Default.setAutomaticFixErrors = checkBoxAutomaticFixCharFiles.Checked;
                 AppSettings.Default.setCheckDefaultEngine = checkBoxCheckDefaultEngine.Checked;
@@ -150,5 +152,107 @@ namespace DAM
                 textBoxStatisticsDir.Text = folderBrowserDialog1.SelectedPath;
             }
         }
+
+
+        #region Stat Player List Settings
+
+        private void buttonStatPlayerListShow_Click(object sender, EventArgs e)
+        {
+            object item;
+            item = listBoxStatPlayerListDontShow.SelectedItem;
+
+            // nothing selected
+            if (item == null)
+                return;
+
+            listBoxStatPlayerListDontShow.Items.Remove(item);
+            listBoxStatPlayerListShow.Items.Add(item);
+
+            listBoxStatPlayerListShow.SelectedItem = item;
+            listBoxStatPlayerListDontShow.SelectedItem = null;
+        }
+
+        private void buttonStatPlayerListDontShow_Click(object sender, EventArgs e)
+        {
+            object item;
+            item = listBoxStatPlayerListShow.SelectedItem;
+
+            // nothing selected
+            if (item == null)
+                return;
+
+            listBoxStatPlayerListShow.Items.Remove(item);
+            listBoxStatPlayerListDontShow.Items.Add(item);
+        }
+
+        private void buttonStatPlayerListUp_Click(object sender, EventArgs e)
+        {
+            object tmp;
+            int index = listBoxStatPlayerListShow.SelectedIndex;
+
+            // is already on top or none is selected
+            if (index == 0 || index == -1)
+                return;
+
+            // swap them
+            tmp = listBoxStatPlayerListShow.Items[index-1];
+            listBoxStatPlayerListShow.Items[index-1] = listBoxStatPlayerListShow.Items[index];
+            listBoxStatPlayerListShow.Items[index] = tmp;
+
+            listBoxStatPlayerListShow.SelectedIndex--;
+        }
+
+        private void buttonStatPlayerListDown_Click(object sender, EventArgs e)
+        {
+            object tmp;
+            int index = listBoxStatPlayerListShow.SelectedIndex;
+
+            // is already on bottom or none is selected
+            if (index == listBoxStatPlayerListShow.Items.Count - 1 || index == -1)
+                return;
+
+            // swap them
+            tmp = listBoxStatPlayerListShow.Items[index + 1];
+            listBoxStatPlayerListShow.Items[index+1] = listBoxStatPlayerListShow.Items[index];
+            listBoxStatPlayerListShow.Items[index] = tmp;
+
+            listBoxStatPlayerListShow.SelectedIndex++;
+        }
+
+        private void LoadStatPlayerListSettings()
+        {
+            string[] show = AppSettings.Default.setStatPlayerListShowFields.Split(';');
+            string[] dontShow = AppSettings.Default.setStatPlayerListDontShowFields.Split(';');
+
+            listBoxStatPlayerListShow.Items.Clear();
+            listBoxStatPlayerListShow.Items.AddRange(show);
+
+            listBoxStatPlayerListDontShow.Items.Clear();
+            listBoxStatPlayerListDontShow.Items.AddRange(dontShow);
+        }
+
+        private void SaveStatPlayerListSettings()
+        {
+            string[] show;
+            string[] dontShow;
+
+            show = GetListItemsAsStringArray(listBoxStatPlayerListShow);
+            dontShow = GetListItemsAsStringArray(listBoxStatPlayerListDontShow);
+
+            AppSettings.Default.setStatPlayerListShowFields = string.Join(";", show);
+            AppSettings.Default.setStatPlayerListDontShowFields = string.Join(";", dontShow);
+        }
+
+        private string[] GetListItemsAsStringArray(ListBox box)
+        {
+            string[] items = new string[box.Items.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                items[i] = box.Items[i].ToString();
+            }
+            return items;
+        }
+
+        #endregion
     }
 }
