@@ -898,6 +898,21 @@ namespace DAM
 
             bannedPlayersToolStripMenuItem_Click(null, null);
             windowBannedPlayers.HighlightRecord(charRecord.AccID);
+            windowBannedPlayers.ShowExpiredbans(false);
+        }
+
+        /// <summary>
+        /// Show ban history for the selected player.
+        /// </summary>
+        private void buttonBanHistory_Click(object sender, EventArgs e)
+        {
+            DamDataSet.CharacterListRow charRecord = GetCharRecordBySelectedRow();
+            if (charRecord == null)
+                return;
+
+            bannedPlayersToolStripMenuItem_Click(null, null);
+            windowBannedPlayers.HighlightRecord(charRecord.AccID);
+            windowBannedPlayers.ShowExpiredbans(true);
         }
 
         /// <summary>
@@ -1276,6 +1291,7 @@ namespace DAM
                 windowBannedPlayers = new BannedPlayers(this, dataSetPlayerInfo);
             windowBannedPlayers.Show();
             windowBannedPlayers.BringToFront();
+            windowBannedPlayers.ShowExpiredbans(false);
         }
 
         /// <summary>
@@ -1414,7 +1430,7 @@ namespace DAM
             DamDataSet.BanListRow banRecord = dataSetPlayerInfo.BanList.FindByAccDir(accDir);
             if (banRecord != null)
             {
-                banRecord.Delete();
+                banRecord.Existent = false;
                 dbUpdatesPending++;
             }
  

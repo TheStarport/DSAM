@@ -430,6 +430,8 @@ namespace DAM {
             
             private global::System.Data.DataColumn columnBanEnd;
             
+            private global::System.Data.DataColumn columnExistent;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public BanListDataTable() {
@@ -505,6 +507,14 @@ namespace DAM {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ExistentColumn {
+                get {
+                    return this.columnExistent;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -540,14 +550,15 @@ namespace DAM {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public BanListRow AddBanListRow(string AccDir, string AccID, string BanReason, System.DateTime BanStart, System.DateTime BanEnd) {
+            public BanListRow AddBanListRow(string AccDir, string AccID, string BanReason, System.DateTime BanStart, System.DateTime BanEnd, bool Existent) {
                 BanListRow rowBanListRow = ((BanListRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         AccDir,
                         AccID,
                         BanReason,
                         BanStart,
-                        BanEnd};
+                        BanEnd,
+                        Existent};
                 rowBanListRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowBanListRow);
                 return rowBanListRow;
@@ -588,6 +599,7 @@ namespace DAM {
                 this.columnBanReason = base.Columns["BanReason"];
                 this.columnBanStart = base.Columns["BanStart"];
                 this.columnBanEnd = base.Columns["BanEnd"];
+                this.columnExistent = base.Columns["Existent"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -603,12 +615,15 @@ namespace DAM {
                 base.Columns.Add(this.columnBanStart);
                 this.columnBanEnd = new global::System.Data.DataColumn("BanEnd", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBanEnd);
+                this.columnExistent = new global::System.Data.DataColumn("Existent", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnExistent);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnAccDir}, true));
                 this.columnAccDir.AllowDBNull = false;
                 this.columnAccDir.Unique = true;
                 this.columnBanStart.DateTimeMode = global::System.Data.DataSetDateTime.Utc;
                 this.columnBanEnd.DateTimeMode = global::System.Data.DataSetDateTime.Utc;
+                this.columnExistent.DefaultValue = ((bool)(true));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2103,6 +2118,22 @@ namespace DAM {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Existent {
+                get {
+                    try {
+                        return ((bool)(this[this.tableBanList.ExistentColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Existent\' in table \'BanList\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableBanList.ExistentColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsAccIDNull() {
                 return this.IsNull(this.tableBanList.AccIDColumn);
             }
@@ -2147,6 +2178,18 @@ namespace DAM {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetBanEndNull() {
                 this[this.tableBanList.BanEndColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsExistentNull() {
+                return this.IsNull(this.tableBanList.ExistentColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetExistentNull() {
+                this[this.tableBanList.ExistentColumn] = global::System.Convert.DBNull;
             }
         }
         

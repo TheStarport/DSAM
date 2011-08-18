@@ -75,7 +75,8 @@ namespace DAM
                         "AccID text",
                         "BanReason text",
                         "BanStart datetime",
-                        "BanEnd datetime"
+                        "BanEnd datetime",
+                        "Existent bool"
                     }, "PRIMARY KEY(AccDir) ON CONFLICT REPLACE");
 
                     CreateTableIfNeeded(conn, "IPList", new string[] {
@@ -157,7 +158,7 @@ namespace DAM
             UpdateGeneralStatistics("Active characters", "SELECT COUNT(*) FROM CharacterList WHERE NOT IsDeleted ");
             UpdateGeneralStatistics("Deleted characters", "SELECT COUNT(*) FROM CharacterList WHERE IsDeleted");
             UpdateGeneralStatistics("Active Accounts", "SELECT COUNT(DISTINCT(AccDir)) FROM CharacterList WHERE NOT IsDeleted");
-            UpdateGeneralStatistics("Banned Accounts", "SELECT COUNT(*) FROM BanList");
+            UpdateGeneralStatistics("Banned Accounts", "SELECT COUNT(*) FROM BanList WHERE Existent");
             UpdateGeneralStatistics("Unique Logins", "SELECT COUNT(DISTINCT(LoginID)) FROM LoginIDList");
             UpdateGeneralStatistics("Characters over rank 80", "SELECT COUNT(*) FROM CharacterList WHERE Rank > '80'");
             UpdateGeneralStatistics("Characters under rank 30", "SELECT COUNT(*) FROM CharacterList WHERE Rank < '30'");
@@ -172,6 +173,43 @@ namespace DAM
         /// <param name="cols"></param>
         private bool CreateTableIfNeeded(SQLiteConnection conn, string name, string[] cols, string constraint)
         {
+            using (SQLiteCommand cmd = new SQLiteCommand(conn))
+            {
+                cmd.CommandText = "PRAGMA table_info('" + name + "')";
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                List<string> tmp_cols = new List<string>(cols);
+
+                while (true)
+                {
+                    if (!reader.Read())
+                        break;
+
+                    string s = reader.GetString(1);
+
+                    for (int i = 0; i < tmp_cols.Count; i++)
+                    {
+                        if (tmp_cols[i].Split(' ')[0] == s)
+                        {
+                            tmp_cols.RemoveAt(i);
+                            i--;
+                            break;
+                        }
+                    }
+
+                }
+
+                foreach (string col in tmp_cols)
+                {
+                    using (SQLiteCommand alterCmd = new SQLiteCommand(conn))
+                    {
+                        alterCmd.CommandText = "ALTER TABLE " + name + " ADD COLUMN " + col;
+                        alterCmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+
             using (SQLiteCommand cmd = new SQLiteCommand(conn))
             {
                 cmd.CommandText = "select * from sqlite_master where name = '" + name + "'";
@@ -375,13 +413,27 @@ namespace DAM
         }
 
         /// <summary>
-        /// Get all ban list records.
+        /// Get all existent ban list records.
         /// </summary>
         /// <param name="dsTable">The ban list.</param>
         public void GetBanList(DamDataSet.BanListDataTable dsTable)
         {
+            GetBanList(dsTable, true);
+        }
+
+        /// <summary>
+        /// Get all ban list records.
+        /// </summary>
+        /// <param name="dsTable">The ban list.</param>
+        /// <param name="onlyExistent">true if only existent bans should be added to <paramref name="dsTable"/></param>
+        public void GetBanList(DamDataSet.BanListDataTable dsTable, bool onlyExistent)
+        {
+            string query = "SELECT * FROM BanList";
+            if(onlyExistent)
+                query += " WHERE Existent";
+
             dsTable.Clear();
-            SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM BanList", GetConnection());
+            SQLiteDataAdapter adpt = new SQLiteDataAdapter(query, GetConnection());
             adpt.Fill(dsTable);
         }
 
@@ -391,8 +443,22 @@ namespace DAM
         /// <param name="dsTable">The ban list.</param>
         public void GetBanListByAccDir(DamDataSet.BanListDataTable dsTable, string accDir)
         {
+            GetBanListByAccDir(dsTable, accDir, true);
+        }
+
+        /// <summary>
+        /// Get the ban list for the specified account
+        /// </summary>
+        /// <param name="dsTable">The ban list.</param>
+        /// <param name="onlyExistent">true if only existent bans should be added to <paramref name="dsTable"/></param>
+        public void GetBanListByAccDir(DamDataSet.BanListDataTable dsTable, string accDir, bool onlyExistent)
+        {
+            string query = "SELECT * FROM BanList WHERE AccDir ='" + accDir + "'";
+            if (onlyExistent)
+                query += " WHERE Existent";
+
             dsTable.Clear();
-            SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM BanList WHERE AccDir ='" + accDir + "'", GetConnection());
+            SQLiteDataAdapter adpt = new SQLiteDataAdapter(query, GetConnection());
             adpt.Fill(dsTable);
         }
 

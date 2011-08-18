@@ -183,6 +183,7 @@
             this.banSelectedButton = new System.Windows.Forms.Button();
             this.deleteSelectedButton = new System.Windows.Forms.Button();
             this.unbanSelectedButton = new System.Windows.Forms.Button();
+            this.buttonBanHistory = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -239,6 +240,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.buttonBanHistory);
             this.tabPage1.Controls.Add(this.buttonAddCompleteMap);
             this.tabPage1.Controls.Add(this.buttonCheckFile);
             this.tabPage1.Controls.Add(this.buttonResetLastOnline);
@@ -1763,6 +1765,16 @@
             this.unbanSelectedButton.UseVisualStyleBackColor = true;
             this.unbanSelectedButton.Click += new System.EventHandler(this.unbanSelectedButton_Click);
             // 
+            // buttonBanHistory
+            // 
+            this.buttonBanHistory.Location = new System.Drawing.Point(166, 67);
+            this.buttonBanHistory.Name = "buttonBanHistory";
+            this.buttonBanHistory.Size = new System.Drawing.Size(80, 23);
+            this.buttonBanHistory.TabIndex = 57;
+            this.buttonBanHistory.Text = "Ban History";
+            this.buttonBanHistory.UseVisualStyleBackColor = true;
+            this.buttonBanHistory.Click += new System.EventHandler(this.buttonBanHistory_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1973,6 +1985,7 @@
         private System.Windows.Forms.Button banSelectedButton;
         private System.Windows.Forms.Button deleteSelectedButton;
         private System.Windows.Forms.Button unbanSelectedButton;
+        private System.Windows.Forms.Button buttonBanHistory;
     }
 }
 
