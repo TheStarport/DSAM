@@ -567,7 +567,7 @@ namespace DAM
             DamDataSet.BanListRow banRecord = dataSet.BanList.FindByAccDir(accDir);
             if (banRecord != null && !banned)
             {
-                banRecord.Delete();
+                banRecord.Existent = false;
                 filesUpdated++;
             }
             else if (banRecord == null && banned)
