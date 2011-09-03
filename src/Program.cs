@@ -39,14 +39,22 @@ namespace DAM
             }
         }
 
-        public static void ApplyProcessorAffinity()
+        public static bool ApplyProcessorAffinity()
         {
-            ProcessThreadCollection threads = Process.GetCurrentProcess().Threads;
-            IntPtr mask = (IntPtr)AppSettings.Default.setProcessorAffinity;
-            foreach (ProcessThread thread in threads)
+            try
             {
-                thread.ProcessorAffinity = mask;
+                ProcessThreadCollection threads = Process.GetCurrentProcess().Threads;
+                IntPtr mask = (IntPtr)AppSettings.Default.setProcessorAffinity;
+                foreach (ProcessThread thread in threads)
+                {
+                    thread.ProcessorAffinity = mask;
+                }
             }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
