@@ -308,13 +308,46 @@ namespace DAM
                           info.ip = values[2];
                           info.ping = Convert.ToInt32(values[4]);
                           info.system = values[6];
-                          info.loss = Convert.ToInt32(values[2]);
-                          info.lag = Convert.ToInt32(values[3]);
-                          info.ping_fluct = Convert.ToInt32(values[4]);
-                          info.saturation = Convert.ToInt32(values[5]);
-                          info.txqueue = Convert.ToInt32(values[6]);
                           playerInfoList.Add(info.id, info);
                        }
+                    }
+
+                    SendCommand(cmdStream, "getstats", unicode);
+                    while (true)
+                    {
+                        string reply = ReceiveReply(cmdStream, unicode);
+                        if (reply.StartsWith("ERR"))
+                        {
+                            LastCmdError = reply;
+                            return false;
+                        }
+                        else if (reply.StartsWith("OK"))
+                        {
+                            LastCmdError = "OK";
+                            return true;
+                        }
+                        else
+                        {
+                            string[] keys;
+                            string[] values;
+                            ParseLine(reply, out keys, out values);
+
+                            // Message arrives in response to getstats command.
+                            // charname=? clientid=? loss=? lag=? sat=? ping_fluct=?
+                            string charname = values[0];
+                            int id = Convert.ToInt32(values[1]);
+
+                            PlayerInfo info;
+                            if (playerInfoList.TryGetValue(id, out info))
+                            {
+                                info.loss = Convert.ToInt32(values[2]);
+                                info.lag = Convert.ToInt32(values[3]);
+                                info.ping_fluct = Convert.ToInt32(values[4]);
+                                info.saturation = Convert.ToInt32(values[5]);
+                                info.txqueue = Convert.ToInt32(values[6]);
+                                playerInfoList[id] = info;
+                            }
+                        }
                     }
                  }
                  catch (Exception ex)

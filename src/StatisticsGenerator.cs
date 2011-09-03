@@ -128,7 +128,8 @@ namespace DAM
                         case "Loss":       toAdd = kvp.Value.loss.ToString();       break;
                         case "Fluct":      toAdd = kvp.Value.ping_fluct.ToString(); break;
                         case "Saturation": toAdd = kvp.Value.saturation.ToString(); break;
-                        case "TxQuene":    toAdd = kvp.Value.saturation.ToString(); break;
+                        case "TxQueue":    toAdd = kvp.Value.txqueue.ToString(); break;
+                        case "Lag":        toAdd = kvp.Value.lag.ToString(); break;
                     }
 
                     toAdd = HtmlEncode(toAdd);
