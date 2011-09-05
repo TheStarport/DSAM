@@ -23,6 +23,7 @@ namespace DAM
                 textBoxAccDir.Text = AppSettings.Default.setAccountDir;
                 textBoxIoncrossDir.Text = AppSettings.Default.setIonCrossDir;
                 textBoxFLDir.Text = AppSettings.Default.setFLDir;
+                textBoxLoginIDBanFile.Text = AppSettings.Default.setLoginIDBanFile;
                 checkBoxChangedOnly.Checked = AppSettings.Default.setCheckChangedOnly;
                 checkBoxWriteEncryptedFiles.Checked = AppSettings.Default.setWriteEncryptedFiles;
                 textBoxFLHookPort.Value = AppSettings.Default.setFLHookPort;
@@ -40,6 +41,9 @@ namespace DAM
                 textBoxStatsFactions.Text = AppSettings.Default.setStatsFactions;
                 numericUpDownHistoryHorizon.Value = AppSettings.Default.setHistoryHorizon;
                 LoadStatPlayerListSettings();
+                checkBoxStatCharsByName.Checked = AppSettings.Default.setStatPlayerListShowCharsByName;
+                checkBoxStatCharsBySys.Checked = AppSettings.Default.setStatPlayerListShowCharsBySys;
+                checkBoxStatsTimeUTC.Checked = AppSettings.Default.setStatPlayerListTimeUTC;
 
                 checkBoxAutomaticFixCharFiles.Checked = AppSettings.Default.setAutomaticFixErrors;
                 checkBoxCheckDefaultEngine.Checked = AppSettings.Default.setCheckDefaultEngine;
@@ -53,6 +57,7 @@ namespace DAM
                 checkBoxShowMultiunbanSucc.Checked = AppSettings.Default.setShowMultiunbanSucc;
                 checkBoxShowMultideleteSucc.Checked = AppSettings.Default.setShowMultideleteSucc;
                 checkBoxFilterWaitEnter.Checked = AppSettings.Default.setFilterWaitForEnter;
+                checkBoxBannedCharsInRed.Checked = AppSettings.Default.setDisplayBannedCharsRed;
 
                 LoadProcessorAffinity();
             }
@@ -65,6 +70,7 @@ namespace DAM
                 AppSettings.Default.setAccountDir = textBoxAccDir.Text;
                 AppSettings.Default.setIonCrossDir = textBoxIoncrossDir.Text;
                 AppSettings.Default.setFLDir = textBoxFLDir.Text;
+                AppSettings.Default.setLoginIDBanFile = textBoxLoginIDBanFile.Text;
                 AppSettings.Default.setCheckChangedOnly = checkBoxChangedOnly.Checked;
                 AppSettings.Default.setWriteEncryptedFiles = checkBoxWriteEncryptedFiles.Checked;
                 AppSettings.Default.setFLHookPort = textBoxFLHookPort.Value;
@@ -82,6 +88,9 @@ namespace DAM
                 AppSettings.Default.setStatsFactions = textBoxStatsFactions.Text;
                 AppSettings.Default.setHistoryHorizon = (int)numericUpDownHistoryHorizon.Value;
                 SaveStatPlayerListSettings();
+                AppSettings.Default.setStatPlayerListShowCharsByName = checkBoxStatCharsByName.Checked;
+                AppSettings.Default.setStatPlayerListShowCharsBySys = checkBoxStatCharsBySys.Checked;
+                AppSettings.Default.setStatPlayerListTimeUTC = checkBoxStatsTimeUTC.Checked;
 
                 AppSettings.Default.setAutomaticFixErrors = checkBoxAutomaticFixCharFiles.Checked;
                 AppSettings.Default.setCheckDefaultEngine = checkBoxCheckDefaultEngine.Checked;
@@ -95,6 +104,7 @@ namespace DAM
                 AppSettings.Default.setShowMultiunbanSucc = checkBoxShowMultiunbanSucc.Checked;
                 AppSettings.Default.setShowMultideleteSucc = checkBoxShowMultideleteSucc.Checked;
                 AppSettings.Default.setFilterWaitForEnter = checkBoxFilterWaitEnter.Checked;
+                AppSettings.Default.setDisplayBannedCharsRed = checkBoxBannedCharsInRed.Checked;
 
                 SaveProcessorAffinity();
                 Program.ApplyProcessorAffinity();
@@ -109,55 +119,71 @@ namespace DAM
             this.Close();
         }
 
+        #region Open File/Dir-Dialog buttons
+
         private void accountDirButton_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1.SelectedPath = textBoxAccDir.Text;
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            folderBrowserDialog.SelectedPath = textBoxAccDir.Text;
+            DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                textBoxAccDir.Text = folderBrowserDialog1.SelectedPath;
+                textBoxAccDir.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
         private void ioncrossDirButton_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1.SelectedPath = textBoxIoncrossDir.Text;
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            folderBrowserDialog.SelectedPath = textBoxIoncrossDir.Text;
+            DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                textBoxIoncrossDir.Text = folderBrowserDialog1.SelectedPath;
+                textBoxIoncrossDir.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
         private void flDirButton_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1.SelectedPath = textBoxFLDir.Text;
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            folderBrowserDialog.SelectedPath = textBoxFLDir.Text;
+            DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                textBoxFLDir.Text = folderBrowserDialog1.SelectedPath;
+                textBoxFLDir.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
         private void UninterestedCharsDirButton_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1.SelectedPath = textBoxMoveUninterestedCharsDir.Text;
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            folderBrowserDialog.SelectedPath = textBoxMoveUninterestedCharsDir.Text;
+            DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                textBoxMoveUninterestedCharsDir.Text = folderBrowserDialog1.SelectedPath;
+                textBoxMoveUninterestedCharsDir.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void statisticsButton_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1.SelectedPath = textBoxStatisticsDir.Text;
-            DialogResult result = folderBrowserDialog1.ShowDialog();
+            folderBrowserDialog.SelectedPath = textBoxStatisticsDir.Text;
+            DialogResult result = folderBrowserDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                textBoxStatisticsDir.Text = folderBrowserDialog1.SelectedPath;
+                textBoxStatisticsDir.Text = folderBrowserDialog.SelectedPath;
             }
         }
+
+        private void loginIDBanFileButton_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBoxLoginIDBanFile.Text) && System.IO.File.Exists(textBoxLoginIDBanFile.Text))
+                openFileDialog.InitialDirectory = new System.IO.FileInfo(textBoxLoginIDBanFile.Text).Directory.ToString();
+
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                textBoxLoginIDBanFile.Text = openFileDialog.FileName;
+            }
+        }
+
+        #endregion
 
         #region Prcoessor Affinity
 

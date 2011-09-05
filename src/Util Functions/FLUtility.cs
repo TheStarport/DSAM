@@ -402,6 +402,18 @@ namespace DAM
                     log.AddLog("Removed " + totalFilesDeleted + " files");
                 }
 
+                // Read LoginID-Bans
+                bgWkr.ReportProgress(0, "Reading LognID-Bans...");
+                log.AddLog("Reading LognID-Bans...");
+                bool retn = ReadLognIDBans(tempDataStore, da, AppSettings.Default.setLoginIDBanFile);
+                if (!retn)
+                {
+                    log.AddLog(tempDataStore.LoginIDBanList.Rows.Count + " LoginID-Bans in database");
+                }
+                else
+                {
+                    log.AddLog("Failed to load LoginID-Bans! Check your settings!");
+                }
 
                 // Check for new/changed character files.
                 int totalFilesUpdated = 0;
@@ -456,7 +468,7 @@ namespace DAM
                             }
                             else
                             {
-                                moveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir, log);
+                                MoveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir, log);
                             }
                             charRecord.IsDeleted = true;
                             inactiveChars++;
@@ -473,7 +485,7 @@ namespace DAM
                             }
                             else
                             {
-                                moveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir, log);
+                                MoveChar(charFilePath, AppSettings.Default.setMoveUninterestedCharsDir, log);
                             }
                             charRecord.IsDeleted = true;
                             uninterestedChars++;
@@ -504,7 +516,7 @@ namespace DAM
         /// <param name="charFile">char-file to move</param>
         /// <param name="toPath">the destination</param>
         /// <param name="log">The LogRecorderInterface</param>
-        public static void moveChar(String charFile, String toPath, LogRecorderInterface log)
+        public static void MoveChar(String charFile, String toPath, LogRecorderInterface log)
         {
             String[] oldName;
             String newFileName;
@@ -544,6 +556,46 @@ namespace DAM
                 }
             }
 
+        }
+
+        public static bool ReadLognIDBans(DamDataSet dataSet, DataAccess da, string filepath)
+        {
+            if (!File.Exists(filepath))
+                return false;
+
+            string[] bans = File.ReadAllLines(filepath);
+            string tmpLoginID = null;
+            string tmpReason = null;
+
+            dataSet.LoginIDBanList.Rows.Clear();
+
+            foreach (string ban in bans)
+            {
+                string[] parts = ban.Split('=');
+                
+                if (parts.Length == 0)
+                    continue;
+
+                tmpReason = null;
+                tmpLoginID = parts[0].Trim();
+
+                if (parts.Length == 2)
+                {
+                    tmpReason = parts[1].Trim();
+                }
+
+                DamDataSet.LoginIDBanListRow loginIDRecord = da.GetLoginIDBanRowByLoginID(tmpLoginID);
+                if (loginIDRecord != null)
+                {
+                    loginIDRecord.Reason = tmpReason;
+                }
+                else
+                {
+                    dataSet.LoginIDBanList.AddLoginIDBanListRow(tmpLoginID, tmpReason);
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

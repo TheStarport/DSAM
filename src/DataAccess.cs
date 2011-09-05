@@ -91,6 +91,11 @@ namespace DAM
                         "AccessTime datetime"
                     }, "PRIMARY KEY(AccDir, LoginID) ON CONFLICT REPLACE");
 
+                    CreateTableIfNeeded(conn, "LoginIDBanList", new string[] {
+                        "LoginID text NOT NULL",
+                        "Reason text"
+                    }, "PRIMARY KEY(LoginID) ON CONFLICT REPLACE");
+
                     CreateTableIfNeeded(conn, "GeneralStatistics", new string[] {
                         "Description text NOT NULL",
                         "Result text",
@@ -175,46 +180,46 @@ namespace DAM
         {
             using (SQLiteCommand cmd = new SQLiteCommand(conn))
             {
-                cmd.CommandText = "PRAGMA table_info('" + name + "')";
-                SQLiteDataReader reader = cmd.ExecuteReader();
-
-                List<string> tmp_cols = new List<string>(cols);
-
-                while (true)
-                {
-                    if (!reader.Read())
-                        break;
-
-                    string s = reader.GetString(1);
-
-                    for (int i = 0; i < tmp_cols.Count; i++)
-                    {
-                        if (tmp_cols[i].Split(' ')[0] == s)
-                        {
-                            tmp_cols.RemoveAt(i);
-                            i--;
-                            break;
-                        }
-                    }
-
-                }
-
-                foreach (string col in tmp_cols)
-                {
-                    using (SQLiteCommand alterCmd = new SQLiteCommand(conn))
-                    {
-                        alterCmd.CommandText = "ALTER TABLE " + name + " ADD COLUMN " + col;
-                        alterCmd.ExecuteNonQuery();
-                    }
-                }
-            }
-
-
-            using (SQLiteCommand cmd = new SQLiteCommand(conn))
-            {
                 cmd.CommandText = "select * from sqlite_master where name = '" + name + "'";
                 if (cmd.ExecuteReader().HasRows)
+                {
+                    using (SQLiteCommand pragmaCmd = new SQLiteCommand(conn))
+                    {
+                        pragmaCmd.CommandText = "PRAGMA table_info('" + name + "')";
+                        SQLiteDataReader reader = pragmaCmd.ExecuteReader();
+
+                        List<string> tmp_cols = new List<string>(cols);
+
+                        while (true)
+                        {
+                            if (!reader.Read())
+                                break;
+
+                            string s = reader.GetString(1);
+
+                            for (int i = 0; i < tmp_cols.Count; i++)
+                            {
+                                if (tmp_cols[i].Split(' ')[0] == s)
+                                {
+                                    tmp_cols.RemoveAt(i);
+                                    i--;
+                                    break;
+                                }
+                            }
+
+                        }
+
+                        foreach (string col in tmp_cols)
+                        {
+                            using (SQLiteCommand alterCmd = new SQLiteCommand(conn))
+                            {
+                                alterCmd.CommandText = "ALTER TABLE " + name + " ADD COLUMN " + col;
+                                alterCmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
                     return false;
+                }
             }
 
             using (SQLiteCommand cmd = new SQLiteCommand(conn))
@@ -381,6 +386,19 @@ namespace DAM
                     SQLiteCommandBuilder builder = new SQLiteCommandBuilder(adpt);
                     builder.ConflictOption = ConflictOption.OverwriteChanges;
                     adpt.Update(dsTable.LoginIDList);
+                }
+                catch (Exception e)
+                {
+                    log.AddLog("Update of database failed: " + e.Message);
+                }
+            }
+            using (SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM LoginIDBanList", GetConnection()))
+            {
+                try
+                {
+                    SQLiteCommandBuilder builder = new SQLiteCommandBuilder(adpt);
+                    builder.ConflictOption = ConflictOption.OverwriteChanges;
+                    adpt.Update(dsTable.LoginIDBanList);
                 }
                 catch (Exception e)
                 {
@@ -557,6 +575,21 @@ namespace DAM
         {
             SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM LoginIDList WHERE AccDir ='" + accDir + "' ORDER BY AccessTime DESC LIMIT 0,1", GetConnection());
             DamDataSet.LoginIDListDataTable dsTable = new DamDataSet.LoginIDListDataTable();
+            adpt.Fill(dsTable);
+            if (dsTable.Count == 0)
+                return null;
+            return dsTable[0];
+        }
+
+        /// <summary>
+        /// Get the LoginIDBanListRow of a LoginID
+        /// </summary>
+        /// <param name="loginID">The loginID</param>
+        /// <returns>The row with of the loginID, null if no row was found</returns>
+        public DamDataSet.LoginIDBanListRow GetLoginIDBanRowByLoginID(string loginID)
+        {
+            SQLiteDataAdapter adpt = new SQLiteDataAdapter("SELECT * FROM LoginIDBanList WHERE loginID ='" + loginID + "' LIMIT 0,1", GetConnection());
+            DamDataSet.LoginIDBanListDataTable dsTable = new DamDataSet.LoginIDBanListDataTable();
             adpt.Fill(dsTable);
             if (dsTable.Count == 0)
                 return null;

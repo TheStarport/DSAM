@@ -94,67 +94,77 @@ namespace DAM
             contents += ".Column1 {FONT-FAMILY: Tahoma; FONT-SIZE: 10pt;  TEXT-ALIGN: left; COLOR: #000000; BACKGROUND: #FFFFFF;}";
             contents += "</style>";
             contents += "</head><body>";
-            contents += "<i>last update: " + DateTime.UtcNow.ToString() + " [ZTC]</i><br><br>";
+            if (AppSettings.Default.setStatPlayerListTimeUTC)
+                contents += "<i>last update: " + DateTime.UtcNow.ToString() + " [UTC]</i><br><br>";
+            else
+                contents += "<i>last update: " + DateTime.Now.ToString() + "</i><br><br>";
             contents += "<i>used slots: " + String.Format("{0}", slots_in_use) + " </i><br><br><br><br>";
-            contents += "<size=5><b><u>Characters by Name</u></b></size><br><br>";
-            contents += "<table width=\"90%\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\">";
-            contents += "<tr>";
-            foreach (string field in playerlistFields)
+            if (AppSettings.Default.setStatPlayerListShowCharsByName)
             {
-                if(column0)
-                    contents += "<th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">";
-                else
-                    contents += "<th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">";
-                contents += field;
-                contents += "</font></th>";
-                column0 = !column0;
-            }
-            column0 = true;
-            contents += "</tr>";
-            foreach (KeyValuePair<string, FLHookSocket.PlayerInfo> kvp in char_list)
-            {
+                contents += "<size=5><b><u>Characters by Name</u></b></size><br><br>";
+                contents += "<table width=\"90%\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\">";
                 contents += "<tr>";
-
                 foreach (string field in playerlistFields)
                 {
-                    string toAdd = string.Empty;
-                    switch(field)
-                    {
-                        case "Character":  toAdd = kvp.Key; break;
-                        case "System":     toAdd = m_gameData.GetItemDescByNickNameX(kvp.Value.system); break;
-                        case "ID":         toAdd = kvp.Value.id.ToString();         break;
-                        case "IP":         toAdd = kvp.Value.ip.ToString();         break;
-                        case "Ping":       toAdd = kvp.Value.ping.ToString();       break;
-                        case "Loss":       toAdd = kvp.Value.loss.ToString();       break;
-                        case "Fluct":      toAdd = kvp.Value.ping_fluct.ToString(); break;
-                        case "Saturation": toAdd = kvp.Value.saturation.ToString(); break;
-                        case "TxQueue":    toAdd = kvp.Value.txqueue.ToString(); break;
-                        case "Lag":        toAdd = kvp.Value.lag.ToString(); break;
-                    }
-
-                    toAdd = HtmlEncode(toAdd);
-
-                    contents += "<td class=\"column" + (column0 ? "0" : "1") + "\">";
-                    contents += toAdd;
-                    contents += "</td>";
+                    if (column0)
+                        contents += "<th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">";
+                    else
+                        contents += "<th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">";
+                    contents += field;
+                    contents += "</font></th>";
                     column0 = !column0;
                 }
-
+                column0 = true;
                 contents += "</tr>";
-            }
-            contents += "</table><br><br><br><br>";
-            contents += "<size=5><b><u>Characters by System</u></b></size><br><br>";
-            contents += "<table width=\"90%\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\">";
-            contents += "<tr><th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">Character</font></th><th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">System</font></th></tr>";
-            foreach (KeyValuePair<string, List<string>> kvp in system_list)
-            {
-               kvp.Value.Sort();
-                foreach (string character in kvp.Value)
+                foreach (KeyValuePair<string, FLHookSocket.PlayerInfo> kvp in char_list)
                 {
-                    contents += "<tr><td class=\"column0\">" + character + "</td><td class=\"column1\">" + kvp.Key + "</td></tr>";
+                    contents += "<tr>";
+
+                    foreach (string field in playerlistFields)
+                    {
+                        string toAdd = string.Empty;
+                        switch (field)
+                        {
+                            case "Character": toAdd = kvp.Key; break;
+                            case "System": toAdd = m_gameData.GetItemDescByNickNameX(kvp.Value.system); break;
+                            case "ID": toAdd = kvp.Value.id.ToString(); break;
+                            case "IP": toAdd = kvp.Value.ip.ToString(); break;
+                            case "Ping": toAdd = kvp.Value.ping.ToString(); break;
+                            case "Loss": toAdd = kvp.Value.loss.ToString(); break;
+                            case "Fluct": toAdd = kvp.Value.ping_fluct.ToString(); break;
+                            case "Saturation": toAdd = kvp.Value.saturation.ToString(); break;
+                            case "TxQueue": toAdd = kvp.Value.txqueue.ToString(); break;
+                            case "Lag": toAdd = kvp.Value.lag.ToString(); break;
+                        }
+
+                        //toAdd = HtmlEncode(toAdd);
+
+                        contents += "<td class=\"column" + (column0 ? "0" : "1") + "\">";
+                        contents += toAdd;
+                        contents += "</td>";
+                        column0 = !column0;
+                    }
+
+                    contents += "</tr>";
                 }
+                contents += "</table><br><br><br><br>";
             }
-            contents += "</table></body></html>";
+            if (AppSettings.Default.setStatPlayerListShowCharsBySys)
+            {
+                contents += "<size=5><b><u>Characters by System</u></b></size><br><br>";
+                contents += "<table width=\"90%\" border=\"1\" cellspacing=\"0\" cellpadding=\"0\">";
+                contents += "<tr><th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">Character</font></th><th bgcolor=\"#ECE9D8\" align=\"left\"><font face=\"Tahoma\" color=\"#000000\" size=\"2\">System</font></th></tr>";
+                foreach (KeyValuePair<string, List<string>> kvp in system_list)
+                {
+                    kvp.Value.Sort();
+                    foreach (string character in kvp.Value)
+                    {
+                        contents += "<tr><td class=\"column0\">" + character + "</td><td class=\"column1\">" + kvp.Key + "</td></tr>";
+                    }
+                }
+                contents += "</table>";
+            }
+            contents += "</body></html>";
             //*****   open the stream and write the contents ...
             String online_players_file = String.Format("{0}\\players_online.html", AppSettings.Default.setStatisticsDir);
             StreamWriter writer = new StreamWriter(online_players_file);
@@ -165,7 +175,7 @@ namespace DAM
             }
             catch (Exception ex)
             {
-                log.AddLog(String.Format("Error '{0}'in GenerateOnlinePlayerStats", ex.Message));
+                log.AddLog(String.Format("Error '{0}' in GenerateOnlinePlayerStats", ex.Message));
             }
             finally
             {

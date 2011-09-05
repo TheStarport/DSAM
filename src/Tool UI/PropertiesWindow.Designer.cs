@@ -31,12 +31,15 @@
             System.Windows.Forms.Label label18;
             System.Windows.Forms.Label label17;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PropertiesWindow));
-            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.loginIDBanFileButton = new System.Windows.Forms.Button();
+            this.textBoxLoginIDBanFile = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
             this.UninterestedCharsDirButton = new System.Windows.Forms.Button();
             this.textBoxMoveUninterestedCharsDir = new System.Windows.Forms.TextBox();
             this.checkBoxMoveUninterestedChars = new System.Windows.Forms.CheckBox();
@@ -100,8 +103,13 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
+            this.StatisticsDirButton = new System.Windows.Forms.Button();
             this.textBoxStatisticsDir = new System.Windows.Forms.TextBox();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.checkBoxBannedCharsInRed = new System.Windows.Forms.CheckBox();
+            this.checkBoxStatCharsBySys = new System.Windows.Forms.CheckBox();
+            this.checkBoxStatCharsByName = new System.Windows.Forms.CheckBox();
+            this.checkBoxStatsTimeUTC = new System.Windows.Forms.CheckBox();
             label18 = new System.Windows.Forms.Label();
             label17 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
@@ -142,7 +150,7 @@
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(495, 390);
+            this.button1.Location = new System.Drawing.Point(495, 445);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 15;
@@ -153,7 +161,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(414, 390);
+            this.button2.Location = new System.Drawing.Point(414, 445);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 16;
@@ -169,7 +177,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(558, 374);
+            this.tabControl1.Size = new System.Drawing.Size(558, 427);
             this.tabControl1.TabIndex = 17;
             // 
             // tabPage1
@@ -178,13 +186,16 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(550, 348);
+            this.tabPage1.Size = new System.Drawing.Size(550, 401);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "General 1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.loginIDBanFileButton);
+            this.groupBox2.Controls.Add(this.textBoxLoginIDBanFile);
+            this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.UninterestedCharsDirButton);
             this.groupBox2.Controls.Add(this.textBoxMoveUninterestedCharsDir);
             this.groupBox2.Controls.Add(this.checkBoxMoveUninterestedChars);
@@ -216,14 +227,40 @@
             this.groupBox2.Controls.Add(this.accountDirButton);
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(537, 311);
+            this.groupBox2.Size = new System.Drawing.Size(537, 389);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Files";
             // 
+            // loginIDBanFileButton
+            // 
+            this.loginIDBanFileButton.Location = new System.Drawing.Point(502, 147);
+            this.loginIDBanFileButton.Name = "loginIDBanFileButton";
+            this.loginIDBanFileButton.Size = new System.Drawing.Size(29, 23);
+            this.loginIDBanFileButton.TabIndex = 42;
+            this.loginIDBanFileButton.Text = "...";
+            this.loginIDBanFileButton.UseVisualStyleBackColor = true;
+            this.loginIDBanFileButton.Click += new System.EventHandler(this.loginIDBanFileButton_Click);
+            // 
+            // textBoxLoginIDBanFile
+            // 
+            this.textBoxLoginIDBanFile.Location = new System.Drawing.Point(9, 149);
+            this.textBoxLoginIDBanFile.Name = "textBoxLoginIDBanFile";
+            this.textBoxLoginIDBanFile.Size = new System.Drawing.Size(487, 20);
+            this.textBoxLoginIDBanFile.TabIndex = 41;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 133);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(82, 13);
+            this.label20.TabIndex = 40;
+            this.label20.Text = "LoginID-Ban file";
+            // 
             // UninterestedCharsDirButton
             // 
-            this.UninterestedCharsDirButton.Location = new System.Drawing.Point(502, 182);
+            this.UninterestedCharsDirButton.Location = new System.Drawing.Point(502, 217);
             this.UninterestedCharsDirButton.Name = "UninterestedCharsDirButton";
             this.UninterestedCharsDirButton.Size = new System.Drawing.Size(29, 23);
             this.UninterestedCharsDirButton.TabIndex = 39;
@@ -233,7 +270,7 @@
             // 
             // textBoxMoveUninterestedCharsDir
             // 
-            this.textBoxMoveUninterestedCharsDir.Location = new System.Drawing.Point(221, 185);
+            this.textBoxMoveUninterestedCharsDir.Location = new System.Drawing.Point(221, 220);
             this.textBoxMoveUninterestedCharsDir.Name = "textBoxMoveUninterestedCharsDir";
             this.textBoxMoveUninterestedCharsDir.Size = new System.Drawing.Size(275, 20);
             this.textBoxMoveUninterestedCharsDir.TabIndex = 38;
@@ -241,7 +278,7 @@
             // checkBoxMoveUninterestedChars
             // 
             this.checkBoxMoveUninterestedChars.AutoSize = true;
-            this.checkBoxMoveUninterestedChars.Location = new System.Drawing.Point(9, 188);
+            this.checkBoxMoveUninterestedChars.Location = new System.Drawing.Point(9, 223);
             this.checkBoxMoveUninterestedChars.Name = "checkBoxMoveUninterestedChars";
             this.checkBoxMoveUninterestedChars.Size = new System.Drawing.Size(206, 17);
             this.checkBoxMoveUninterestedChars.TabIndex = 37;
@@ -250,7 +287,7 @@
             // 
             // numericUpDown3
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(413, 239);
+            this.numericUpDown3.Location = new System.Drawing.Point(413, 274);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -268,7 +305,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(467, 241);
+            this.label13.Location = new System.Drawing.Point(467, 276);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(29, 13);
             this.label13.TabIndex = 35;
@@ -277,7 +314,7 @@
             // checkBoxCheckDefaultLights
             // 
             this.checkBoxCheckDefaultLights.AutoSize = true;
-            this.checkBoxCheckDefaultLights.Location = new System.Drawing.Point(392, 265);
+            this.checkBoxCheckDefaultLights.Location = new System.Drawing.Point(392, 300);
             this.checkBoxCheckDefaultLights.Name = "checkBoxCheckDefaultLights";
             this.checkBoxCheckDefaultLights.Size = new System.Drawing.Size(134, 17);
             this.checkBoxCheckDefaultLights.TabIndex = 34;
@@ -287,7 +324,7 @@
             // checkBoxCheckDefaultEngine
             // 
             this.checkBoxCheckDefaultEngine.AutoSize = true;
-            this.checkBoxCheckDefaultEngine.Location = new System.Drawing.Point(186, 288);
+            this.checkBoxCheckDefaultEngine.Location = new System.Drawing.Point(186, 323);
             this.checkBoxCheckDefaultEngine.Name = "checkBoxCheckDefaultEngine";
             this.checkBoxCheckDefaultEngine.Size = new System.Drawing.Size(142, 17);
             this.checkBoxCheckDefaultEngine.TabIndex = 33;
@@ -297,7 +334,7 @@
             // checkBoxCheckDefaultPowerPlant
             // 
             this.checkBoxCheckDefaultPowerPlant.AutoSize = true;
-            this.checkBoxCheckDefaultPowerPlant.Location = new System.Drawing.Point(186, 265);
+            this.checkBoxCheckDefaultPowerPlant.Location = new System.Drawing.Point(186, 300);
             this.checkBoxCheckDefaultPowerPlant.Name = "checkBoxCheckDefaultPowerPlant";
             this.checkBoxCheckDefaultPowerPlant.Size = new System.Drawing.Size(165, 17);
             this.checkBoxCheckDefaultPowerPlant.TabIndex = 32;
@@ -307,7 +344,7 @@
             // checkBoxReportVisitError
             // 
             this.checkBoxReportVisitError.AutoSize = true;
-            this.checkBoxReportVisitError.Location = new System.Drawing.Point(9, 288);
+            this.checkBoxReportVisitError.Location = new System.Drawing.Point(9, 323);
             this.checkBoxReportVisitError.Name = "checkBoxReportVisitError";
             this.checkBoxReportVisitError.Size = new System.Drawing.Size(129, 17);
             this.checkBoxReportVisitError.TabIndex = 31;
@@ -317,7 +354,7 @@
             // checkBoxAutomaticFixCharFiles
             // 
             this.checkBoxAutomaticFixCharFiles.AutoSize = true;
-            this.checkBoxAutomaticFixCharFiles.Location = new System.Drawing.Point(9, 265);
+            this.checkBoxAutomaticFixCharFiles.Location = new System.Drawing.Point(9, 300);
             this.checkBoxAutomaticFixCharFiles.Name = "checkBoxAutomaticFixCharFiles";
             this.checkBoxAutomaticFixCharFiles.Size = new System.Drawing.Size(170, 17);
             this.checkBoxAutomaticFixCharFiles.TabIndex = 30;
@@ -327,7 +364,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(240, 241);
+            this.label9.Location = new System.Drawing.Point(240, 276);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(167, 13);
             this.label9.TabIndex = 29;
@@ -336,7 +373,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(230, 217);
+            this.label8.Location = new System.Drawing.Point(230, 252);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 28;
@@ -344,7 +381,7 @@
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(186, 239);
+            this.numericUpDown2.Location = new System.Drawing.Point(186, 274);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -356,7 +393,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(179, 214);
+            this.numericUpDown1.Location = new System.Drawing.Point(179, 249);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -379,7 +416,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 217);
+            this.label7.Location = new System.Drawing.Point(6, 252);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(162, 13);
             this.label7.TabIndex = 25;
@@ -388,7 +425,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 241);
+            this.label2.Location = new System.Drawing.Point(6, 276);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(174, 13);
             this.label2.TabIndex = 24;
@@ -397,7 +434,7 @@
             // checkBoxAutomaticCharClean
             // 
             this.checkBoxAutomaticCharClean.AutoSize = true;
-            this.checkBoxAutomaticCharClean.Location = new System.Drawing.Point(289, 165);
+            this.checkBoxAutomaticCharClean.Location = new System.Drawing.Point(289, 200);
             this.checkBoxAutomaticCharClean.Name = "checkBoxAutomaticCharClean";
             this.checkBoxAutomaticCharClean.Size = new System.Drawing.Size(186, 17);
             this.checkBoxAutomaticCharClean.TabIndex = 23;
@@ -407,7 +444,7 @@
             // checkBoxAutomaticCharWipe
             // 
             this.checkBoxAutomaticCharWipe.AutoSize = true;
-            this.checkBoxAutomaticCharWipe.Location = new System.Drawing.Point(9, 165);
+            this.checkBoxAutomaticCharWipe.Location = new System.Drawing.Point(9, 200);
             this.checkBoxAutomaticCharWipe.Name = "checkBoxAutomaticCharWipe";
             this.checkBoxAutomaticCharWipe.Size = new System.Drawing.Size(222, 17);
             this.checkBoxAutomaticCharWipe.TabIndex = 22;
@@ -416,11 +453,12 @@
             // 
             // checkBoxChangedOnly
             // 
+            this.checkBoxChangedOnly.AutoSize = true;
             this.checkBoxChangedOnly.Checked = true;
             this.checkBoxChangedOnly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxChangedOnly.Location = new System.Drawing.Point(9, 135);
+            this.checkBoxChangedOnly.Location = new System.Drawing.Point(9, 177);
             this.checkBoxChangedOnly.Name = "checkBoxChangedOnly";
-            this.checkBoxChangedOnly.Size = new System.Drawing.Size(267, 24);
+            this.checkBoxChangedOnly.Size = new System.Drawing.Size(193, 17);
             this.checkBoxChangedOnly.TabIndex = 21;
             this.checkBoxChangedOnly.Text = "Check changed character files only";
             // 
@@ -445,7 +483,7 @@
             // checkBoxWriteEncryptedFiles
             // 
             this.checkBoxWriteEncryptedFiles.AutoSize = true;
-            this.checkBoxWriteEncryptedFiles.Location = new System.Drawing.Point(289, 139);
+            this.checkBoxWriteEncryptedFiles.Location = new System.Drawing.Point(289, 177);
             this.checkBoxWriteEncryptedFiles.Name = "checkBoxWriteEncryptedFiles";
             this.checkBoxWriteEncryptedFiles.Size = new System.Drawing.Size(122, 17);
             this.checkBoxWriteEncryptedFiles.TabIndex = 9;
@@ -522,7 +560,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(550, 348);
+            this.tabPage3.Size = new System.Drawing.Size(550, 401);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "General 2";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -531,7 +569,7 @@
             // 
             this.groupBox6.Controls.Add(this.label19);
             this.groupBox6.Controls.Add(this.checkedListBoxProcessors);
-            this.groupBox6.Location = new System.Drawing.Point(6, 176);
+            this.groupBox6.Location = new System.Drawing.Point(6, 195);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(199, 133);
             this.groupBox6.TabIndex = 41;
@@ -563,7 +601,7 @@
             this.groupBox1.Controls.Add(this.textBoxFLHookLogin);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(211, 176);
+            this.groupBox1.Location = new System.Drawing.Point(211, 195);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(243, 93);
             this.groupBox1.TabIndex = 39;
@@ -629,6 +667,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.checkBoxBannedCharsInRed);
             this.groupBox4.Controls.Add(this.checkBoxFilterWaitEnter);
             this.groupBox4.Controls.Add(this.checkBoxShowMultideleteSucc);
             this.groupBox4.Controls.Add(this.checkBoxShowMultiunbanSucc);
@@ -638,10 +677,10 @@
             this.groupBox4.Controls.Add(this.checkBoxShowQuitMsg);
             this.groupBox4.Location = new System.Drawing.Point(6, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(538, 164);
+            this.groupBox4.Size = new System.Drawing.Size(538, 183);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Message-Box Settings";
+            this.groupBox4.Text = "UI Settings";
             // 
             // checkBoxFilterWaitEnter
             // 
@@ -719,7 +758,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(550, 348);
+            this.tabPage2.Size = new System.Drawing.Size(550, 401);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Statistics";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -733,17 +772,20 @@
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.button3);
+            this.groupBox3.Controls.Add(this.StatisticsDirButton);
             this.groupBox3.Controls.Add(this.textBoxStatisticsDir);
             this.groupBox3.Location = new System.Drawing.Point(7, 7);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(537, 331);
+            this.groupBox3.Size = new System.Drawing.Size(537, 388);
             this.groupBox3.TabIndex = 36;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "HTML Statistics Output";
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.checkBoxStatsTimeUTC);
+            this.groupBox5.Controls.Add(this.checkBoxStatCharsByName);
+            this.groupBox5.Controls.Add(this.checkBoxStatCharsBySys);
             this.groupBox5.Controls.Add(this.buttonStatPlayerListDown);
             this.groupBox5.Controls.Add(this.buttonStatPlayerListUp);
             this.groupBox5.Controls.Add(label18);
@@ -754,7 +796,7 @@
             this.groupBox5.Controls.Add(this.listBoxStatPlayerListDontShow);
             this.groupBox5.Location = new System.Drawing.Point(6, 168);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(372, 127);
+            this.groupBox5.Size = new System.Drawing.Size(372, 188);
             this.groupBox5.TabIndex = 50;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Player online list";
@@ -818,7 +860,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(142, 303);
+            this.label15.Location = new System.Drawing.Point(138, 364);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(29, 13);
             this.label15.TabIndex = 41;
@@ -834,7 +876,7 @@
             // 
             // numericUpDownHistoryHorizon
             // 
-            this.numericUpDownHistoryHorizon.Location = new System.Drawing.Point(88, 301);
+            this.numericUpDownHistoryHorizon.Location = new System.Drawing.Point(84, 362);
             this.numericUpDownHistoryHorizon.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -857,7 +899,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 303);
+            this.label14.Location = new System.Drawing.Point(2, 364);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(76, 13);
             this.label14.TabIndex = 38;
@@ -882,15 +924,15 @@
             this.label11.TabIndex = 34;
             this.label11.Text = "Statistics directory";
             // 
-            // button3
+            // StatisticsDirButton
             // 
-            this.button3.Location = new System.Drawing.Point(502, 30);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(29, 23);
-            this.button3.TabIndex = 35;
-            this.button3.Text = "...";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.StatisticsDirButton.Location = new System.Drawing.Point(502, 30);
+            this.StatisticsDirButton.Name = "StatisticsDirButton";
+            this.StatisticsDirButton.Size = new System.Drawing.Size(29, 23);
+            this.StatisticsDirButton.TabIndex = 35;
+            this.StatisticsDirButton.Text = "...";
+            this.StatisticsDirButton.UseVisualStyleBackColor = true;
+            this.StatisticsDirButton.Click += new System.EventHandler(this.statisticsButton_Click);
             // 
             // textBoxStatisticsDir
             // 
@@ -899,17 +941,61 @@
             this.textBoxStatisticsDir.Size = new System.Drawing.Size(487, 20);
             this.textBoxStatisticsDir.TabIndex = 33;
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            // 
+            // checkBoxBannedCharsInRed
+            // 
+            this.checkBoxBannedCharsInRed.AutoSize = true;
+            this.checkBoxBannedCharsInRed.Location = new System.Drawing.Point(6, 160);
+            this.checkBoxBannedCharsInRed.Name = "checkBoxBannedCharsInRed";
+            this.checkBoxBannedCharsInRed.Size = new System.Drawing.Size(181, 17);
+            this.checkBoxBannedCharsInRed.TabIndex = 8;
+            this.checkBoxBannedCharsInRed.Text = "Display banned characters in red";
+            this.checkBoxBannedCharsInRed.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxStatCharsBySys
+            // 
+            this.checkBoxStatCharsBySys.AutoSize = true;
+            this.checkBoxStatCharsBySys.Location = new System.Drawing.Point(6, 145);
+            this.checkBoxStatCharsBySys.Name = "checkBoxStatCharsBySys";
+            this.checkBoxStatCharsBySys.Size = new System.Drawing.Size(168, 17);
+            this.checkBoxStatCharsBySys.TabIndex = 58;
+            this.checkBoxStatCharsBySys.Text = "Show \"Characters by System\"";
+            this.checkBoxStatCharsBySys.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxStatCharsByName
+            // 
+            this.checkBoxStatCharsByName.AutoSize = true;
+            this.checkBoxStatCharsByName.Location = new System.Drawing.Point(6, 122);
+            this.checkBoxStatCharsByName.Name = "checkBoxStatCharsByName";
+            this.checkBoxStatCharsByName.Size = new System.Drawing.Size(162, 17);
+            this.checkBoxStatCharsByName.TabIndex = 59;
+            this.checkBoxStatCharsByName.Text = "Show \"Characters by Name\"";
+            this.checkBoxStatCharsByName.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxStatsTimeUTC
+            // 
+            this.checkBoxStatsTimeUTC.AutoSize = true;
+            this.checkBoxStatsTimeUTC.Location = new System.Drawing.Point(6, 165);
+            this.checkBoxStatsTimeUTC.Name = "checkBoxStatsTimeUTC";
+            this.checkBoxStatsTimeUTC.Size = new System.Drawing.Size(118, 17);
+            this.checkBoxStatsTimeUTC.TabIndex = 60;
+            this.checkBoxStatsTimeUTC.Text = "Display time in UTC";
+            this.checkBoxStatsTimeUTC.UseVisualStyleBackColor = true;
+            // 
             // PropertiesWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(582, 421);
+            this.ClientSize = new System.Drawing.Size(574, 472);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(590, 455);
-            this.MinimumSize = new System.Drawing.Size(590, 455);
+            this.MaximumSize = new System.Drawing.Size(590, 510);
+            this.MinimumSize = new System.Drawing.Size(590, 510);
             this.Name = "PropertiesWindow";
             this.Text = "Properties";
             this.Load += new System.EventHandler(this.PropertiesWindow_Load);
@@ -940,7 +1026,7 @@
 
         #endregion
 
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TabControl tabControl1;
@@ -962,7 +1048,7 @@
         private System.Windows.Forms.TextBox textBoxStatsFactions;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button StatisticsDirButton;
         private System.Windows.Forms.TextBox textBoxStatisticsDir;
         private System.Windows.Forms.CheckBox checkBoxCheckDefaultEngine;
         private System.Windows.Forms.CheckBox checkBoxCheckDefaultPowerPlant;
@@ -1011,6 +1097,14 @@
         private System.Windows.Forms.TextBox textBoxFLHookLogin;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button loginIDBanFileButton;
+        private System.Windows.Forms.TextBox textBoxLoginIDBanFile;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.CheckBox checkBoxBannedCharsInRed;
+        private System.Windows.Forms.CheckBox checkBoxStatCharsByName;
+        private System.Windows.Forms.CheckBox checkBoxStatCharsBySys;
+        private System.Windows.Forms.CheckBox checkBoxStatsTimeUTC;
 
     }
 }

@@ -456,6 +456,7 @@ namespace DAM
 
             piFileView.Text = "";
             piAccountID.Text = "";
+            piAccountID.ForeColor = SystemColors.ControlText;
             changeBanButton.Text = "Ban Account";
             buttonBanInfo.Enabled = false;
 
@@ -563,7 +564,24 @@ namespace DAM
             isAdmin |= File.Exists(accDirPath + Path.DirectorySeparatorChar + "admin");
             bool isBanned = File.Exists(accDirPath + Path.DirectorySeparatorChar + "banned");
             bool isAuthenticated = File.Exists(accDirPath + Path.DirectorySeparatorChar + "authenticated");
+            bool isLongIDBanned = false;
 
+            if (!string.IsNullOrEmpty(AppSettings.Default.setLoginIDBanFile))
+            {
+                GetDataAccess();
+                DamDataSet.LoginIDListDataTable loginIDs = new DamDataSet.LoginIDListDataTable();
+                dataAccess.GetLoginIDListByAccDir(loginIDs, charRecord.AccDir);
+
+                foreach (DamDataSet.LoginIDListRow row in loginIDs)
+                {
+                    if (dataAccess.GetLoginIDBanRowByLoginID(row.LoginID) != null)
+                    {
+                        isLongIDBanned = true;
+                        break;
+                    }
+                }
+            }
+            
             if (isBanned)
             {
                 changeBanButton.Text = "Unban Account";
@@ -574,10 +592,13 @@ namespace DAM
             {
                 // Do the account ID first and path. After this point we could hit an exception and
                 // stop the update.
-                piAccountID.Text = charRecord.AccID 
+                piAccountID.Text = charRecord.AccID
                     + (isBanned ? " [BANNED]" : "")
+                    + (isLongIDBanned ? " [HW-BANNED]" : "")
                     + (isAdmin ? " [ADMIN]" : "")
                     + (isAuthenticated ? " [AUTHENTICATED]" : "");
+                if ((isLongIDBanned || isBanned) && AppSettings.Default.setDisplayBannedCharsRed)
+                    piAccountID.BackColor = Color.Red;
                 piPath.Text = AppSettings.Default.setAccountDir + "\\" + charRecord.CharPath;
                 piName.Text = charRecord.CharName + (charRecord.IsDeleted ? " [DELETED]" : "");
                 piCreated.Text = String.Format("{0:f}", charRecord.Created);
