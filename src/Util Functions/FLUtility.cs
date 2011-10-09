@@ -405,7 +405,7 @@ namespace DAM
                 // Read LoginID-Bans
                 bgWkr.ReportProgress(0, "Reading LognID-Bans...");
                 log.AddLog("Reading LognID-Bans...");
-                bool retn = ReadLognIDBans(tempDataStore, da, AppSettings.Default.setLoginIDBanFile);
+                bool retn = ReadLoginIDBans(tempDataStore, da, AppSettings.Default.setLoginIDBanFile);
                 if (!retn)
                 {
                     log.AddLog(tempDataStore.LoginIDBanList.Rows.Count + " LoginID-Bans in database");
@@ -558,7 +558,7 @@ namespace DAM
 
         }
 
-        public static bool ReadLognIDBans(DamDataSet dataSet, DataAccess da, string filepath)
+        public static bool ReadLoginIDBans(DamDataSet dataSet, DataAccess da, string filepath)
         {
             if (!File.Exists(filepath))
                 return false;
@@ -566,6 +566,15 @@ namespace DAM
             string[] bans = File.ReadAllLines(filepath);
             string tmpLoginID = null;
             string tmpReason = null;
+
+            /*
+             * If a file contains the same loginID twice, AddLoginIDBanListRow will crash.
+             * This is because GetLoginIDBanRowByLogin reads from the file,
+             * but AddLoginIDBanListRow isn't synced to the file.
+             * 
+             * This list stores all banned IDs.
+             */
+            List<string> bannedIDs = new List<string>(bans.Length);
 
             dataSet.LoginIDBanList.Rows.Clear();
 
@@ -584,14 +593,21 @@ namespace DAM
                     tmpReason = parts[1].Trim();
                 }
 
+                if (bannedIDs.Contains(tmpLoginID))
+                    continue;
+
+                // check if the ban exists..
                 DamDataSet.LoginIDBanListRow loginIDRecord = da.GetLoginIDBanRowByLoginID(tmpLoginID);
                 if (loginIDRecord != null)
                 {
+                    // just update the reason
                     loginIDRecord.Reason = tmpReason;
                 }
                 else
                 {
+                    // add the ban
                     dataSet.LoginIDBanList.AddLoginIDBanListRow(tmpLoginID, tmpReason);
+                    bannedIDs.Add(tmpLoginID);
                 }
             }
 
