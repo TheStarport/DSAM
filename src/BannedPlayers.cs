@@ -56,12 +56,6 @@ namespace DAM
                     filter += " AND ";
                 filter += "(BanEnd < #"+String.Format("{0:s}",DateTime.Now.ToUniversalTime())+"#)";
             }
-            else
-            {
-                if (filter != "")
-                    filter += " AND ";
-                filter += "NOT Existent";
-            }
 
             banListBindingSource.Filter = filter;
         }
@@ -103,15 +97,6 @@ namespace DAM
         {
             textBoxFilter.Text = accountID;
             timerFilter.Start();
-        }
-
-        /// <summary>
-        /// Set if expired bans should be shown, too or not.
-        /// </summary>
-        /// <param name="value">true = expired bans, false = don't show them</param>
-        public void ShowExpiredbans(bool value)
-        {
-            checkBoxShowExpiredBans.Checked = value;
         }
 
         private void checkBoxShowExpiredBans_CheckedChanged(object sender, EventArgs e)

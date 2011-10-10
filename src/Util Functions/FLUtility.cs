@@ -632,24 +632,29 @@ namespace DAM
             // Check and update the account ban information. Remove bans for deleted accounts
             // and automatically create bans if they don't have any other information.
             bool banned = File.Exists(accDirPath + Path.DirectorySeparatorChar + "banned");
-            DamDataSet.BanListRow banRecord = dataSet.BanList.FindByAccDir(accDir);
-            if (banRecord != null && !banned)
+            if (banned)
             {
-                banRecord.Existent = false;
-                filesUpdated++;
-            }
-            else if (banRecord == null && banned)
-            {
-                string banInfo = File.ReadAllText(accDirPath + Path.DirectorySeparatorChar + "banned");
+                DateTime fileCreationTime = File.GetCreationTime(accDirPath + Path.DirectorySeparatorChar + "banned");
+                DamDataSet.BanListRow banRecord = dataSet.BanList.FindByAccDir(accDir);
 
-                banRecord = dataSet.BanList.NewBanListRow();
-                banRecord.AccDir = accDir;
-                banRecord.AccID = GetAccountID(accDirPath);
-                banRecord.BanReason = (banInfo.Length > 0) ? banInfo : "UNKNOWN";
-                banRecord.BanStart = File.GetCreationTime(accDirPath + Path.DirectorySeparatorChar + "banned");
-                banRecord.BanEnd = DateTime.Now.AddDays(1000).ToUniversalTime();
-                dataSet.BanList.AddBanListRow(banRecord);
-                filesUpdated++;
+                if (banRecord != null && !banned)
+                {
+                    banRecord.Delete();
+                    filesUpdated++;
+                }
+                else if(banRecord == null)
+                {
+                    string banInfo = File.ReadAllText(accDirPath + Path.DirectorySeparatorChar + "banned");
+
+                    banRecord = dataSet.BanList.NewBanListRow();
+                    banRecord.AccDir = accDir;
+                    banRecord.AccID = GetAccountID(accDirPath);
+                    banRecord.BanReason = (banInfo.Length > 0) ? banInfo : "UNKNOWN";
+                    banRecord.BanStart = File.GetCreationTime(accDirPath + Path.DirectorySeparatorChar + "banned");
+                    banRecord.BanEnd = DateTime.Now.AddDays(1000).ToUniversalTime();
+                    dataSet.BanList.AddBanListRow(banRecord);
+                    filesUpdated++;
+                }
             }
 
             // Check and update login id information.

@@ -456,7 +456,7 @@ namespace DAM
 
             piFileView.Text = "";
             piAccountID.Text = "";
-            piAccountID.ForeColor = SystemColors.ControlText;
+            piAccountID.BackColor = SystemColors.ControlLight;
             changeBanButton.Text = "Ban Account";
             buttonBanInfo.Enabled = false;
 
@@ -919,7 +919,6 @@ namespace DAM
 
             bannedPlayersToolStripMenuItem_Click(null, null);
             windowBannedPlayers.HighlightRecord(charRecord.AccID);
-            windowBannedPlayers.ShowExpiredbans(false);
         }
 
         /// <summary>
@@ -933,7 +932,6 @@ namespace DAM
 
             bannedPlayersToolStripMenuItem_Click(null, null);
             windowBannedPlayers.HighlightRecord(charRecord.AccID);
-            windowBannedPlayers.ShowExpiredbans(true);
         }
 
         /// <summary>
@@ -1312,7 +1310,6 @@ namespace DAM
                 windowBannedPlayers = new BannedPlayers(this, dataSetPlayerInfo);
             windowBannedPlayers.Show();
             windowBannedPlayers.BringToFront();
-            windowBannedPlayers.ShowExpiredbans(false);
         }
 
         /// <summary>
@@ -1451,7 +1448,7 @@ namespace DAM
             DamDataSet.BanListRow banRecord = dataSetPlayerInfo.BanList.FindByAccDir(accDir);
             if (banRecord != null)
             {
-                banRecord.Existent = false;
+                banRecord.Delete();
                 dbUpdatesPending++;
             }
  
