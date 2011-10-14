@@ -405,11 +405,11 @@ namespace DAM
         /// <returns>The entry or null if an entry was not selected</returns>
         private DamDataSet.CharacterListRow GetCharRecordBySelectedRow()
         {
-            // Get the deleted for the currently selected player in the character list.
-            if (charListDataGridView.SelectedRows.Count == 0)
+            string charFilePath = GetCharPathBySelectedRow();
+
+            if (charFilePath == null)
                 return null;
 
-            string charFilePath = (string)charListDataGridView.SelectedRows[0].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
             return dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePath);
         }
 
@@ -420,18 +420,48 @@ namespace DAM
         /// <returns>The entrys or null if an entry was not selected</returns>
         private DamDataSet.CharacterListRow[] GetAllCharRecordsBySelectedRows()
         {
+            string[] charFilePaths = GetAllCharPathsBySelectedRows();
+            DamDataSet.CharacterListRow[] selectedRows = new DamDataSet.CharacterListRow[charFilePaths.Length];
+
+            for (int i = 0; i < charFilePaths.Length; i++)
+            {
+                selectedRows[i] = dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePaths[i]);
+            }
+
+            return selectedRows;
+        }
+
+        /// <summary>
+        /// Get the charfilepath of the currently selected row
+        /// in the table.
+        /// </summary>
+        /// <returns>The entry or null if an entry was not selected</returns>
+        private string GetCharPathBySelectedRow()
+        {
+            // Get the deleted for the currently selected player in the character list.
+            if (charListDataGridView.SelectedRows.Count == 0)
+                return null;
+
+            return (string)charListDataGridView.SelectedRows[0].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
+        }
+
+        /// <summary>
+        /// Get all charfilepaths of the currently selected rows
+        /// in the table.
+        /// </summary>
+        /// <returns>The entrys or null if an entry was not selected</returns>
+        private string[] GetAllCharPathsBySelectedRows()
+        {
             // don't enter the loop if only one is selected
             if (charListDataGridView.SelectedRows.Count == 1)
-                return new DamDataSet.CharacterListRow[] { GetCharRecordBySelectedRow() };
+                return new string[] { GetCharPathBySelectedRow() };
 
             // array to save all selected rows
-            DamDataSet.CharacterListRow[] selectedRows = new DamDataSet.CharacterListRow[charListDataGridView.SelectedRows.Count];
-            string charFilePath;
+            string[] selectedRows = new string[charListDataGridView.SelectedRows.Count];
 
-            for(int i = 0; i < selectedRows.Length; i++)
+            for (int i = 0; i < selectedRows.Length; i++)
             {
-                charFilePath = (string)charListDataGridView.SelectedRows[i].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
-                selectedRows[i]= dataSetPlayerInfo.CharacterList.FindByCharPath(charFilePath);
+                selectedRows[i] = (string)charListDataGridView.SelectedRows[i].Cells[charPathDataGridViewTextBoxColumn1.Index].Value;
             }
 
             return selectedRows;
@@ -2427,15 +2457,7 @@ namespace DAM
             }
 
             // save all selected rows
-            DamDataSet.CharacterListRow[] selectedChars = GetAllCharRecordsBySelectedRows();
-            info.selectedCharPaths = new string[selectedChars.Length];
-
-            // TODO: GetAllCharRecordsBySelectedRows() has already the CharPath, doubled work here..
-            for (int i = 0; i < selectedChars.Length; i++)
-            {
-                info.selectedCharPaths[i] = selectedChars[i].CharPath;
-            }
-
+            info.selectedCharPaths = GetAllCharPathsBySelectedRows();
             return info;
         }
 
