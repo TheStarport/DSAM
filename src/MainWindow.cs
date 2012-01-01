@@ -998,7 +998,9 @@ namespace DAM
             else
             {
                 string charPath = AppSettings.Default.setAccountDir + "\\" + charRecord.CharPath;
-                new ChangeLocationWindow(this, gameData, loadedCharFile).ShowDialog(this);
+                List<FLDataFile> charFiles = new List<FLDataFile>();
+                charFiles.Add(loadedCharFile);
+                new ChangeLocationWindow(this, gameData, charFiles).ShowDialog(this);
             }
         }
 
@@ -1552,20 +1554,8 @@ namespace DAM
                         if (flHookCmdr.CmdIsOnServer(accCharRecord.CharName))
                             flHookCmdr.CmdKick(accCharRecord.CharName);
                     }
-
-                    foreach (DamDataSet.CharacterListRow accCharRecord in charRecords)
-                    {
-                        if (!flHookCmdr.CmdBan(accCharRecord.CharName))
-                            MessageBox.Show(this, "Warning flhook command failed \"" + flHookCmdr.LastCmdError + "\". Creating ban file in account anyway.", null, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        break;
-                    }
                 }
-
-                flHookCmdr.CmdBan(charName);
-
                 charFile.SaveSettings(charFile.filePath, AppSettings.Default.setWriteEncryptedFiles);
-
-                flHookCmdr.CmdUnban(charName);
             }
             catch (Exception ex)
             {
@@ -2556,5 +2546,21 @@ namespace DAM
                 charListDataGridView.FirstDisplayedScrollingRowIndex = info.scrollPos;
         }
         #endregion
+
+        private void buttonMoveAllSelected_Click(object sender, EventArgs e)
+        {
+            DamDataSet.CharacterListRow[] charRecords = GetAllCharRecordsBySelectedRows();
+
+            if (MessageBox.Show(this, "Are you sure you want to move " + charRecords.Length + " players?", "Move Players?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) != DialogResult.Yes)
+                return;
+
+            List<FLDataFile> charFiles = new List<FLDataFile>();
+            for (int i = 0; i < charRecords.Length; i++)
+            {
+                string charPath = AppSettings.Default.setAccountDir + "\\" + charRecords[i].CharPath;
+                charFiles.Add(new FLDataFile(charPath, true));
+            }
+            new ChangeLocationWindow(this, gameData, charFiles).ShowDialog(this);
+        }
     }
 }

@@ -183,6 +183,7 @@
             this.banSelectedButton = new System.Windows.Forms.Button();
             this.deleteSelectedButton = new System.Windows.Forms.Button();
             this.unbanSelectedButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1227,20 +1228,20 @@
             this.propertiesToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // propertiesToolStripMenuItem
             // 
             this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.propertiesToolStripMenuItem.Text = "Properties";
             this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -1257,67 +1258,67 @@
             this.rescanAccountFilesToolStripMenuItem,
             this.reloadGameDataToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "Tools";
             // 
             // bannedPlayersToolStripMenuItem
             // 
             this.bannedPlayersToolStripMenuItem.Name = "bannedPlayersToolStripMenuItem";
-            this.bannedPlayersToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.bannedPlayersToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.bannedPlayersToolStripMenuItem.Text = "Banned Players";
             this.bannedPlayersToolStripMenuItem.Click += new System.EventHandler(this.bannedPlayersToolStripMenuItem_Click);
             // 
             // statisticsToolStripMenuItem
             // 
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.statisticsToolStripMenuItem.Text = "Statistics";
             this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
             // 
             // searchIPtoolStripMenuItem
             // 
             this.searchIPtoolStripMenuItem.Name = "searchIPtoolStripMenuItem";
-            this.searchIPtoolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.searchIPtoolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.searchIPtoolStripMenuItem.Text = "Search IP";
             this.searchIPtoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // searchLoginIDToolStripMenuItem
             // 
             this.searchLoginIDToolStripMenuItem.Name = "searchLoginIDToolStripMenuItem";
-            this.searchLoginIDToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.searchLoginIDToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.searchLoginIDToolStripMenuItem.Text = "Search Login ID";
             this.searchLoginIDToolStripMenuItem.Click += new System.EventHandler(this.searchLoginIDToolStripMenuItem_Click);
             // 
             // itemListToolStripMenuItem
             // 
             this.itemListToolStripMenuItem.Name = "itemListToolStripMenuItem";
-            this.itemListToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.itemListToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.itemListToolStripMenuItem.Text = "Item List";
             this.itemListToolStripMenuItem.Click += new System.EventHandler(this.hashcodeListToolStripMenuItem_Click);
             // 
             // fLFileEditorToolStripMenuItem
             // 
             this.fLFileEditorToolStripMenuItem.Name = "fLFileEditorToolStripMenuItem";
-            this.fLFileEditorToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.fLFileEditorToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.fLFileEditorToolStripMenuItem.Text = "FL File Editor";
             this.fLFileEditorToolStripMenuItem.Click += new System.EventHandler(this.fLFileEditorToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
             // 
             // rescanAccountFilesToolStripMenuItem
             // 
             this.rescanAccountFilesToolStripMenuItem.Name = "rescanAccountFilesToolStripMenuItem";
-            this.rescanAccountFilesToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.rescanAccountFilesToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.rescanAccountFilesToolStripMenuItem.Text = "Rescan Account Files";
             this.rescanAccountFilesToolStripMenuItem.Click += new System.EventHandler(this.rescanAccountFilesToolStripMenuItem_Click);
             // 
             // reloadGameDataToolStripMenuItem
             // 
             this.reloadGameDataToolStripMenuItem.Name = "reloadGameDataToolStripMenuItem";
-            this.reloadGameDataToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.reloadGameDataToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.reloadGameDataToolStripMenuItem.Text = "Reload Game Data";
             this.reloadGameDataToolStripMenuItem.Click += new System.EventHandler(this.reloadGameDataToolStripMenuItem_Click);
             // 
@@ -1327,18 +1328,18 @@
             this.toolStripSeparator5,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(123, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -1522,7 +1523,7 @@
             // toolStripStatusLabelStatus
             // 
             this.toolStripStatusLabelStatus.Name = "toolStripStatusLabelStatus";
-            this.toolStripStatusLabelStatus.Size = new System.Drawing.Size(516, 17);
+            this.toolStripStatusLabelStatus.Size = new System.Drawing.Size(539, 17);
             this.toolStripStatusLabelStatus.Spring = true;
             this.toolStripStatusLabelStatus.Text = "-";
             this.toolStripStatusLabelStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1530,26 +1531,26 @@
             // toolStripStatusLabel4
             // 
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(108, 17);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(99, 17);
             this.toolStripStatusLabel4.Text = "DB Pending Writes:";
             // 
             // toolStripDBPending
             // 
             this.toolStripDBPending.Name = "toolStripDBPending";
-            this.toolStripDBPending.Size = new System.Drawing.Size(12, 17);
+            this.toolStripDBPending.Size = new System.Drawing.Size(11, 17);
             this.toolStripDBPending.Text = "-";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Margin = new System.Windows.Forms.Padding(6, 3, 0, 2);
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(84, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(72, 17);
             this.toolStripStatusLabel1.Text = "Hook Comms:";
             // 
             // toolStripHookState
             // 
             this.toolStripHookState.Name = "toolStripHookState";
-            this.toolStripHookState.Size = new System.Drawing.Size(12, 17);
+            this.toolStripHookState.Size = new System.Drawing.Size(11, 17);
             this.toolStripHookState.Text = "-";
             this.toolStripHookState.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             // 
@@ -1763,11 +1764,23 @@
             this.unbanSelectedButton.UseVisualStyleBackColor = true;
             this.unbanSelectedButton.Click += new System.EventHandler(this.unbanSelectedButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(349, 445);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(110, 23);
+            this.button1.TabIndex = 24;
+            this.button1.Text = "Move all selected";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.buttonMoveAllSelected_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(960, 550);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBoxFilter);
             this.Controls.Add(this.unbanSelectedButton);
             this.Controls.Add(this.deleteSelectedButton);
@@ -1781,8 +1794,8 @@
             this.MinimumSize = new System.Drawing.Size(968, 584);
             this.Name = "MainWindow";
             this.Text = "DS Account Manager";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1973,6 +1986,7 @@
         private System.Windows.Forms.Button banSelectedButton;
         private System.Windows.Forms.Button deleteSelectedButton;
         private System.Windows.Forms.Button unbanSelectedButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 

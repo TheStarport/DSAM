@@ -605,6 +605,22 @@ namespace DAM
 
             string keys = hash.ToString() + " 0x" + hash.ToString("X");
 
+            /* if (gameDataType == GAMEDATA_TRACTORS)
+            {
+                using (StreamWriter file = new StreamWriter("C:\\file.txt", true))
+                {
+                    file.WriteLine();
+                    file.WriteLine(String.Format(";{0}", nickName));
+                    file.WriteLine(section.GetSetting("ids_name").UInt(0));
+                    file.WriteLine("NAME");
+                    file.WriteLine(stIDSName);
+                    file.WriteLine();
+                    file.WriteLine(section.GetSetting("ids_info").UInt(0));
+                    file.WriteLine("INFOCARD");
+                    file.WriteLine(stIDSInfo);
+                }
+            } */
+
             items.AddHashListRow(hash, nickName, gameDataType, stIDSName, stIDSInfo, stIDSInfo1, stIDSInfo2, stIDSInfo3, keys);
             return true;
         }
