@@ -273,7 +273,10 @@ namespace DAM
             }
             else
             {
-                location += " docked at " + gameData.GetItemDescByNickNameX(charFile.GetSetting("Player", "base").Str(0));
+                string basename = gameData.GetItemDescByNickNameX(charFile.GetSetting("Player", "base").Str(0));
+                if (basename.Trim().Length==0)
+                    basename += "-ERROR";
+                location += " docked at " + basename + " [" + charFile.GetSetting("Player", "base").Str(0) + "]";
             }
             return location;
         }
