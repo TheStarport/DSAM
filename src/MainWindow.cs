@@ -1768,12 +1768,15 @@ namespace DAM
 
 
             // put all the parts together
-            for (int i = 0; i < parts.Count - 1; i++)
+            if (parts.Count > 0)
             {
-                tmp.Append(parts[i]);
-                tmp.Append(" AND ");
+                for (int i = 0; i < parts.Count - 1; i++)
+                {
+                    tmp.Append(parts[i]);
+                    tmp.Append(" AND ");
+                }
+                tmp.Append(parts[parts.Count - 1]);
             }
-            tmp.Append(parts[parts.Count - 1]);
 
             characterListBindingSource.Filter = tmp.ToString();
 
@@ -2114,7 +2117,7 @@ namespace DAM
                         MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         FLUtility.CheckCharFile(dataSetPlayerInfo, this, gameData, loadedCharFile, false, true);
-                        SaveCharFile(loadedCharFile);
+                        updatePlayerInfoTimer.Start();
                     }
                 }
             }
