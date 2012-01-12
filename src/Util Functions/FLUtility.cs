@@ -762,6 +762,8 @@ namespace DAM
                     string charFilePath = iCharFilePath;
 
                     string charPath = charFilePath.Substring(AppSettings.Default.setAccountDir.Length + 1);
+                    DateTime lastUpdate = File.GetLastWriteTime(charFilePath);
+
                     DamDataSet.CharacterListRow charRecord = dataSet.CharacterList.FindByCharPath(charPath);
                     if (charRecord != null)
                     {
@@ -779,8 +781,7 @@ namespace DAM
                             // we read it then don't read it again.
                             else if (AppSettings.Default.setCheckChangedOnly)
                             {
-                                DateTime lastUpdate = File.GetLastWriteTime(charFilePath);
-                                if (lastUpdate != charRecord.Updated)
+                                if (lastUpdate == charRecord.Updated)
                                     continue;
                             }
                         }
@@ -826,7 +827,7 @@ namespace DAM
                         charRecord.CharPath = charFilePath.Substring(AppSettings.Default.setAccountDir.Length + 1);
                         charRecord.AccID = GetAccountID(accDirPath);
                         charRecord.AccDir = accDir;
-                        charRecord.Updated = DateTime.Now;
+                        charRecord.Updated = lastUpdate;
                         charRecord.IsDeleted = false;
                         charRecord.Location = GetLocation(gameData, cfp);
                         charRecord.Money = (int)cfp.GetSetting("Player", "money").UInt(0);
@@ -840,7 +841,7 @@ namespace DAM
                     // Otherwise just update it.
                     else
                     {
-                        charRecord.Updated = DateTime.Now;
+                        charRecord.Updated = lastUpdate;
                         charRecord.IsDeleted = false;
                         charRecord.Location = GetLocation(gameData, cfp);
                         charRecord.Money = (int)cfp.GetSetting("Player", "money").UInt(0);
