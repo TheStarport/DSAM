@@ -60,7 +60,10 @@ namespace DAM
                 checkBoxBannedCharsInRed.Checked = AppSettings.Default.setDisplayBannedCharsRed;
 
                 LoadProcessorAffinity();
-                LoadLoginIdSettings();
+                _loginIDs = LoadLoginIdSettings();
+
+                foreach (var file in _loginIDs.Keys)
+                    lbLoginFiles.Items.Add(file);
             }
         }
 
@@ -409,11 +412,12 @@ namespace DAM
             result.Remove(result.Length - 1, 1);
 
             AppSettings.Default.setLoginIDs = result.ToString();
+            FLUtility.LOGIN_ID_FILES = _loginIDs;
         }
 
-        private void LoadLoginIdSettings()
+        public static Dictionary<string, List<KeyValuePair<string, string>>> LoadLoginIdSettings()
         {
-            _loginIDs = new Dictionary<string, List<KeyValuePair<string, string>>>();
+            var loginIDs = new Dictionary<string, List<KeyValuePair<string, string>>>();
             var files = AppSettings.Default.setLoginIDs.Split('|');
 
             // Format:
@@ -436,16 +440,17 @@ namespace DAM
                 var parts = rawFile.Split(':');
                 var file = parts[0];
                 var values = parts[1].Split(';');
-                lbLoginFiles.Items.Add(file);
 
-                _loginIDs[file] = new List<KeyValuePair<string, string>>();
+                loginIDs[file] = new List<KeyValuePair<string, string>>();
                 foreach (var val in values)
                 {
                     parts = val.Split('#');
                     var kvp = new KeyValuePair<string, string>(parts[0], parts[1]);
-                    _loginIDs[file].Add(kvp);
+                    loginIDs[file].Add(kvp);
                 }
             }
+
+            return loginIDs;
         }
         #endregion
     }

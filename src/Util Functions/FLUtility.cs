@@ -23,6 +23,8 @@ namespace DAM
     {
         public static DateTime INVALID_DATE = new DateTime(0);
 
+        public static Dictionary<string, List<KeyValuePair<string, string>>> LOGIN_ID_FILES;
+
         /// <summary>
         /// Decode an ascii hex string into unicode
         /// </summary>
@@ -706,14 +708,47 @@ namespace DAM
                 }
             }
 
+            try
+            {
+                if (LOGIN_ID_FILES == null)
+                    LOGIN_ID_FILES = PropertiesWindow.LoadLoginIdSettings();
+
+                foreach (var rawFile in LOGIN_ID_FILES)
+                {
+                    string[] loginFiles = Directory.GetFiles(accDirPath, rawFile.Key);
+                    foreach (var file in loginFiles)
+                    {
+                        var ini = new FLDataFile(file, false);
+                        var accessTime = File.GetLastWriteTime(file);
+                        var result = new StringBuilder(100);
+                        foreach (var kvp in rawFile.Value)
+                        {
+                            string loginID;
+                            string sec = kvp.Key;
+                            string key = kvp.Value;
+                            if (sec == "")
+                                sec = "ROOT";
+
+                            loginID = ini.GetSetting(sec, kvp.Value).Str(0);
+                            result.Append(key + "=" + loginID.Trim() + " ");
+                        }
+                        result.Remove(result.Length - 1, 1);
+                        dataSet.LoginIDList.AddLoginIDListRow(accDir, result.ToString(), accessTime);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.AddLog(String.Format("Error '{0}' when reading hash info {1}", ex.Message, accDirPath));
+            }
+
             // Check and update login id information.
             try
             {
                 string[] loginFiles = Directory.GetFiles(accDirPath, "login_*.ini");
                 foreach (string loginFilePath in loginFiles)
                 {
-                    DamDataSet.LoginIDListRow loginIDRecord = dataSet.LoginIDList.NewLoginIDListRow();
-                    string filename = new FileInfo(loginFilePath).Name;
+                    string filename = Path.GetFileName(loginFilePath);
                     string loginID = filename.Substring(6, filename.Length - 10);
                     DateTime accessTime = File.GetLastWriteTime(loginFilePath);
                     dataSet.LoginIDList.AddLoginIDListRow(accDir, loginID, accessTime);
@@ -722,35 +757,6 @@ namespace DAM
             catch (Exception ex)
             {
                 log.AddLog(String.Format("Error '{0}' when reading login info {1}", ex.Message, accDirPath));
-            }
-
-            // Read flhookuser.ini information.
-            // used to store HwIDs/LoginIDs on the HHC-Server
-            try
-            {
-                string hookini = accDirPath + "\\flhookuser.ini";
-                DateTime accessTime = File.GetLastWriteTime(hookini);
-                if (File.Exists(hookini))
-                {
-                    string[] lines = File.ReadAllLines(hookini);
-                    Int32 tmp = 0;
-                    foreach (string line in lines)
-                    {
-                        if (line.StartsWith("HardwareID="))
-                        {
-                            // tmp will be 0 if parsing fails
-                            Int32.TryParse(line.Substring(11), out tmp);
-                            break;
-                        }
-                    }
-                    // don't add accs without LoginID
-                    if (tmp != 0)
-                        dataSet.LoginIDList.AddLoginIDListRow(accDir, tmp.ToString(), accessTime);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.AddLog(String.Format("Error '{0}' when reading login/flhookuser info {1}", ex.Message, accDirPath));
             }
 
             // Check for new/updated charfiles
