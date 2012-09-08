@@ -33,6 +33,10 @@
             this.changeShipButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lvCharLogins = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonAddCompleteMap = new System.Windows.Forms.Button();
             this.buttonCheckFile = new System.Windows.Forms.Button();
             this.buttonResetLastOnline = new System.Windows.Forms.Button();
@@ -42,7 +46,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.kickPlayerButton = new System.Windows.Forms.Button();
             this.deletePlayerButton = new System.Windows.Forms.Button();
-            this.piIPAddresses = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.piPath = new System.Windows.Forms.TextBox();
             this.openDirButton = new System.Windows.Forms.Button();
@@ -221,8 +224,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -240,6 +243,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lvCharLogins);
             this.tabPage1.Controls.Add(this.buttonAddCompleteMap);
             this.tabPage1.Controls.Add(this.buttonCheckFile);
             this.tabPage1.Controls.Add(this.buttonResetLastOnline);
@@ -250,7 +254,6 @@
             this.tabPage1.Controls.Add(this.label18);
             this.tabPage1.Controls.Add(this.kickPlayerButton);
             this.tabPage1.Controls.Add(this.deletePlayerButton);
-            this.tabPage1.Controls.Add(this.piIPAddresses);
             this.tabPage1.Controls.Add(this.label13);
             this.tabPage1.Controls.Add(this.piPath);
             this.tabPage1.Controls.Add(this.openDirButton);
@@ -286,6 +289,35 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Overview";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // lvCharLogins
+            // 
+            this.lvCharLogins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.lvCharLogins.FullRowSelect = true;
+            this.lvCharLogins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lvCharLogins.Location = new System.Drawing.Point(81, 328);
+            this.lvCharLogins.MultiSelect = false;
+            this.lvCharLogins.Name = "lvCharLogins";
+            this.lvCharLogins.Size = new System.Drawing.Size(293, 124);
+            this.lvCharLogins.TabIndex = 58;
+            this.lvCharLogins.UseCompatibleStateImageBehavior = false;
+            this.lvCharLogins.View = System.Windows.Forms.View.Details;
+            this.lvCharLogins.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lvCharLogins_KeyUp);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 33;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Width = 98;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Width = 300;
             // 
             // buttonAddCompleteMap
             // 
@@ -373,18 +405,6 @@
             this.deletePlayerButton.Text = "Delete Player";
             this.deletePlayerButton.UseVisualStyleBackColor = true;
             this.deletePlayerButton.Click += new System.EventHandler(this.deletePlayerButton_Click);
-            // 
-            // piIPAddresses
-            // 
-            this.piIPAddresses.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.piIPAddresses.Location = new System.Drawing.Point(81, 325);
-            this.piIPAddresses.Multiline = true;
-            this.piIPAddresses.Name = "piIPAddresses";
-            this.piIPAddresses.ReadOnly = true;
-            this.piIPAddresses.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.piIPAddresses.Size = new System.Drawing.Size(293, 127);
-            this.piIPAddresses.TabIndex = 45;
             // 
             // label13
             // 
@@ -752,9 +772,9 @@
             // 
             this.piFactionGrid.AllowUserToAddRows = false;
             this.piFactionGrid.AllowUserToDeleteRows = false;
-            this.piFactionGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.piFactionGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.piFactionGrid.AutoGenerateColumns = false;
             this.piFactionGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.piFactionGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -878,9 +898,9 @@
             // 
             this.piCargoGrid.AllowUserToAddRows = false;
             this.piCargoGrid.AllowUserToDeleteRows = false;
-            this.piCargoGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.piCargoGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.piCargoGrid.AutoGenerateColumns = false;
             this.piCargoGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.piCargoGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1000,9 +1020,9 @@
             // 
             this.piEquipmentGrid.AllowUserToAddRows = false;
             this.piEquipmentGrid.AllowUserToDeleteRows = false;
-            this.piEquipmentGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.piEquipmentGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.piEquipmentGrid.AutoGenerateColumns = false;
             this.piEquipmentGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.piEquipmentGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1093,8 +1113,8 @@
             // 
             // richTextBoxPlayerInfoAdminText
             // 
-            this.richTextBoxPlayerInfoAdminText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxPlayerInfoAdminText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxPlayerInfoAdminText.Location = new System.Drawing.Point(6, 285);
             this.richTextBoxPlayerInfoAdminText.Name = "richTextBoxPlayerInfoAdminText";
             this.richTextBoxPlayerInfoAdminText.Size = new System.Drawing.Size(453, 140);
@@ -1121,8 +1141,8 @@
             // 
             // richTextBoxPlayerInfoPlayerText
             // 
-            this.richTextBoxPlayerInfoPlayerText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxPlayerInfoPlayerText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxPlayerInfoPlayerText.BackColor = System.Drawing.SystemColors.Window;
             this.richTextBoxPlayerInfoPlayerText.Location = new System.Drawing.Point(3, 19);
             this.richTextBoxPlayerInfoPlayerText.Name = "richTextBoxPlayerInfoPlayerText";
@@ -1133,8 +1153,8 @@
             // 
             // buttonPlayerInfoSaveAdminText
             // 
-            this.buttonPlayerInfoSaveAdminText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPlayerInfoSaveAdminText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonPlayerInfoSaveAdminText.Location = new System.Drawing.Point(386, 432);
             this.buttonPlayerInfoSaveAdminText.Name = "buttonPlayerInfoSaveAdminText";
             this.buttonPlayerInfoSaveAdminText.Size = new System.Drawing.Size(75, 23);
@@ -1169,9 +1189,9 @@
             // 
             // piFileView
             // 
-            this.piFileView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.piFileView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.piFileView.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.piFileView.Location = new System.Drawing.Point(6, 6);
             this.piFileView.Name = "piFileView";
@@ -1234,14 +1254,14 @@
             // propertiesToolStripMenuItem
             // 
             this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.propertiesToolStripMenuItem.Text = "Properties";
             this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -1264,61 +1284,61 @@
             // bannedPlayersToolStripMenuItem
             // 
             this.bannedPlayersToolStripMenuItem.Name = "bannedPlayersToolStripMenuItem";
-            this.bannedPlayersToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.bannedPlayersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.bannedPlayersToolStripMenuItem.Text = "Banned Players";
             this.bannedPlayersToolStripMenuItem.Click += new System.EventHandler(this.bannedPlayersToolStripMenuItem_Click);
             // 
             // statisticsToolStripMenuItem
             // 
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.statisticsToolStripMenuItem.Text = "Statistics";
             this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
             // 
             // searchIPtoolStripMenuItem
             // 
             this.searchIPtoolStripMenuItem.Name = "searchIPtoolStripMenuItem";
-            this.searchIPtoolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.searchIPtoolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.searchIPtoolStripMenuItem.Text = "Search IP";
             this.searchIPtoolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // searchLoginIDToolStripMenuItem
             // 
             this.searchLoginIDToolStripMenuItem.Name = "searchLoginIDToolStripMenuItem";
-            this.searchLoginIDToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.searchLoginIDToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.searchLoginIDToolStripMenuItem.Text = "Search Login ID";
             this.searchLoginIDToolStripMenuItem.Click += new System.EventHandler(this.searchLoginIDToolStripMenuItem_Click);
             // 
             // itemListToolStripMenuItem
             // 
             this.itemListToolStripMenuItem.Name = "itemListToolStripMenuItem";
-            this.itemListToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.itemListToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.itemListToolStripMenuItem.Text = "Item List";
             this.itemListToolStripMenuItem.Click += new System.EventHandler(this.hashcodeListToolStripMenuItem_Click);
             // 
             // fLFileEditorToolStripMenuItem
             // 
             this.fLFileEditorToolStripMenuItem.Name = "fLFileEditorToolStripMenuItem";
-            this.fLFileEditorToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.fLFileEditorToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.fLFileEditorToolStripMenuItem.Text = "FL File Editor";
             this.fLFileEditorToolStripMenuItem.Click += new System.EventHandler(this.fLFileEditorToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(172, 6);
             // 
             // rescanAccountFilesToolStripMenuItem
             // 
             this.rescanAccountFilesToolStripMenuItem.Name = "rescanAccountFilesToolStripMenuItem";
-            this.rescanAccountFilesToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.rescanAccountFilesToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.rescanAccountFilesToolStripMenuItem.Text = "Rescan Account Files";
             this.rescanAccountFilesToolStripMenuItem.Click += new System.EventHandler(this.rescanAccountFilesToolStripMenuItem_Click);
             // 
             // reloadGameDataToolStripMenuItem
             // 
             this.reloadGameDataToolStripMenuItem.Name = "reloadGameDataToolStripMenuItem";
-            this.reloadGameDataToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.reloadGameDataToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.reloadGameDataToolStripMenuItem.Text = "Reload Game Data";
             this.reloadGameDataToolStripMenuItem.Click += new System.EventHandler(this.reloadGameDataToolStripMenuItem_Click);
             // 
@@ -1334,12 +1354,12 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(123, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(112, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -1349,9 +1369,9 @@
             this.charListDataGridView.AllowUserToDeleteRows = false;
             this.charListDataGridView.AllowUserToOrderColumns = true;
             this.charListDataGridView.AllowUserToResizeRows = false;
-            this.charListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.charListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.charListDataGridView.AutoGenerateColumns = false;
             this.charListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.charListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1495,7 +1515,7 @@
             this.toolStripDBPending,
             this.toolStripStatusLabel1,
             this.toolStripHookState});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 528);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 533);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(960, 22);
             this.statusStrip1.TabIndex = 15;
@@ -1779,7 +1799,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(960, 550);
+            this.ClientSize = new System.Drawing.Size(960, 555);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBoxFilter);
             this.Controls.Add(this.unbanSelectedButton);
@@ -1794,8 +1814,8 @@
             this.MinimumSize = new System.Drawing.Size(968, 584);
             this.Name = "MainWindow";
             this.Text = "DS Account Manager";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1960,7 +1980,6 @@
         private System.Windows.Forms.ToolStripMenuItem fLFileEditorToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBoxShowOriginalFile;
         private System.Windows.Forms.Button buttonAddCompleteMap;
-        private System.Windows.Forms.TextBox piIPAddresses;
         private System.Windows.Forms.Timer timerShutdown;
         private System.Windows.Forms.ToolStripMenuItem reloadGameDataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchLoginIDToolStripMenuItem;
@@ -1987,6 +2006,10 @@
         private System.Windows.Forms.Button deleteSelectedButton;
         private System.Windows.Forms.Button unbanSelectedButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListView lvCharLogins;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
 

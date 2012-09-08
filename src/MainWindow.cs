@@ -516,7 +516,7 @@ namespace DAM
             piKills.Text = "";
             piCreated.Text = "";
 
-            piIPAddresses.Text = "";
+            lvCharLogins.Items.Clear();
 
             piAffiliation.Text = "";
 
@@ -646,14 +646,21 @@ namespace DAM
 
                 using (DamDataSet ds = new DamDataSet())
                 {
-                    DateTime startTime = DateTime.Now;
                     GetDataAccess().GetIPListByAccDir(ds.IPList, charRecord.AccDir);
                     foreach (DamDataSet.IPListRow row in ds.IPList)
-                        piIPAddresses.Text += String.Format("IP: {0}: {1}\r\n", row.AccessTime, row.IP);
+                    {
+                        var item = lvCharLogins.Items.Add("IP");
+                        item.SubItems.Add(row.AccessTime.ToString("dd.mm.yyyy HH:mm"));
+                        item.SubItems.Add(row.IP);
+                    }
 
                     GetDataAccess().GetLoginIDListByAccDir(ds.LoginIDList, charRecord.AccDir);
                     foreach (DamDataSet.LoginIDListRow row in ds.LoginIDList)
-                        piIPAddresses.Text += String.Format("LoginID: {0}: {1}\r\n", row.AccessTime, row.LoginID);
+                    {
+                        var item = lvCharLogins.Items.Add("Hash");
+                        item.SubItems.Add(row.AccessTime.ToString("dd.mm.yyyy HH:mm"));
+                        item.SubItems.Add(row.LoginID);
+                    }
                 }
                 
                 // Load the char file if it exists.
@@ -2564,6 +2571,13 @@ namespace DAM
                 charFiles.Add(new FLDataFile(charPath, true));
             }
             new ChangeLocationWindow(this, gameData, charFiles).ShowDialog(this);
+        }
+
+        private void lvCharLogins_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(lvCharLogins.SelectedItems.Count == 1 && e.Control && e.KeyCode == Keys.C)
+                Clipboard.SetText(lvCharLogins.SelectedItems[0].SubItems[1].Text + ", " +
+                                  lvCharLogins.SelectedItems[0].SubItems[2].Text);
         }
     }
 }
