@@ -748,9 +748,23 @@ namespace DAM
                 string[] loginFiles = Directory.GetFiles(accDirPath, "login_*.ini");
                 foreach (string loginFilePath in loginFiles)
                 {
-                    string filename = Path.GetFileName(loginFilePath);
-                    string loginID = filename.Substring(6, filename.Length - 10);
-                    DateTime accessTime = File.GetLastWriteTime(loginFilePath);
+                    // format: time=1347057642 id=3A44AC9A ip=13.33.33.37 id2=2A7A4F74
+                    string content = File.ReadAllText(loginFilePath);
+                    DateTime accessTime;
+                    string loginID = "";
+
+                    string[] values = content.Split(' ');
+                    foreach (var raw in values)
+                    {
+                        string[] parts = raw.Split('=');
+                        string key = parts[0];
+
+                        if (key == "id" || key == "id2")
+                            loginID += raw + " ";
+                    }
+
+                    loginID = loginID.Trim();
+                    accessTime = File.GetLastWriteTime(loginFilePath);
                     dataSet.LoginIDList.AddLoginIDListRow(accDir, loginID, accessTime);
                 }
             }
