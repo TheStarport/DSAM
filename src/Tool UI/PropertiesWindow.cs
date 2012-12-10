@@ -409,7 +409,8 @@ namespace DAM
                 result.Remove(result.Length - 1, 1);
                 result.Append('|');
             }
-            result.Remove(result.Length - 1, 1);
+            if (result.Length > 0)
+                result.Remove(result.Length - 1, 1);
 
             AppSettings.Default.setLoginIDs = result.ToString();
             FLUtility.LOGIN_ID_FILES = _loginIDs;
