@@ -752,20 +752,28 @@ namespace DAM
                     string content = File.ReadAllText(loginFilePath);
                     DateTime accessTime;
                     string loginID = "";
+                    string loginID2 = "";
+                    string ip = "";
 
-                    string[] values = content.Split(' ');
+                    string[] values = content.Split(new char[]{'\t',' '});
                     foreach (var raw in values)
                     {
                         string[] parts = raw.Split('=');
                         string key = parts[0];
+                        string value = parts[1];
 
-                        if (key == "id" || key == "id2")
-                            loginID += raw + " ";
+                        if (key == "id")
+                            loginID += value.Trim();
+                        else if (key == "id2")
+                            loginID2 += value.Trim();
+                        else if (key == "ip")
+                            ip += value.Trim();
                     }
 
-                    loginID = loginID.Trim();
                     accessTime = File.GetLastWriteTime(loginFilePath);
                     dataSet.LoginIDList.AddLoginIDListRow(accDir, loginID, accessTime);
+                    dataSet.LoginIDList.AddLoginIDListRow(accDir, loginID2, accessTime);
+                    dataSet.IPList.AddIPListRow(accDir, ip, accessTime);
                 }
             }
             catch (Exception ex)

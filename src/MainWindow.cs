@@ -650,7 +650,7 @@ namespace DAM
                     foreach (DamDataSet.IPListRow row in ds.IPList)
                     {
                         var item = lvCharLogins.Items.Add("IP");
-                        item.SubItems.Add(row.AccessTime.ToString("dd.mm.yyyy HH:mm"));
+                        item.SubItems.Add(row.AccessTime.ToString("dd MMM yyyy HH:mm"));
                         item.SubItems.Add(row.IP);
                     }
 
@@ -658,7 +658,7 @@ namespace DAM
                     foreach (DamDataSet.LoginIDListRow row in ds.LoginIDList)
                     {
                         var item = lvCharLogins.Items.Add("Hash");
-                        item.SubItems.Add(row.AccessTime.ToString("dd.mm.yyyy HH:mm"));
+                        item.SubItems.Add(row.AccessTime.ToString("dd MMM yyyy HH:mm"));
                         item.SubItems.Add(row.LoginID);
                     }
                 }

@@ -532,7 +532,8 @@ namespace DAM
             {
                 if (i != 0)
                     query += " OR";
-                query += " '" + loginIDs[i] + "' LIKE '%' || LoginID || '%'";
+                query += " LoginID =  '" + loginIDs[i] + "'";
+;
             }
             query += "";
 
