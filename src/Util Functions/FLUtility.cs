@@ -1094,13 +1094,14 @@ namespace DAM
                 bool foundScanner = false;
                 bool foundTractor = false;
                 bool foundSound = false;
-                foreach (FLDataFile.Setting set in charFile.GetSettings("Player", setting))
+                FLDataFile.Setting engineSet = null;
+                foreach (var set in charFile.GetSettings("Player", setting))
                 {
                     try
                     {
                         uint equipHash = set.UInt(0);
 
-                        GameDataSet.HashListRow equipItem = gameData.GetItemByHash(equipHash);
+                        var equipItem = gameData.GetItemByHash(equipHash);
                         if (equipItem == null)
                         {
                             log.AddLog("Error in charfile '" + charFile.filePath + "' unknown hash at line " + set.desc);
@@ -1109,79 +1110,101 @@ namespace DAM
                             continue;
                         }
 
-                        if (equipItem.ItemType == FLGameData.GAMEDATA_ENGINES)
+                        
+
+                        switch (equipItem.ItemType)
                         {
-                            if (foundEngine)
-                            {
-                                log.AddLog("Error in charfile '" + charFile.filePath + "' engine already present at line " + set.desc);
-                                foundErrors = true;
-                                if (fixErrors) { charFile.DeleteSetting(set); }
-                            }
-                            else if (AppSettings.Default.setCheckDefaultEngine && shipInfo.DefaultEngine != equipHash)
-                            {
-                                if (!admin)
+                            case FLGameData.GAMEDATA_ENGINES:
+
+                                if (foundEngine)
                                 {
+                                    log.AddLog("Error in charfile '" + charFile.filePath + "' engine already present at line " + set.desc);
+                                    foundErrors = true;
+                                    if (!fixErrors) continue;
+
+                                    charFile.DeleteSetting(set.Str(1) == "" ? set : engineSet);
+                                    break;
+                                }
+                                foundEngine = true;
+                                if (AppSettings.Default.setCheckDefaultEngine && shipInfo.DefaultEngine != equipHash)
+                                {
+                                    if (admin) continue;
                                     log.AddLog("Error in charfile '" + charFile.filePath + "' invalid engine at line " + set.desc + " should be " + shipInfo.DefaultEngine);
                                     foundErrors = true;
                                     if (fixErrors) { set.values[0] = shipInfo.DefaultEngine; }
                                 }
-                            }
-                            foundEngine = true;
-                        }
-                        else if (equipItem.ItemType == FLGameData.GAMEDATA_POWERGEN)
-                        {
-                            if (foundPowerGen)
-                            {
-                                log.AddLog("Error in charfile '" + charFile.filePath + "' powergen already present at line " + set.desc + " should be " + shipInfo.DefaultPowerPlant);
-                                foundErrors = true;
-                                if (fixErrors) { charFile.DeleteSetting(set); }
-                            }
-                            else if (AppSettings.Default.setCheckDefaultEngine && shipInfo.DefaultPowerPlant != equipHash)
-                            {
-                                if (!admin)
+
+                                if (set.Str(1) == "")
                                 {
-                                    log.AddLog("Error in charfile '" + charFile.filePath + "' invalid powergen at line " + set.desc + " should be " + shipInfo.DefaultPowerPlant);
+                                    
+                                    if (!fixErrors) continue;
+                                    GameDataSet.HardPointListRow engHP = null;
+                                    foreach (var hp in hardPoints)
+                                    {
+                                        if (hp.HPType == FLGameData.GAMEDATA_ENGINES)
+                                        { engHP = hp; }
+                                    }
+                                    // none engine HP found
+                                    if (engHP == null) continue;
                                     foundErrors = true;
-                                    if (fixErrors) { set.values[0] = shipInfo.DefaultPowerPlant; }
+                                    log.AddLog("Error in charfile '" + charFile.filePath + "' engine mounted on default hardpoint " + set.desc);
+                                    set.values[1] = engHP.HPName;
+
                                 }
-                            }
-                            foundPowerGen = true;
-                        }
-                        else if (equipItem.ItemType == FLGameData.GAMEDATA_SCANNERS)
-                        {
-                            if (foundScanner)
-                            {
-                                log.AddLog("Error in charfile '" + charFile.filePath + "' scanner already present at line" + set.desc);
-                                foundErrors = true;
-                                if (fixErrors) { charFile.DeleteSetting(set); }
-                            }
-                            foundScanner = true;
-                        }
-                        else if (equipItem.ItemType == FLGameData.GAMEDATA_TRACTORS)
-                        {
-                            if (foundTractor)
-                            {
-                                log.AddLog("Error in charfile '" + charFile.filePath + "' tractor already present at line" + set.desc);
-                                foundErrors = true;
-                                if (fixErrors) { charFile.DeleteSetting(set); }
-                            }
-                            foundTractor = true;
-                        }
-                        else if (equipItem.ItemType == FLGameData.GAMEDATA_SOUND)
-                        {
-                            if (foundSound)
-                            {
-                                log.AddLog("Error in charfile '" + charFile.filePath + "' sound already present at line" + set.desc);
-                                foundErrors = true;
-                                if (fixErrors) { charFile.DeleteSetting(set); }
-                            }
-                            else if (shipInfo.DefaultSound != 0 && shipInfo.DefaultSound != equipHash)
-                            {
-                                log.AddLog("Error in charfile '" + charFile.filePath + "' invalid sound at line " + set.desc + " should be " + shipInfo.DefaultSound);
-                                foundErrors = true;
-                                if (fixErrors) { set.values[0] = shipInfo.DefaultSound; }
-                            }
-                            foundSound = true;
+                                foundEngine = true;
+                                engineSet = set;
+                                break;
+                            case FLGameData.GAMEDATA_POWERGEN:
+                                if (foundPowerGen)
+                                {
+                                    log.AddLog("Error in charfile '" + charFile.filePath + "' powergen already present at line " + set.desc + " should be " + shipInfo.DefaultPowerPlant);
+                                    foundErrors = true;
+                                    if (fixErrors) { charFile.DeleteSetting(set); }
+                                }
+                                else if (AppSettings.Default.setCheckDefaultEngine && shipInfo.DefaultPowerPlant != equipHash)
+                                {
+                                    if (!admin)
+                                    {
+                                        log.AddLog("Error in charfile '" + charFile.filePath + "' invalid powergen at line " + set.desc + " should be " + shipInfo.DefaultPowerPlant);
+                                        foundErrors = true;
+                                        if (fixErrors) { set.values[0] = shipInfo.DefaultPowerPlant; }
+                                    }
+                                }
+                                foundPowerGen = true;
+                                break;
+                            case FLGameData.GAMEDATA_SCANNERS:
+                                if (foundScanner)
+                                {
+                                    log.AddLog("Error in charfile '" + charFile.filePath + "' scanner already present at line" + set.desc);
+                                    foundErrors = true;
+                                    if (fixErrors) { charFile.DeleteSetting(set); }
+                                }
+                                foundScanner = true;
+                                break;
+                            case FLGameData.GAMEDATA_TRACTORS:
+                                if (foundTractor)
+                                {
+                                    log.AddLog("Error in charfile '" + charFile.filePath + "' tractor already present at line" + set.desc);
+                                    foundErrors = true;
+                                    if (fixErrors) { charFile.DeleteSetting(set); }
+                                }
+                                foundTractor = true;
+                                break;
+                            case FLGameData.GAMEDATA_SOUND:
+                                if (foundSound)
+                                {
+                                    log.AddLog("Error in charfile '" + charFile.filePath + "' sound already present at line" + set.desc);
+                                    foundErrors = true;
+                                    if (fixErrors) { charFile.DeleteSetting(set); }
+                                }
+                                else if (shipInfo.DefaultSound != 0 && shipInfo.DefaultSound != equipHash)
+                                {
+                                    log.AddLog("Error in charfile '" + charFile.filePath + "' invalid sound at line " + set.desc + " should be " + shipInfo.DefaultSound);
+                                    foundErrors = true;
+                                    if (fixErrors) { set.values[0] = shipInfo.DefaultSound; }
+                                }
+                                foundSound = true;
+                                break;
                         }
                     }
                     catch (Exception)
@@ -1200,7 +1223,14 @@ namespace DAM
                     log.AddLog("Error in charfile '" + charFile.filePath + "' missing engine");
                     if (fixErrors)
                     {
-                        charFile.AddSettingNotUnique("player", setting, new object[] { shipInfo.DefaultEngine, "", 1 });
+                        string hpname = "";
+                        foreach (var hp in hardPoints)
+                        {
+                            if (hp.HPType == "engines")
+                                hpname = hp.HPName;
+                        }
+
+                        charFile.AddSettingNotUnique("player", setting, new object[] { shipInfo.DefaultEngine, hpname, 1 });
                     }
                 }
                 if (AppSettings.Default.setCheckDefaultPowerPlant && !foundPowerGen && shipInfo.DefaultPowerPlant != 0)

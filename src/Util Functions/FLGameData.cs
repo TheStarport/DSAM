@@ -1127,207 +1127,270 @@ namespace DAM
 
         private string HardpointClassToGameDataClass(string hpClass)
         {
-            if (hpClass == "hp_cargo_pod")
-                return GAMEDATA_MISC;
 
-            if (hpClass == "hp_countermeasure_dropper")
-                return GAMEDATA_CM;
+            switch (hpClass)
+            {
+                case ("hp_cargo_pod"):
+                    return GAMEDATA_MISC;
+                case ("hp_countermeasure_dropper"):
+                    return GAMEDATA_CM;
+                case ("hp_turret"):
+                    return GAMEDATA_TURRETS;
+                case ("hp_mine_dropper"):
+                    return GAMEDATA_MINES;
+                case ("hp_torpedo"):
+                    return GAMEDATA_PROJECTILES;
 
-            if (hpClass == "hp_turret")
-                return GAMEDATA_TURRETS;
+                case ("hp_thruster"):
+                    return GAMEDATA_THRUSTERS;
 
-            if (hpClass == "hp_mine_dropper")
-                return GAMEDATA_MINES;
+                case ("hp_freighter_shield_generator"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_torpedo")
-                return GAMEDATA_PROJECTILES;
+                case ("hp_elite_shield_generator"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_thruster")
-                return GAMEDATA_THRUSTERS;
+                case ("hp_fighter_shield_generator"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_freighter_shield_generator")
-                return GAMEDATA_SHIELDS;
+                case ("hp_shield_generator"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_elite_shield_generator")
-                return GAMEDATA_SHIELDS;
+                case ("hp_gun"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_fighter_shield_generator")
-                return GAMEDATA_SHIELDS;
+                case ("hp_child"):
+                    return GAMEDATA_MISC;
 
-            if (hpClass == "hp_shield_generator")
-                return GAMEDATA_SHIELDS;
+                case ("hp_tractor_source"):
+                    return GAMEDATA_MISC;
 
-            if (hpClass == "hp_gun")
-                return GAMEDATA_GUNS;
+                case ("hp_bay_external"):
+                    return GAMEDATA_MISC;
 
-            if (hpClass == "hp_child")
-                return GAMEDATA_MISC;
+                case ("hp_bay_surface"):
+                    return GAMEDATA_MISC;
 
-            if (hpClass == "hp_tractor_source")
-                return GAMEDATA_MISC;
+                case ("hp_gun_special_1"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_bay_external")
-                return GAMEDATA_MISC;
+                case ("hp_gun_special_2"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_bay_surface")
-                return GAMEDATA_MISC;
+                case ("hp_gun_special_3"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_gun_special_1")
-                return GAMEDATA_GUNS;
+                case ("hp_gun_special_4"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_gun_special_2")
-                return GAMEDATA_GUNS;
+                case ("hp_gun_special_5"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_gun_special_3")
-                return GAMEDATA_GUNS;
+                case ("hp_gun_special_6"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_gun_special_4")
-                return GAMEDATA_GUNS;
+                case ("hp_gun_special_7"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_gun_special_5")
-                return GAMEDATA_GUNS;
+                case ("hp_gun_special_8"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_gun_special_6")
-                return GAMEDATA_GUNS;
+                case ("hp_gun_special_9"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_gun_special_7")
-                return GAMEDATA_GUNS;
+                case ("hp_gun_special_10"):
+                    return GAMEDATA_GUNS;
 
-            if (hpClass == "hp_gun_special_8")
-                return GAMEDATA_GUNS;
+                case ("hp_turret_special_1"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_gun_special_9")
-                return GAMEDATA_GUNS;
+                case ("hp_turret_special_2"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_gun_special_10")
-                return GAMEDATA_GUNS;
+                case ("hp_turret_special_3"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_turret_special_1")
-                return GAMEDATA_TURRETS;
+                case ("hp_turret_special_4"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_turret_special_2")
-                return GAMEDATA_TURRETS;
+                case ("hp_turret_special_5"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_turret_special_3")
-                return GAMEDATA_TURRETS;
+                case ("hp_turret_special_6"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_turret_special_4")
-                return GAMEDATA_TURRETS;
+                case ("hp_turret_special_7"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_turret_special_5")
-                return GAMEDATA_TURRETS;
+                case ("hp_turret_special_8"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_turret_special_6")
-                return GAMEDATA_TURRETS;
+                case ("hp_turret_special_9"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_turret_special_7")
-                return GAMEDATA_TURRETS;
+                case ("hp_turret_special_10"):
+                    return GAMEDATA_TURRETS;
 
-            if (hpClass == "hp_turret_special_8")
-                return GAMEDATA_TURRETS;
+                case ("hp_torpedo_special_1"):
+                    return GAMEDATA_PROJECTILES;
 
-            if (hpClass == "hp_turret_special_9")
-                return GAMEDATA_TURRETS;
+                case ("hp_torpedo_special_2"):
+                    return GAMEDATA_PROJECTILES;
 
-            if (hpClass == "hp_turret_special_10")
-                return GAMEDATA_TURRETS;
+                case ("hp_fighter_shield_special_1"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_torpedo_special_1")
-                return GAMEDATA_PROJECTILES;
+                case ("hp_fighter_shield_special_2"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_torpedo_special_2")
-                return GAMEDATA_PROJECTILES;
+                case ("hp_fighter_shield_special_3"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_fighter_shield_special_1")
-                return GAMEDATA_SHIELDS;
+                case ("hp_fighter_shield_special_4"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_fighter_shield_special_2")
-                return GAMEDATA_SHIELDS;
+                case ("hp_fighter_shield_special_5"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_fighter_shield_special_3")
-                return GAMEDATA_SHIELDS;
+                case ("hp_fighter_shield_special_6"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_fighter_shield_special_4")
-                return GAMEDATA_SHIELDS;
+                case ("hp_fighter_shield_special_7"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_fighter_shield_special_5")
-                return GAMEDATA_SHIELDS;
+                case ("hp_fighter_shield_special_8"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_fighter_shield_special_6")
-                return GAMEDATA_SHIELDS;
+                case ("hp_fighter_shield_special_9"):
+                    return GAMEDATA_SHIELDS;
 
-            if (hpClass == "hp_fighter_shield_special_7")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_fighter_shield_special_8")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_fighter_shield_special_9")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_fighter_shield_special_10")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_1")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_2")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_3")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_4")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_5")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_6")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_7")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_8")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_9")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_elite_shield_special_10")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_1")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_2")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_3")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_4")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_5")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_6")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_7")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_8")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_9")
-                return GAMEDATA_SHIELDS;
-
-            if (hpClass == "hp_freighter_shield_special_10")
-                return GAMEDATA_SHIELDS;
-
+                case ("hp_fighter_shield_special_10"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_1"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_2"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_3"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_4"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_5"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_6"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_7"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_8"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_9"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_elite_shield_special_10"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_1"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_2"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_3"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_4"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_5"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_6"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_7"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_8"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_9"):
+                    return GAMEDATA_SHIELDS;
+
+                case ("hp_freighter_shield_special_10"):
+                    return GAMEDATA_SHIELDS;
+
+                case "hp_freighter_engine_special_1":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_2":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_3":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_4":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_5":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_6":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_7":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_8":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_9":
+                    return GAMEDATA_ENGINES;
+                case "hp_freighter_engine_special_10":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_1":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_2":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_3":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_4":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_5":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_6":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_7":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_8":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_9":
+                    return GAMEDATA_ENGINES;
+                case "hp_elite_engine_special_10":
+                    return GAMEDATA_ENGINES;
+
+                case "hp_fighter_engine_special_1":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_2":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_3":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_4":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_5":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_6":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_7":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_8":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_9":
+                    return GAMEDATA_ENGINES;
+                case "hp_fighter_engine_special_10":
+                    return GAMEDATA_ENGINES;
+
+            }
+           
             throw new Exception("unknown hardpoint class " + hpClass);
         }
 
