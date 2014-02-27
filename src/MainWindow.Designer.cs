@@ -34,9 +34,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.lvCharLogins = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonAddCompleteMap = new System.Windows.Forms.Button();
             this.buttonCheckFile = new System.Windows.Forms.Button();
             this.buttonResetLastOnline = new System.Windows.Forms.Button();
@@ -187,6 +187,7 @@
             this.deleteSelectedButton = new System.Windows.Forms.Button();
             this.unbanSelectedButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.searchItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -224,8 +225,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
@@ -772,9 +773,9 @@
             // 
             this.piFactionGrid.AllowUserToAddRows = false;
             this.piFactionGrid.AllowUserToDeleteRows = false;
-            this.piFactionGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.piFactionGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.piFactionGrid.AutoGenerateColumns = false;
             this.piFactionGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.piFactionGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -898,9 +899,9 @@
             // 
             this.piCargoGrid.AllowUserToAddRows = false;
             this.piCargoGrid.AllowUserToDeleteRows = false;
-            this.piCargoGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.piCargoGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.piCargoGrid.AutoGenerateColumns = false;
             this.piCargoGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.piCargoGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1020,9 +1021,9 @@
             // 
             this.piEquipmentGrid.AllowUserToAddRows = false;
             this.piEquipmentGrid.AllowUserToDeleteRows = false;
-            this.piEquipmentGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.piEquipmentGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.piEquipmentGrid.AutoGenerateColumns = false;
             this.piEquipmentGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.piEquipmentGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1113,8 +1114,8 @@
             // 
             // richTextBoxPlayerInfoAdminText
             // 
-            this.richTextBoxPlayerInfoAdminText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxPlayerInfoAdminText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxPlayerInfoAdminText.Location = new System.Drawing.Point(6, 285);
             this.richTextBoxPlayerInfoAdminText.Name = "richTextBoxPlayerInfoAdminText";
             this.richTextBoxPlayerInfoAdminText.Size = new System.Drawing.Size(453, 140);
@@ -1141,8 +1142,8 @@
             // 
             // richTextBoxPlayerInfoPlayerText
             // 
-            this.richTextBoxPlayerInfoPlayerText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxPlayerInfoPlayerText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxPlayerInfoPlayerText.BackColor = System.Drawing.SystemColors.Window;
             this.richTextBoxPlayerInfoPlayerText.Location = new System.Drawing.Point(3, 19);
             this.richTextBoxPlayerInfoPlayerText.Name = "richTextBoxPlayerInfoPlayerText";
@@ -1153,8 +1154,8 @@
             // 
             // buttonPlayerInfoSaveAdminText
             // 
-            this.buttonPlayerInfoSaveAdminText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonPlayerInfoSaveAdminText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonPlayerInfoSaveAdminText.Location = new System.Drawing.Point(386, 432);
             this.buttonPlayerInfoSaveAdminText.Name = "buttonPlayerInfoSaveAdminText";
             this.buttonPlayerInfoSaveAdminText.Size = new System.Drawing.Size(75, 23);
@@ -1189,9 +1190,9 @@
             // 
             // piFileView
             // 
-            this.piFileView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.piFileView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.piFileView.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.piFileView.Location = new System.Drawing.Point(6, 6);
             this.piFileView.Name = "piFileView";
@@ -1272,6 +1273,7 @@
             this.statisticsToolStripMenuItem,
             this.searchIPtoolStripMenuItem,
             this.searchLoginIDToolStripMenuItem,
+            this.searchItemToolStripMenuItem,
             this.itemListToolStripMenuItem,
             this.fLFileEditorToolStripMenuItem,
             this.toolStripSeparator1,
@@ -1369,9 +1371,9 @@
             this.charListDataGridView.AllowUserToDeleteRows = false;
             this.charListDataGridView.AllowUserToOrderColumns = true;
             this.charListDataGridView.AllowUserToResizeRows = false;
-            this.charListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.charListDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.charListDataGridView.AutoGenerateColumns = false;
             this.charListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.charListDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1395,6 +1397,7 @@
             this.charListDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.charListDataGridView.Size = new System.Drawing.Size(447, 318);
             this.charListDataGridView.TabIndex = 11;
+            this.charListDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.charListDataGridView_CellContentClick);
             this.charListDataGridView.SelectionChanged += new System.EventHandler(this.charListDataGridView_SelectionChanged);
             // 
             // charNameDataGridViewTextBoxColumn1
@@ -1795,6 +1798,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonMoveAllSelected_Click);
             // 
+            // searchItemToolStripMenuItem
+            // 
+            this.searchItemToolStripMenuItem.Name = "searchItemToolStripMenuItem";
+            this.searchItemToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.searchItemToolStripMenuItem.Text = "Search Item";
+            this.searchItemToolStripMenuItem.Click += new System.EventHandler(this.searchItemToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1814,8 +1824,8 @@
             this.MinimumSize = new System.Drawing.Size(968, 584);
             this.Name = "MainWindow";
             this.Text = "DS Account Manager";
-            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1858,7 +1868,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem;
-        private System.Windows.Forms.DataGridView charListDataGridView;
+        public System.Windows.Forms.DataGridView charListDataGridView;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.BindingSource characterListBindingSource;
@@ -2010,6 +2020,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ToolStripMenuItem searchItemToolStripMenuItem;
     }
 }
 

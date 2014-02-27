@@ -37,7 +37,7 @@ namespace DAM
         /// <summary>
         /// The game data including infocards.
         /// </summary>
-        private FLGameData gameData = new FLGameData();
+        public FLGameData gameData = new FLGameData();
 
         /// <summary>
         /// The communications socket for executing flhook commands.
@@ -1710,7 +1710,7 @@ namespace DAM
             }
             else if (checkBoxFilterSameIP.Checked)
             {
-                using (DamDataSet tds = new DamDataSet())
+                using (var tds = new DamDataSet())
                 {
                     if (selectedCharRecord != null)
                     {
@@ -2008,10 +2008,7 @@ namespace DAM
             if (InvokeRequired)
                 throw new Exception("Data access from invalid thread");
 
-            if (dataAccess == null) 
-                dataAccess = new DataAccess();
-
-            return dataAccess;
+            return dataAccess ?? (dataAccess = new DataAccess());
         }
 
         /// <summary>
@@ -2578,6 +2575,17 @@ namespace DAM
             if(lvCharLogins.SelectedItems.Count == 1 && e.Control && e.KeyCode == Keys.C)
                 Clipboard.SetText(lvCharLogins.SelectedItems[0].SubItems[1].Text + ", " +
                                   lvCharLogins.SelectedItems[0].SubItems[2].Text);
+        }
+
+        private void charListDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void searchItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var sit = new SearchItemTool(this);
+            sit.Show();
         }
     }
 }

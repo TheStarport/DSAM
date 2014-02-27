@@ -120,8 +120,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\lib\System.Data.SQLite.DLL</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Deployment" />
@@ -141,6 +142,12 @@
       <DependentUpon>GameDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="LogRecorderInterface.cs" />
+    <Compile Include="SearchItemTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchItemTool.Designer.cs">
+      <DependentUpon>SearchItemTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="StatisticsGenerator.cs" />
     <Compile Include="Tool UI\AboutWindow.cs">
       <SubType>Form</SubType>
@@ -268,6 +275,9 @@
       <DependentUpon>PropertiesWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="SearchItemTool.resx">
+      <DependentUpon>SearchItemTool.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tool UI\AboutWindow.resx">
       <DependentUpon>AboutWindow.cs</DependentUpon>
     </EmbeddedResource>
