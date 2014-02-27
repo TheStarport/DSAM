@@ -1347,6 +1347,7 @@ namespace DAM
                     return GAMEDATA_ENGINES;
                 case "hp_freighter_engine_special_10":
                     return GAMEDATA_ENGINES;
+
                 case "hp_elite_engine_special_1":
                     return GAMEDATA_ENGINES;
                 case "hp_elite_engine_special_2":

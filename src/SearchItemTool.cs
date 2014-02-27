@@ -32,18 +32,25 @@ namespace DAM
                 _bgWorker.ProgressChanged += _bgWorker_ProgressChanged;
                 _bgWorker.RunWorkerCompleted += _bgWorker_RunWorkerCompleted;
                 _bgWorker.RunWorkerAsync();
+                button1.Text = "Cancel";
             }
             else
             {
                 if (_bgWorker.IsBusy)
+                {
                     _bgWorker.CancelAsync();
+                    button1.Text = "Go Team Go";
+                }
+                    
                 else _bgWorker.RunWorkerAsync();
+                button1.Text = "Cancel";
             }
         }
 
         void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             dataGridView1.DataSource = e.Result;
+            button1.Text = "Go Team Go";
         }
 
         void _bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -66,6 +73,7 @@ namespace DAM
 
             var accDt = new DamDataSet.CharacterListDataTable();
 
+            var stringToCompare = textBox1.Text.ToLowerInvariant();
 
             foreach (DataGridViewRow row in rows)
             {
@@ -82,7 +90,7 @@ namespace DAM
 
                 foreach (var set in loadedCharFile.GetSettings("Player", "cargo"))
                 {
-                    if (_mainWindow.gameData.GetItemDescByHash(set.UInt(0)) != textBox1.Text) continue;
+                    if (_mainWindow.gameData.GetItemDescByHash(set.UInt(0)).ToLowerInvariant() != stringToCompare) continue;
                     accDt.ImportRow(obj);
                     isAdded = true;
                     break;
@@ -91,7 +99,7 @@ namespace DAM
                 if (!isAdded)
                     foreach (FLDataFile.Setting set in loadedCharFile.GetSettings("Player", "base_equip"))
                     {
-                        if (_mainWindow.gameData.GetItemDescByHash(set.UInt(0)) != textBox1.Text) continue;
+                        if (_mainWindow.gameData.GetItemDescByHash(set.UInt(0)).ToLowerInvariant() != stringToCompare) continue;
                         accDt.ImportRow(obj);
                         break;
                     }
