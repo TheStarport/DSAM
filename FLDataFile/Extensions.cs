@@ -14,17 +14,17 @@ namespace FLDataFile
         /// <returns></returns>
         public static string String(this Setting ins)
         {
-            return string.Format(@"{0} = {1}", ins.Name, string.Join(", ", ins.Values));
+            return string.Format(@"{0} = {1}", ins.Name, string.Join(", ", ins));
         }
 
         public static uint GetUInt32(this Setting ins, int position)
         {
-            return Convert.ToUInt32(ins.Values[position],10);
+            return Convert.ToUInt32(ins[position],10);
         }
 
         public static int GetInt(this Setting ins, int position)
         {
-            return Convert.ToInt32(ins.Values[position], 10);
+            return Convert.ToInt32(ins[position], 10);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace FLDataFile
         /// <param name="value"></param>
         public static void AddValue(this Setting ins, string value)
         {
-            ins.Values.Add(value);
+            ins.Add(value);
         }
         #endregion
 

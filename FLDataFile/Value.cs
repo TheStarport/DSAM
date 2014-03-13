@@ -34,8 +34,12 @@ namespace FLDataFile
             //get the values, split em and trim em.
 
             AddRange(
-                (text.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries))
-                .Select(s => s.Trim())
+                (
+                text
+                .Substring(0, text.IndexOf(';')+1) //remove comments
+                .Split(Delimiters, StringSplitOptions.RemoveEmptyEntries) //split multivalues
+                )
+                .Select(s => s.Trim()) //remove spaces just to be safe
                 );
 
 
