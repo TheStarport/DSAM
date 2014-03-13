@@ -90,6 +90,8 @@ namespace FLDataFile
                 {
                     s = s.Trim();
 
+                    if (s.Length == 0) continue;
+
                     if (s[0] == ';') continue;
 
                     if (s[0] == '[')
@@ -98,7 +100,7 @@ namespace FLDataFile
                         {
                             Sections.Add(curSection);
                         }
-                        curSection = new Section(s.Substring(1, s.Length - 2).ToLowerInvariant());
+                        curSection = new Section(s.Substring(1, s.Length - 2));
                     }
                     else
                     {
@@ -125,7 +127,7 @@ namespace FLDataFile
                 int sectionNumEntries = BitConverter.ToInt16(buf, p); p += 2;
                 string sectionName = BufToString(buf, strTableOffset + sectionStrOffset);
 
-                var section = new Section(sectionName.ToLowerInvariant());
+                var section = new Section(sectionName);
                 Sections.Add(section);
 
                 while (sectionNumEntries-- > 0)

@@ -32,7 +32,11 @@ namespace FLDataFile
         {
             Name = name.Trim();
             //get the values, split em and trim em.
-            Values = (List<String>)(new List<string>(text.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries))).Select(s => s.Trim());
+
+
+            Values = (text.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries))
+                .Select(s => s.Trim())
+                .ToList();
         }
 
 
