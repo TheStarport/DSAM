@@ -220,6 +220,11 @@ namespace FLDataFile
             return ret;
         }
 
+        public Setting GetSetting(string sectionName, string settingName)
+        {
+            return GetFirstOf(sectionName).GetFirstOf(settingName);
+        }
+
         #endregion
     }
 }

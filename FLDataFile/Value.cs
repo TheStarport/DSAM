@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace FLDataFile
 {
-    public class Setting
+    public class Setting : List<String>
     {
 
         public string Name { get; set; }
 
         private static readonly string[] Delimiters = { ", ","," };
 
-        public List<String> Values;
+        //public  Values;
 
         /// <summary>
         /// Creates an empty setting.
@@ -20,7 +20,7 @@ namespace FLDataFile
         public Setting(string name)
         {
             Name = name;
-            Values = new List<string>();
+            //Values = new List<string>();
         }
 
         /// <summary>
@@ -33,10 +33,12 @@ namespace FLDataFile
             Name = name.Trim();
             //get the values, split em and trim em.
 
-
-            Values = (text.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries))
+            AddRange(
+                (text.Split(Delimiters, StringSplitOptions.RemoveEmptyEntries))
                 .Select(s => s.Trim())
-                .ToList();
+                );
+
+
         }
 
 
