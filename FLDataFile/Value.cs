@@ -10,7 +10,7 @@ namespace FLDataFile
         public string Name { get; set; }
 
         private static readonly string[] Delimiters = { ", ","," };
-
+        private static readonly char[] TrimChars = { ' ', '\t' };
         //public  Values;
 
         /// <summary>
@@ -30,13 +30,14 @@ namespace FLDataFile
         /// <param name="name">Setting's name.</param>
         public Setting(string text,string name)
         {
-            Name = name.Trim();
+            Name = name.Trim(TrimChars);
             //get the values, split em and trim em.
-
+            if ((text.IndexOf(';')) != -1)
+                text = text.Substring(0, text.IndexOf(';'));
+            text = text.Trim(TrimChars);
             AddRange(
                 (
                 text
-                .Substring(0, text.IndexOf(';')+1) //remove comments
                 .Split(Delimiters, StringSplitOptions.RemoveEmptyEntries) //split multivalues
                 )
                 .Select(s => s.Trim()) //remove spaces just to be safe

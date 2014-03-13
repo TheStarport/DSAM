@@ -48,7 +48,8 @@ namespace FLDataFile
         public static void AddSetting(this Section sec, string str)
         {
             var s = str.Split('=');
-            sec.Settings.Add(new Setting(s[1],s[0]));
+            if (s.Length > 1)
+                sec.Settings.Add(new Setting(s[1],s[0]));
         }
         #endregion
 

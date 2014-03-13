@@ -190,7 +190,10 @@ namespace FLDataFile
         public Section GetFirstOf(string name)
         {
             if (_secDictionary == null) _secDictionary = new Dictionary<string, Section>();
-            return _secDictionary[name] ?? (_secDictionary[name] = Sections.First(a => a.Name == name));
+            if (!_secDictionary.ContainsKey(name))
+                _secDictionary[name] = Sections.First(a => a.Name == name);
+
+            return _secDictionary[name];
         }
 
         /// <summary>

@@ -35,7 +35,10 @@ namespace FLDataFile
         /// <returns>Setting class.</returns>
         public Setting GetFirstOf(string name)
         {
-            return _setDictionary[name] ?? (_setDictionary[name] = Settings.First(a => a.Name == name));
+            if (!_setDictionary.ContainsKey(name))
+                _setDictionary[name] = Settings.First(a => a.Name == name);
+
+            return _setDictionary[name];
         }
 
         /// <summary>
