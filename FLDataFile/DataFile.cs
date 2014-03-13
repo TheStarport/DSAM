@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 
 namespace FLDataFile
 {
@@ -10,16 +11,20 @@ namespace FLDataFile
     /// </summary>
     public class DataFile
     {
-        /// <summary>
-        ///     The super duper microsoft encryption key
-        /// </summary>
-        private static readonly byte[] Gene = { (byte)'G', (byte)'e', (byte)'n', (byte)'e' };
+
 
         
 
         public List<Section> Sections;
-
+        private Dictionary<string, Section> _secDictionary; 
         public string Path;
+
+
+        #region "INI loader"
+        /// <summary>
+        ///     The super duper microsoft encryption key
+        /// </summary>
+        private static readonly byte[] Gene = { (byte)'G', (byte)'e', (byte)'n', (byte)'e' };
 
         /// <summary>
         /// Loads INI and tries to deGene if it's coded.
@@ -175,6 +180,20 @@ namespace FLDataFile
             return System.Text.Encoding.ASCII.GetString(buf, offset, strLen);
         }
 
+        #endregion
+
+        /// <summary>
+        /// Returns first section with this name. Speeds up consequentive calls if used.
+        /// </summary>
+        /// <param name="name">Name of the section.</param>
+        /// <returns>Section class.</returns>
+        public Section GetFirstOf(string name)
+        {
+            if (_secDictionary == null) _secDictionary = new Dictionary<string, Section>();
+            if (_secDictionary[name] == null) _secDictionary[name] = Sections.First(a => a.Name == name);
+
+            return _secDictionary[name];
+        }
 
     }
 }
