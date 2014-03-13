@@ -20,6 +20,7 @@ namespace FLDataFile
         public Setting(string name)
         {
             Name = name;
+            Values = new List<string>();
         }
 
         /// <summary>

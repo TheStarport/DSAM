@@ -230,6 +230,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UIDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Util Functions\FLDataFile.cs" />
     <Compile Include="Util Functions\FLDataFileException.cs" />
     <Compile Include="Util Functions\FLHookCommander.cs" />
     <Compile Include="Util Functions\FLHookListener.cs" />
@@ -241,7 +242,6 @@
       <DependentUpon>CreateBanWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Util Functions\FLGameData.cs" />
-    <Compile Include="Util Functions\FLDataFile.cs" />
     <Compile Include="DamDataSet.cs">
       <DependentUpon>DamDataSet.xsd</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

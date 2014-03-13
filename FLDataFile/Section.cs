@@ -6,7 +6,7 @@ namespace FLDataFile
 {
     public class Section
     {
-        public List<Setting> Settings;
+        public List<Setting> Settings = new List<Setting>();
         private readonly Dictionary<string, Setting> _setDictionary = new Dictionary<string, Setting>(); 
         public string Name { get; set; }
 
@@ -35,12 +35,18 @@ namespace FLDataFile
         /// <returns>Setting class.</returns>
         public Setting GetFirstOf(string name)
         {
-            if (_setDictionary[name] == null) 
-                _setDictionary[name] = Settings.First(a => a.Name == name);
-
-            return _setDictionary[name];
+            return _setDictionary[name] ?? (_setDictionary[name] = Settings.First(a => a.Name == name));
         }
 
+        /// <summary>
+        /// Returns all settings matching the name specified.
+        /// </summary>
+        /// <param name="name">Setting name</param>
+        /// <returns></returns>
+        public IEnumerable<Setting> GetSettings(string name)
+        {
+            return Settings.Where(a => a.Name == name);
+        } 
     }
 
 

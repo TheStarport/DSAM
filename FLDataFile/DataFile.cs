@@ -12,9 +12,6 @@ namespace FLDataFile
     public class DataFile
     {
 
-
-        
-
         public List<Section> Sections;
         private Dictionary<string, Section> _secDictionary; 
         public string Path;
@@ -66,6 +63,7 @@ namespace FLDataFile
             //checks for empty file
             if (buf.Length == 0) throw new Exception(string.Format("Empty file: {0}",path));
 
+            Sections = new List<Section>();
 
             // If this is a bini file then decode it
             if (buf.Length >= 12 && buf[0] == 'B' && buf[1] == 'I' && buf[2] == 'N' && buf[3] == 'I')
@@ -78,8 +76,6 @@ namespace FLDataFile
             }
 
         }
-
-        private static readonly char[] SectionHeaders = { '[', ']' };
 
         private void Parse(byte[] buf)
         {
@@ -102,7 +98,7 @@ namespace FLDataFile
                         {
                             Sections.Add(curSection);
                         }
-                        curSection = new Section(s.Trim(SectionHeaders));
+                        curSection = new Section(s.Substring(1, s.Length - 2).ToLowerInvariant());
                     }
                     else
                     {
@@ -129,7 +125,7 @@ namespace FLDataFile
                 int sectionNumEntries = BitConverter.ToInt16(buf, p); p += 2;
                 string sectionName = BufToString(buf, strTableOffset + sectionStrOffset);
 
-                var section = new Section(sectionName);
+                var section = new Section(sectionName.ToLowerInvariant());
                 Sections.Add(section);
 
                 while (sectionNumEntries-- > 0)
@@ -182,6 +178,8 @@ namespace FLDataFile
 
         #endregion
 
+
+        #region "stuff retrieving"
         /// <summary>
         /// Returns first section with this name. Speeds up consequentive calls if used.
         /// </summary>
@@ -190,10 +188,36 @@ namespace FLDataFile
         public Section GetFirstOf(string name)
         {
             if (_secDictionary == null) _secDictionary = new Dictionary<string, Section>();
-            if (_secDictionary[name] == null) _secDictionary[name] = Sections.First(a => a.Name == name);
-
-            return _secDictionary[name];
+            return _secDictionary[name] ?? (_secDictionary[name] = Sections.First(a => a.Name == name));
         }
 
+        /// <summary>
+        /// Returns all sections matching the name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public IEnumerable<Section> GetSections(string name)
+        {
+            return Sections.Where(a => a.Name == name);
+        }
+
+
+        /// <summary>
+        /// Return a list of all items with the specified section name and setting name
+        /// </summary>
+        /// <param name="sectionName">The section name.</param>
+        /// <param name="settingName">The setting name.</param>
+        /// <returns></returns>
+        public List<Setting> GetSettings(string sectionName, string settingName)
+        {
+            var ret = new List<Setting>();
+            foreach (var sect in GetSections(sectionName))
+            {
+                ret.AddRange(sect.GetSettings(settingName));
+            }
+            return ret;
+        }
+
+        #endregion
     }
 }
