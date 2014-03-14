@@ -191,7 +191,7 @@ namespace FLDataFile
         {
             if (_secDictionary == null) _secDictionary = new Dictionary<string, Section>();
             if (!_secDictionary.ContainsKey(name))
-                _secDictionary[name] = Sections.First(a => a.Name == name);
+                _secDictionary[name] = Sections.FirstOrDefault(a => a.Name == name);
 
             return _secDictionary[name];
         }

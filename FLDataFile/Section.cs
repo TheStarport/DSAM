@@ -35,10 +35,32 @@ namespace FLDataFile
         /// <returns>Setting class.</returns>
         public Setting GetFirstOf(string name)
         {
+            if (name == null) return null;
             if (!_setDictionary.ContainsKey(name))
-                _setDictionary[name] = Settings.First(a => a.Name == name);
+                _setDictionary[name] = Settings.FirstOrDefault(a => a.Name == name);
 
             return _setDictionary[name];
+        }
+
+        /// <summary>
+        /// Returns any setting found with the names provided. At least two names needed, obviously.
+        /// </summary>
+        /// <param name="setting1"></param>
+        /// <param name="setting2"></param>
+        /// <param name="setting3"></param>
+        /// <param name="setting4"></param>
+        /// <returns>First setting found, or null if none found.</returns>
+        public Setting GetAnySetting(string setting1, string setting2,string setting3 = null, string setting4 = null)
+        {
+            var gf1 = GetFirstOf(setting1);
+            if (gf1 != null) return gf1;
+            var gf2 = GetFirstOf(setting2);
+            if (gf2 != null) return gf2;
+            var gf3 = GetFirstOf(setting3);
+            if (gf3 != null) return gf3;
+            var gf4 = GetFirstOf(setting4);
+            if (gf4 != null) return gf4;
+            return null;
         }
 
         /// <summary>
