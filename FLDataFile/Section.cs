@@ -42,6 +42,19 @@ namespace FLDataFile
             return _setDictionary[name];
         }
 
+
+        /// <summary>
+        /// Try to get first setting with the name defined and store it in setting value.
+        /// </summary>
+        /// <param name="name">Name of the setting</param>
+        /// <param name="setting">Where to store the setting.</param>
+        /// <returns>True if succeeds, otherwise false.</returns>
+        public bool TryGetFirstOf(string name, out Setting setting)
+        {
+            setting = GetFirstOf(name);
+            return setting != null;
+        }
+
         /// <summary>
         /// Returns any setting found with the names provided. At least two names needed, obviously.
         /// </summary>
