@@ -242,12 +242,12 @@ namespace DSAccountManager_v2.GD
             //TODO: Warning, hardcoded system path! :S
             var sysFile = new DataFile(_flDataPath + @"\Universe\" + sec.GetFirstOf("file")[0]);
 
-            foreach (var obj in sysFile.GetSections("object"))
+            foreach (var obj in sysFile.GetSections("Object"))
             {
                 Setting curset;
                 //string pos;
                 var idsInfo = "";
-
+                var idsInfo1 = "";
 
                 //TODO: do we need pos?
                 //if (obj.TryGetFirstOf("pos", out curset))
@@ -263,11 +263,14 @@ namespace DSAccountManager_v2.GD
                     }
 
                     idsInfo = GetIDString(id);
+                    if (_infocardMap.ContainsKey(id))
+                        idsInfo1 = GetIDString(_infocardMap[id]);
                 }
 
                 //add the icard to the base if object is base
                 if (obj.TryGetFirstOf("base", out curset))
-                    Bases.FindByNickname(curset[0]).Infocard = idsInfo;
+                    //TODO: really join the stuff, infos are in XML format.
+                    Bases.FindByNickname(curset[0]).Infocard = idsInfo + idsInfo1;
                 
             }
 
