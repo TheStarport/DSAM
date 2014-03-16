@@ -12,11 +12,20 @@
   <xs:element name="GameInfoSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="GameInfoSet" msprop:Generator_UserDSName="GameInfoSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Bases" msprop:Generator_TableClassName="BasesDataTable" msprop:Generator_TableVarName="tableBases" msprop:Generator_TablePropName="Bases" msprop:Generator_RowDeletingName="BasesRowDeleting" msprop:Generator_RowChangingName="BasesRowChanging" msprop:Generator_RowEvHandlerName="BasesRowChangeEventHandler" msprop:Generator_RowDeletedName="BasesRowDeleted" msprop:Generator_UserTableName="Bases" msprop:Generator_RowChangedName="BasesRowChanged" msprop:Generator_RowEvArgName="BasesRowChangeEvent" msprop:Generator_RowClassName="BasesRow">
+        <xs:element name="Bases" msprop:Generator_TableClassName="BasesDataTable" msprop:Generator_TableVarName="tableBases" msprop:Generator_RowChangedName="BasesRowChanged" msprop:Generator_TablePropName="Bases" msprop:Generator_RowDeletingName="BasesRowDeleting" msprop:Generator_RowChangingName="BasesRowChanging" msprop:Generator_RowEvHandlerName="BasesRowChangeEventHandler" msprop:Generator_RowDeletedName="BasesRowDeleted" msprop:Generator_RowClassName="BasesRow" msprop:Generator_UserTableName="Bases" msprop:Generator_RowEvArgName="BasesRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Nickname" msprop:Generator_ColumnVarNameInTable="columnNickname" msprop:Generator_ColumnPropNameInRow="Nickname" msprop:Generator_ColumnPropNameInTable="NicknameColumn" msprop:Generator_UserColumnName="Nickname" type="xs:string" />
-              <xs:element name="IDString" msprop:Generator_ColumnVarNameInTable="columnIDString" msprop:Generator_ColumnPropNameInRow="IDString" msprop:Generator_ColumnPropNameInTable="IDStringColumn" msprop:Generator_UserColumnName="IDString" type="xs:string" minOccurs="0" />
+              <xs:element name="IDString" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IDString" msprop:Generator_ColumnVarNameInTable="columnIDString" msprop:Generator_ColumnPropNameInTable="IDStringColumn" msprop:Generator_UserColumnName="IDString" type="xs:string" minOccurs="0" />
+              <xs:element name="Infocard" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Infocard" msprop:Generator_ColumnVarNameInTable="columnInfocard" msprop:Generator_ColumnPropNameInTable="InfocardColumn" msprop:Generator_UserColumnName="Infocard" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Systems" msprop:Generator_TableClassName="SystemsDataTable" msprop:Generator_TableVarName="tableSystems" msprop:Generator_TablePropName="Systems" msprop:Generator_RowDeletingName="SystemsRowDeleting" msprop:Generator_RowChangingName="SystemsRowChanging" msprop:Generator_RowEvHandlerName="SystemsRowChangeEventHandler" msprop:Generator_RowDeletedName="SystemsRowDeleted" msprop:Generator_UserTableName="Systems" msprop:Generator_RowChangedName="SystemsRowChanged" msprop:Generator_RowEvArgName="SystemsRowChangeEvent" msprop:Generator_RowClassName="SystemsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Nickname" msprop:Generator_ColumnVarNameInTable="columnNickname" msprop:Generator_ColumnPropNameInRow="Nickname" msprop:Generator_ColumnPropNameInTable="NicknameColumn" msprop:Generator_UserColumnName="Nickname" type="xs:string" />
+              <xs:element name="Infocard" msprop:Generator_ColumnVarNameInTable="columnInfocard" msprop:Generator_ColumnPropNameInRow="Infocard" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInTable="InfocardColumn" msprop:Generator_UserColumnName="Infocard" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -24,6 +33,10 @@
     </xs:complexType>
     <xs:unique name="BasesKey1" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Bases" />
+      <xs:field xpath="mstns:Nickname" />
+    </xs:unique>
+    <xs:unique name="SystemsKey1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Systems" />
       <xs:field xpath="mstns:Nickname" />
     </xs:unique>
   </xs:element>

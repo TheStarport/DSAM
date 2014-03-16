@@ -60,6 +60,7 @@ namespace DSAccountManager_v2.GD
         private readonly string _flDataPath;
 
         public readonly GameInfoSet.BasesDataTable Bases = new GameInfoSet.BasesDataTable();
+        public readonly GameInfoSet.SystemsDataTable Systems = new GameInfoSet.SystemsDataTable();
 
         /// <summary>
         /// Initiates the Universe DB. FLPath is the path to the Freelancer directory, not DATA\EXE etc.
@@ -110,7 +111,107 @@ namespace DSAccountManager_v2.GD
                 {
                     LoadSystem(sysSection);
                 }
+            }
 
+            foreach (var entry in flIni.GetSettings("Data", "equipment"))
+            {
+                var equipFile = new DataFile(_flDataPath + @"\" + entry[0]);
+
+                foreach (var eqSection in equipFile.Sections)
+                {
+                    switch (eqSection.Name)
+                    {
+                        case "engine":
+                            LoadEquip(eqSection,EquipTypes.Engine);
+                            break;
+                        case "power":
+                            LoadEquip(eqSection, EquipTypes.Powerplant);
+                            break;
+                        case "scanner":
+                            LoadEquip(eqSection, EquipTypes.Scanner);
+                            break;
+                        case "tractor":
+                            LoadEquip(eqSection, EquipTypes.Tractor);
+                            break;
+                        case "cloakingdevice":
+                            LoadEquip(eqSection, EquipTypes.Cloak);
+                            break;
+                        case "armor":
+                            LoadEquip(eqSection, EquipTypes.Armor);
+                            break;
+                        case "internalfx":
+                            //if (section.SettingExists("use_sound"))
+                            //{
+                            //    AddGameData(DataStore.HashList, section, GAMEDATA_SOUND, false);
+                            //}
+                            break;
+                        case "attachedfx":
+                            LoadEquip(eqSection, EquipTypes.AttachedFX);
+                            break;
+                        case "light":
+                            LoadEquip(eqSection, EquipTypes.Light);
+                            break;
+                        case "gun":
+                            //if (section.SettingExists("hp_gun_type"))
+                            //{
+                            //    string hpType = section.GetSetting("hp_gun_type").Str(0);
+                            //    AddGameData(DataStore.HashList, section, HardpointClassToGameDataClass(hpType), true);
+                            //    DataStore.EquipInfoList.AddEquipInfoListRow(
+                            //        FLUtility.CreateID(section.GetSetting("nickname").Str(0)),
+                            //        HardpointClassToGameDataClass(hpType), hpType);
+                            //}
+                            //// Probably an npc gun
+                            //else
+                            //{
+                            //    AddGameData(DataStore.HashList, section, GAMEDATA_GEN, false);
+                            //}
+                            break;
+                        case "shieldgenerator":
+                            //if (section.SettingExists("hp_type"))
+                            //{
+                            //    string hpType = section.GetSetting("hp_type").Str(0);
+                            //    AddGameData(DataStore.HashList, section, HardpointClassToGameDataClass(hpType), true);
+                            //    DataStore.EquipInfoList.AddEquipInfoListRow(
+                            //        FLUtility.CreateID(section.GetSetting("nickname").Str(0)),
+                            //        HardpointClassToGameDataClass(hpType), hpType);
+                            //}
+                            //// Probably an npc shield
+                            //else
+                            //{
+                            //    AddGameData(DataStore.HashList, section, GAMEDATA_GEN, false);
+                            //}
+                            break;
+                        case "countermeasuredropper":
+                            LoadEquip(eqSection, EquipTypes.CountermeasureDropper);
+                            break;
+                        case "thruster":
+                            LoadEquip(eqSection, EquipTypes.Thruster);
+                            break;
+                        case "minedropper":
+                            LoadEquip(eqSection, EquipTypes.MineDropper);
+                            break;
+                        case "munition":
+                            LoadEquip(eqSection, EquipTypes.Munition);
+                            break;
+                        case "repairkit":
+                            LoadEquip(eqSection, EquipTypes.RepairKit);
+                            break;
+                        case "countermeasure":
+                            LoadEquip(eqSection, EquipTypes.Countermeasure);
+                            break;
+                        case "shieldbattery":
+                            LoadEquip(eqSection, EquipTypes.ShieldBattery);
+                            break;
+                        case "mine":
+                            LoadEquip(eqSection, EquipTypes.Mine);
+                            break;
+                        case "commodity":
+                            LoadEquip(eqSection, EquipTypes.Cargo);
+                            break;
+
+                    }
+
+                }
             }
 
 
@@ -120,11 +221,11 @@ namespace DSAccountManager_v2.GD
         private void LoadBase(Section sec)
         {
             var nickname = sec.GetFirstOf("nickname")[0];
-            var file = _flDataPath + sec.GetFirstOf("file");
+            //var file = _flDataPath + sec.GetFirstOf("file");
 
             var stIDSName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
 
-            Bases.AddBasesRow(nickname, stIDSName);
+            Bases.AddBasesRow(nickname, stIDSName,"");
 
             //TODO: do we rly need room data?
             //FLGameData:Ln 191
@@ -134,18 +235,50 @@ namespace DSAccountManager_v2.GD
         {
             var sysNick = sec.GetFirstOf("nickname")[0].ToLowerInvariant();
             var stIDSName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
+            Systems.AddSystemsRow(sysNick, stIDSName);
+
+
             //string file = Directory.GetParent(ini.filePath).FullName + "\\" + section.GetSetting("file").Str(0);
-            //ParseSystem(file, log);
             //TODO: Warning, hardcoded system path! :S
             var sysFile = new DataFile(_flDataPath + @"\Universe\" + sec.GetFirstOf("file")[0]);
 
             foreach (var obj in sysFile.GetSections("object"))
             {
+                Setting curset;
+                //string pos;
+                var idsInfo = "";
+
+
+                //TODO: do we need pos?
+                //if (obj.TryGetFirstOf("pos", out curset))
+                //    pos = string.Join(", ", curset);
+
+                //get infocard for the object
+                if (obj.TryGetFirstOf("ids_info", out curset))
+                {
+                    uint id;
+                    if (!uint.TryParse(curset[0], out id))
+                    {
+                        //TODO: log error, return to next foreach
+                    }
+
+                    idsInfo = GetIDString(id);
+                }
+
+                //add the icard to the base if object is base
+                if (obj.TryGetFirstOf("base", out curset))
+                    Bases.FindByNickname(curset[0]).Infocard = idsInfo;
                 
             }
 
+            //TODO: zones needed?
+
         }
 
+        private void LoadEquip(Section sec, EquipTypes equipType)
+        {
+            //TODO: load equippppes!
+        }
 
         /// <summary>
         /// Gets ID String (description from DLL) 

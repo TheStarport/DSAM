@@ -75,6 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameInfoSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="GD\EquipTypes.cs" />
     <Compile Include="GD\Universe.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
