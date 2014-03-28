@@ -14,7 +14,7 @@ namespace FLDataFile
         /// <returns></returns>
         public static string String(this Setting ins)
         {
-            return string.Format(@"{0} = {1}", ins.Name, string.Join(", ", ins));
+            return string.Format(@"{0} = {1}    ; {2}", ins.Name, string.Join(", ", ins), ins.Comments);
         }
 
         public static uint GetUInt32(this Setting ins, int position)

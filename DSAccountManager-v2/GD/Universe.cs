@@ -280,7 +280,25 @@ namespace DSAccountManager_v2.GD
 
         private void LoadEquip(Section sec, EquipTypes equipType)
         {
-            //TODO: load equippppes!
+            switch (equipType)
+            {
+                case EquipTypes.Gun:
+                    Setting s;
+                    if ((s = sec.GetFirstOf("hp_gun_type")) != null)
+                    {
+                        string hpType = s[0];
+                        //AddGameData(DataStore.HashList, section, HardpointClassToGameDataClass(hpType), true);
+                        //DataStore.EquipInfoList.AddEquipInfoListRow(
+                            //FLUtility.CreateID(section.GetSetting("nickname").Str(0)),
+                            //HardpointClassToGameDataClass(hpType), hpType);
+                    }
+                    // Probably an npc gun
+                    else
+                    {
+                        //AddGameData(DataStore.HashList, section, GAMEDATA_GEN, false);
+                    }
+                    break;
+            }
         }
 
         /// <summary>

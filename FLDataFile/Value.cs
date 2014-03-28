@@ -8,7 +8,7 @@ namespace FLDataFile
     {
 
         public string Name { get; set; }
-
+        public string Comments { get; set; }
         private static readonly string[] Delimiters = { ", ","," };
         private static readonly char[] TrimChars = { ' ', '\t' };
         //public  Values;

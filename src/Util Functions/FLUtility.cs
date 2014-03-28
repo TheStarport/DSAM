@@ -186,7 +186,7 @@ namespace DAM
             string accountIdFilePath = accDirPath + Path.DirectorySeparatorChar + "name";
 
             // Read a 'name' file into memory.
-            FileStream fs = System.IO.File.OpenRead(accountIdFilePath);
+            FileStream fs = File.OpenRead(accountIdFilePath);
             byte[] buf = new byte[fs.Length];
             fs.Read(buf, 0, (int)fs.Length);
             fs.Close();

@@ -2210,7 +2210,7 @@ namespace DAM
                         loadedCharFile.AddSettingNotUnique("Player", "visit", new object[] { r.ItemHash, 41 });
                     }
                 }
-
+                 
                 while (loadedCharFile.DeleteSetting("mPlayer", "sys_visited")) ;
                 foreach (GameDataSet.HashListRow r in gameData.DataStore.HashList)
                 {
@@ -2579,7 +2579,6 @@ namespace DAM
 
         private void charListDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void searchItemToolStripMenuItem_Click(object sender, EventArgs e)
