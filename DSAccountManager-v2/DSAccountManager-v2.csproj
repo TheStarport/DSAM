@@ -120,6 +120,10 @@
       <Project>{60f268ee-f1cf-4d5b-9641-b6db66bc956e}</Project>
       <Name>FLDataFile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FLHookTransport\FLHookTransport.csproj">
+      <Project>{530a2a36-8e9b-4680-9ebe-8dd9bd2f67a5}</Project>
+      <Name>FLHookTransport</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogDispatcher\LogDispatcher.csproj">
       <Project>{49d25a77-7a3f-4028-b4dc-54747f012f29}</Project>
       <Name>LogDispatcher</Name>

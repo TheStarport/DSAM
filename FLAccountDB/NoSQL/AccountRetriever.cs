@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using System.Text;
 using LogDispatcher;
 
 namespace FLAccountDB.NoSQL
@@ -59,7 +59,7 @@ namespace FLAccountDB.NoSQL
                             player.Health = float.Parse(set[0]);
                             break;
                         case "equip":
-                            player.Equipment.Add(
+                            player.EquipmentList.Add(
                                 new Tuple<uint, string, float>(
                                     uint.Parse(set[0]),
                                     set[1],
@@ -115,6 +115,8 @@ namespace FLAccountDB.NoSQL
             return player;
         }
 
+
+        //private static StringBuilder _equipList = new StringBuilder();
         /// <summary>
         /// Returns a Player object associated with the charfile.
         /// </summary>
@@ -128,6 +130,8 @@ namespace FLAccountDB.NoSQL
                 LastOnline = DateTime.Now
             };
 
+            //_equipList.Clear()
+            var equipList = new StringBuilder();
             foreach (var set in flFile.GetFirstOf("Player").Settings)
             {
                 switch (set.Name)
@@ -164,6 +168,10 @@ namespace FLAccountDB.NoSQL
 
                         return null;
 
+                        //break;
+                    case "equip":
+                        equipList.Append(" ");
+                        equipList.Append(set[0]);
                         break;
                     case "tstamp":
                         long high = uint.Parse(set[0]);
@@ -177,86 +185,88 @@ namespace FLAccountDB.NoSQL
 
             player.CharID = path.Substring(path.Length - 14, 11);
             player.CharPath = path.Substring(path.Length - 26, 23);
+            player.Equipment = equipList.ToString();
             return player;
         }
 
 
-        public static string GetAccountID(string accDirPath)
-        {
-            // shameless copypaste here
-            var accountIdFilePath = accDirPath + Path.DirectorySeparatorChar + "name";
 
-            // Read a 'name' file into memory.
-            var fs = File.OpenRead(accountIdFilePath);
-            var buf = new byte[fs.Length];
-            fs.Read(buf, 0, (int)fs.Length);
-            fs.Close();
+        //public static string GetAccountID(string accDirPath)
+        //{
+        //    // shameless copypaste here
+        //    var accountIdFilePath = accDirPath + Path.DirectorySeparatorChar + "name";
 
-            // Decode the account ID
-            var accountID = "";
-            for (var i = 0; i < buf.Length; i += 2)
-            {
-                switch (buf[i])
-                {
-                    case 0x43:
-                        accountID += '-';
-                        break;
-                    case 0x0f:
-                        accountID += 'a';
-                        break;
-                    case 0x0c:
-                        accountID += 'b';
-                        break;
-                    case 0x0d:
-                        accountID += 'c';
-                        break;
-                    case 0x0a:
-                        accountID += 'd';
-                        break;
-                    case 0x0b:
-                        accountID += 'e';
-                        break;
-                    case 0x08:
-                        accountID += 'f';
-                        break;
-                    case 0x5e:
-                        accountID += '0';
-                        break;
-                    case 0x5f:
-                        accountID += '1';
-                        break;
-                    case 0x5c:
-                        accountID += '2';
-                        break;
-                    case 0x5d:
-                        accountID += '3';
-                        break;
-                    case 0x5a:
-                        accountID += '4';
-                        break;
-                    case 0x5b:
-                        accountID += '5';
-                        break;
-                    case 0x58:
-                        accountID += '6';
-                        break;
-                    case 0x59:
-                        accountID += '7';
-                        break;
-                    case 0x56:
-                        accountID += '8';
-                        break;
-                    case 0x57:
-                        accountID += '9';
-                        break;
-                    default:
-                        accountID += '?';
-                        break;
-                }
-            }
+        //    // Read a 'name' file into memory.
+        //    var fs = File.OpenRead(accountIdFilePath);
+        //    var buf = new byte[fs.Length];
+        //    fs.Read(buf, 0, (int)fs.Length);
+        //    fs.Close();
 
-            return accountID;
-        }
+        //    // Decode the account ID
+        //    var accountID = "";
+        //    for (var i = 0; i < buf.Length; i += 2)
+        //    {
+        //        switch (buf[i])
+        //        {
+        //            case 0x43:
+        //                accountID += '-';
+        //                break;
+        //            case 0x0f:
+        //                accountID += 'a';
+        //                break;
+        //            case 0x0c:
+        //                accountID += 'b';
+        //                break;
+        //            case 0x0d:
+        //                accountID += 'c';
+        //                break;
+        //            case 0x0a:
+        //                accountID += 'd';
+        //                break;
+        //            case 0x0b:
+        //                accountID += 'e';
+        //                break;
+        //            case 0x08:
+        //                accountID += 'f';
+        //                break;
+        //            case 0x5e:
+        //                accountID += '0';
+        //                break;
+        //            case 0x5f:
+        //                accountID += '1';
+        //                break;
+        //            case 0x5c:
+        //                accountID += '2';
+        //                break;
+        //            case 0x5d:
+        //                accountID += '3';
+        //                break;
+        //            case 0x5a:
+        //                accountID += '4';
+        //                break;
+        //            case 0x5b:
+        //                accountID += '5';
+        //                break;
+        //            case 0x58:
+        //                accountID += '6';
+        //                break;
+        //            case 0x59:
+        //                accountID += '7';
+        //                break;
+        //            case 0x56:
+        //                accountID += '8';
+        //                break;
+        //            case 0x57:
+        //                accountID += '9';
+        //                break;
+        //            default:
+        //                accountID += '?';
+        //                break;
+        //        }
+        //    }
+
+        //    return accountID;
+        //}
 
     }
 }

@@ -12,7 +12,7 @@ namespace FLAccountDB
     public class NoSQLDB
     {
 
-        private SQLiteConnection _conn;
+        private readonly SQLiteConnection _conn;
         private readonly DBQueue _queue;
         private readonly string _accPath;
 
@@ -58,11 +58,12 @@ namespace FLAccountDB
          Ship TEXT,
          Location TEXT NOT NULL,
          Base TEXT,
+         Equipment TEXT,
          Created DATETIME,
          LastOnline DATETIME
 );";
                     createDataBase.ExecuteNonQuery();
-                    createDataBase.CommandText = "CREATE INDEX CharLookup ON Accounts(CharPath ASC)";
+                    createDataBase.CommandText = "CREATE INDEX CharLookup ON Accounts(CharName ASC)";
                     createDataBase.ExecuteNonQuery();
                     LogDispatcher.LogDispatcher.NewMessage(LogType.Info,"Created new database");
                     }
@@ -88,14 +89,13 @@ namespace FLAccountDB
             else foreach (var acc in accDirs) LoadAccountDirectory(acc.FullName);
         }
 
-        private const string InsertText = "INSERT INTO Accounts " + "(CharPath,CharName,AccID,CharCode,Money,Ship,Location,Base,Created,LastOnline) " + "VALUES(@CharPath,@CharName,@AccID,@CharCode,@Money,@Ship,@Location,@Base,@Created,@LastOnline)";
+        private const string InsertText = "INSERT INTO Accounts " + "(CharPath,CharName,AccID,CharCode,Money,Ship,Location,Base,Equipment,Created,LastOnline) " + "VALUES(@CharPath,@CharName,@AccID,@CharCode,@Money,@Ship,@Location,@Base,@Equipment,@Created,@LastOnline)";
 
         private void LoadAccountDirectory(string path)
         {
             //var accountID = AccountRetriever.GetAccountID(path);
             var accountID = path.Substring(path.Length - 11);
             var isBanned = File.Exists(path + Path.DirectorySeparatorChar + "banned");
-
             var charFiles = Directory.GetFiles(path, "??-????????.fl");
 
             //remove the account dir if there's no charfiles
@@ -103,12 +103,9 @@ namespace FLAccountDB
 
             var dbChars = GetCharCodesByAccount(accountID);
 
-            //var comm = new SQLiteCommand(_conn);
-            //var trans = _conn.BeginTransaction();
                 using (var comm = new SQLiteCommand(InsertText,_queue.Conn))
                     foreach (var md in charFiles.Select(AccountRetriever.GetMeta).Where(md => md != null))
                     {
-                        md.IsBanned = isBanned;
                         comm.Parameters.AddWithValue("@CharPath", md.CharPath);
                         comm.Parameters.AddWithValue("@CharName", md.Name);
                         comm.Parameters.AddWithValue("@AccID", accountID);
@@ -117,6 +114,7 @@ namespace FLAccountDB
                         comm.Parameters.AddWithValue("@Ship", md.ShipArch);
                         comm.Parameters.AddWithValue("@Location", md.System);
                         comm.Parameters.AddWithValue("@Base", md.Base);
+                        comm.Parameters.AddWithValue("@Equipment", md.Equipment);
                         comm.Parameters.AddWithValue("@Created", DateTime.Now);
                         comm.Parameters.AddWithValue("@LastOnline", md.LastOnline);
                         _queue.Execute(comm);
@@ -190,5 +188,6 @@ namespace FLAccountDB
             }
             
         }
+       
     }
 }

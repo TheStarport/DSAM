@@ -48,11 +48,16 @@ namespace FLAccountDB
         {
             if (_count > 0)
             {
+                
                 lock (Transaction)
                 {
-                    LogDispatcher.LogDispatcher.NewMessage(LogType.Garbage,"DB Committed, changes: " + _count);
-                    Transaction.Commit();
-                    Transaction = Conn.BeginTransaction();
+                    if (Transaction != null)
+                    {
+                        LogDispatcher.LogDispatcher.NewMessage(LogType.Garbage, "DB Committed, changes: " + _count);
+                        Transaction.Commit();
+                        Transaction = Conn.BeginTransaction();
+                    }
+
                 }
 
             }
