@@ -5,55 +5,69 @@ using LogDispatcher;
 
 namespace FLAccountDB
 {
-    class DBQueue
+    public class DBQueue
     {
         public SQLiteConnection Conn;
         public SQLiteTransaction Transaction;
-        private int _count;
-        public DBQueue(SQLiteConnection conn, int timeout = 15000)
+        public int Count;
+
+        private int _threshold;
+        private readonly Timer _timer;
+        public DBQueue(SQLiteConnection conn, int timeout = 15000, int threshold = 1000)
         {
+            _threshold = threshold;
             Conn = conn;
+            
             Transaction = Conn.BeginTransaction();
-            var timer = new Timer(timeout);
-            timer.Elapsed += _timer_Elapsed;
-            timer.Enabled = true;
-            timer.Start();
-            GC.KeepAlive(timer);
+            _timer = new Timer(timeout);
+            _timer.Elapsed += _timer_Elapsed;
+            _timer.Enabled = true;
+            _timer.Start();
+            GC.KeepAlive(_timer);
 
         }
 
-        /// <summary>
-        /// Dump all the unsaved changes before closing.
-        /// </summary>
-        ~DBQueue()
+        public void SetThreshold(int value)
         {
-            _timer_Elapsed(null,null);
+            _threshold = value;
         }
+
+        public void SetTimeout(int value)
+        {
+            _timer.Interval = value;
+        }
+
         public void Execute(SQLiteCommand cmd)
         {
-            cmd.Connection = Conn;
-            lock (Transaction)
-            cmd.Transaction = Transaction;
-            
-            cmd.ExecuteNonQuery();
-            _count++;
-            if (_count > 1000)
-            {
-                _timer_Elapsed(null,null);
-                _count = 0;
-            }
+            lock (Conn)
+                lock (Transaction)
+                {
+                    cmd.Connection = Conn;
+                    cmd.Transaction = Transaction;
+
+                    cmd.ExecuteNonQuery();
+                }
+            Count++;
+            if (Count > _threshold)
+                Force();
+
+        }
+
+        public void Force()
+        {
+            _timer_Elapsed(null,null);
         }
 
         void _timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (_count > 0)
+            if (Count > 0)
             {
                 
                 lock (Transaction)
                 {
                     if (Transaction != null)
                     {
-                        LogDispatcher.LogDispatcher.NewMessage(LogType.Garbage, "DB Committed, changes: " + _count);
+                        LogDispatcher.LogDispatcher.NewMessage(LogType.Garbage, "DB Committed, changes: " + Count);
                         Transaction.Commit();
                         Transaction = Conn.BeginTransaction();
                     }
@@ -62,7 +76,7 @@ namespace FLAccountDB
 
             }
 
-            _count = 0;
+            Count = 0;
         }
     }
 }

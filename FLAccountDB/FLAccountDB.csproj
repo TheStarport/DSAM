@@ -59,7 +59,10 @@
   <ItemGroup>
     <Compile Include="DBQueue.cs" />
     <Compile Include="IDatabase.cs" />
-    <Compile Include="NoSQLDB.cs" />
+    <Compile Include="MetadataExtensions.cs" />
+    <Compile Include="NoSQL\NoSQLDB-Retriever.cs" />
+    <Compile Include="NoSQL\NoSQLDB-Scanning.cs" />
+    <Compile Include="NoSQL\NoSQLDB.cs" />
     <Compile Include="NoSQL\AccountRetriever.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Character.cs" />

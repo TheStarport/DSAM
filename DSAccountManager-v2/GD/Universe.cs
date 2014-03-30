@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DSAccountManager_v2.GD
 {
-    class Universe
+    class Universe : IDisposable
     {
 
         #region "Unmanaged DLL load func"
@@ -363,5 +363,10 @@ namespace DSAccountManager_v2.GD
             return System.Text.Encoding.Unicode.GetString(bufInfo, 0, size);
         }
 
+        public void Dispose()
+        {
+            Bases.Dispose();
+            Systems.Dispose();
+        }
     }
 }

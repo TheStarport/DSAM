@@ -9,6 +9,7 @@ namespace FLAccountDB
     {
         public bool IsAdmin;
         public bool IsBanned;
+        public bool IsOnline;
         public Dictionary<string, float> Reputation = new Dictionary<string, float>();
 
         /// <summary>

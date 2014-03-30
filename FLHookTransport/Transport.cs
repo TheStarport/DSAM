@@ -11,6 +11,7 @@ namespace FLHookTransport
         private Socket _socket;
         public bool OpenSocket(string addr, int port, string password)
         {
+            if (port == 0) return false;
             try
             {
                 _socket = new Socket(addr, port, password);
@@ -22,6 +23,11 @@ namespace FLHookTransport
             }
 
             return true;
+        }
+
+        public bool IsSocketOpen()
+        {
+            return _socket != null && _socket.IsAlive();
         }
 
         /// <summary>

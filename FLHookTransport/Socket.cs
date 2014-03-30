@@ -12,6 +12,7 @@ namespace FLHookTransport
 
         public event EventLine UnexpectedMessage;
         public delegate void EventLine(string message);
+        private readonly TcpClient _client;
         /// <summary>
         /// Initiate and open socket and reader.
         /// </summary>
@@ -20,18 +21,18 @@ namespace FLHookTransport
         /// <param name="login">Password.</param>
         public Socket(string addr, int port, string login)
         {
-            TcpClient client;
+            
             try
             {
-                client = new TcpClient(addr, port);
-                _stream = client.GetStream();
+                _client = new TcpClient(addr, port);
+                _stream = _client.GetStream();
             }
             catch (Exception e)
             {
                 throw new Exception("Cannot connect to FLHook, " + e.Message);
             }
 
-            client.ReceiveTimeout = 5000;
+            _client.ReceiveTimeout = 5000;
             _stream.ReadTimeout = 250;
             _sreader = new StreamReader(_stream);
 
@@ -47,6 +48,11 @@ namespace FLHookTransport
                 throw new Exception("no pass ok message '" + reply + "'");
 
 
+        }
+
+        public bool IsAlive()
+        {
+            return (_client.Connected && (_sreader != null) && (_stream.CanRead));
         }
 
         /// <summary>
@@ -98,6 +104,7 @@ namespace FLHookTransport
 
         public string GetMessage()
         {
+            if (!_stream.DataAvailable) return null;
             string str;
             try
             {
