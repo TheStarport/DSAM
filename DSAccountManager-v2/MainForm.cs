@@ -20,24 +20,7 @@ namespace DSAccountManager_v2
                 Properties.Settings.Default.DBPath,
                 Properties.Settings.Default.FLDBPath);
 
-            if (!DBiFace.IsDBAvailable())
-            {
-                //Database not found/set up
-                var set = new Forms.Settings();
-                set.ShowDialog();
-                return;
-            }
-
-            if (DBiFace.DBCountRows("Accounts") == 0)
-                if (MessageBox.Show(
-                    @"DB is not initialized. Initialize and scan now?",
-                    @"Database is empty",
-                    MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    //Database is empty
-                    DBiFace.InitDB(Properties.Settings.Default.DBAggressiveScan);
-                    return;
-                }
+            if (!DBiFace.IsDBAvailable()) return;
 
             DBiFace.UpdateDB();
         }
@@ -65,6 +48,7 @@ namespace DSAccountManager_v2
             }
 
             Action action = () => toolStatus.Text = str;
+            //TODO: update the main grid
             //if (toolProgress.Control.InvokeRequired)
             Invoke(action);
         }

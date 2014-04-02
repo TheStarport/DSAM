@@ -79,22 +79,15 @@ namespace FLAccountDB.NoSQL
 
         public void CloseDB()
         {
+            _closePending = true;
             if (_bgwLoader != null)
                 if (_bgwLoader.IsBusy)
-                {
-                    _closePending = true;
                     _bgwLoader.CancelAsync();
-                    _areReadyToClose.WaitOne();
-                }
 
             if (_bgwUpdater != null)
                 if (_bgwUpdater.IsBusy)
-                {
-                    _closePending = true;
                     _bgwUpdater.CancelAsync();
-                    _areReadyToClose.WaitOne();
-                }
-            
+            _areReadyToClose.WaitOne();
             Queue.Force();
             if (_conn.State == ConnectionState.Open)
                 _conn.Close();
@@ -127,6 +120,7 @@ namespace FLAccountDB.NoSQL
                 _conn))
             {
                 cmd.Parameters.AddWithValue("@AccID", accID);
+                //TODO: ctor somewhere there is really CPU hungary. The whole method in fact
                 using (var rdr = cmd.ExecuteReader())
                     while (rdr.Read())
                         str.Add(rdr.GetString(0));

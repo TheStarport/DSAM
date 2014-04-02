@@ -98,7 +98,11 @@ namespace FLAccountDB.NoSQL
             if ((bool) e.Argument)
                 Parallel.ForEach(accDirs, account =>
                 {
-                    if (_bgwLoader.CancellationPending) return;
+                    if (_bgwLoader.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
                     LoadAccountDirectory(account.FullName);
                     _bgwLoader.ReportProgress((i / count) * 100);
                     i++;

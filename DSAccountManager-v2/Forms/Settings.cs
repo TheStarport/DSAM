@@ -51,6 +51,8 @@ namespace DSAccountManager_v2.Forms
             Properties.Settings.Default.DBType = comboBackendSelector.SelectedIndex;
             Properties.Settings.Default.Save();
 
+
+            //if (DBiFace.AccDB == null) return;
             DBiFace.AccDB.Queue.SetThreshold((int)numericUpDown3.Value);
             DBiFace.AccDB.Queue.SetTimeout((int)numericUpDown4.Value);
         }
@@ -101,6 +103,10 @@ namespace DSAccountManager_v2.Forms
         private void buttonSQOpen_Click(object sender, EventArgs e)
         {
             DBiFace.ReloadDB();
+
+            if (DBiFace.IsDBAvailable()) return;
+            var myToolTip = new ToolTip {IsBalloon = true};
+            myToolTip.Show("Please select the Freelancer DB path then open SQL DB again!", buttonSQOpen);
         }
     }
 }

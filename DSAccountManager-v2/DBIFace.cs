@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using FLAccountDB;
 using FLAccountDB.NoSQL;
 using FLHookTransport;
@@ -42,6 +43,23 @@ namespace DSAccountManager_v2
             AccDB.Queue.SetThreshold((int)Properties.Settings.Default.TuneQThreshold);
             AccDB.Queue.SetTimeout((int)Properties.Settings.Default.TuneQTimer);
             _path1 = path1;
+
+
+            if (!IsDBAvailable())
+            {
+                //Database not found/set up
+                var set = new Forms.Settings();
+                set.ShowDialog();
+                return;
+            }
+
+            if (DBCountRows("Accounts") != 0) return;
+            if (MessageBox.Show(
+                @"DB is not initialized. Initialize and scan now?",
+                @"Database is empty",
+                MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            //Database is empty
+            InitDB(Properties.Settings.Default.DBAggressiveScan);
         }
         public static void PurgeDB()
         {
