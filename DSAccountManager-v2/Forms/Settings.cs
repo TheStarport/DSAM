@@ -52,7 +52,7 @@ namespace DSAccountManager_v2.Forms
             Properties.Settings.Default.Save();
 
 
-            //if (DBiFace.AccDB == null) return;
+            if (DBiFace.AccDB == null) return;
             DBiFace.AccDB.Queue.SetThreshold((int)numericUpDown3.Value);
             DBiFace.AccDB.Queue.SetTimeout((int)numericUpDown4.Value);
         }

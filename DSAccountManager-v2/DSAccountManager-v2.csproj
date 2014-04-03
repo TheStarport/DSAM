@@ -145,6 +145,10 @@
       <Project>{49d25a77-7a3f-4028-b4dc-54747f012f29}</Project>
       <Name>LogDispatcher</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WaitWindow\WaitWindow.csproj">
+      <Project>{8184954c-059f-4ac4-86b0-eae797889425}</Project>
+      <Name>WaitWindow</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="x64\SQLite.Interop.dll">

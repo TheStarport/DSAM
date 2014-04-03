@@ -85,5 +85,13 @@ namespace DSAccountManager_v2
         {
             DBiFace.InitDB(Properties.Settings.Default.DBAggressiveScan);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var v = new WaitWindow.Window(this,
+                handler => DBiFace.DBRenew += handler,
+                handler => DBiFace.DBRenew += handler,
+                5000);
+        }
     }
 }

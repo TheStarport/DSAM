@@ -82,12 +82,21 @@ namespace FLAccountDB.NoSQL
             _closePending = true;
             if (_bgwLoader != null)
                 if (_bgwLoader.IsBusy)
+                {
                     _bgwLoader.CancelAsync();
+                    _areReadyToClose.WaitOne();
+                }
+                    
 
             if (_bgwUpdater != null)
                 if (_bgwUpdater.IsBusy)
+                {
                     _bgwUpdater.CancelAsync();
-            _areReadyToClose.WaitOne();
+                    _areReadyToClose.WaitOne();
+                }
+                    
+
+            
             Queue.Force();
             if (_conn.State == ConnectionState.Open)
                 _conn.Close();

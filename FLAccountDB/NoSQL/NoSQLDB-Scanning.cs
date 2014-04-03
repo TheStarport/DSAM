@@ -69,8 +69,10 @@ namespace FLAccountDB.NoSQL
 
         void _bgwLoader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            _areReadyToClose.Reset();
             if (StateChanged != null)
                 StateChanged(DBStates.Ready);
+
             if (e.Cancelled && _closePending)
                 _areReadyToClose.Set();
             if (ProgressChanged != null)
@@ -160,9 +162,10 @@ namespace FLAccountDB.NoSQL
 
         void _bgwUpdater_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            _areReadyToClose.Reset();
             if (StateChanged != null)
                 StateChanged(DBStates.Ready);
-
+            
             if (e.Cancelled && _closePending)
                 _areReadyToClose.Set();
             if (ProgressChanged != null)

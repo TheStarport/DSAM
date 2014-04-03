@@ -140,10 +140,16 @@ namespace DSAccountManager_v2
 
         public static event StateChange DBStateChanged;
         public delegate void StateChange(DBStates state);
+
+        //TODO if you see me wipe dis
+        public static event WaitWindow.Event.WaitSimpleEvent DBRenew;
         static void _accDB_StateChanged(DBStates state)
         {
             if (DBStateChanged != null)
                 DBStateChanged(state);
+            if (state != DBStates.Ready) return;
+            if (DBRenew != null)
+                DBRenew();
         }
         #endregion
 
