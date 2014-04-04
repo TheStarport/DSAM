@@ -24,5 +24,11 @@ namespace LogDispatcher
             if ((LogMessage != null) & (type <= LogLevel))
                 LogMessage(type, DateTime.Now + @"\ " + LogLevel + ": " + message);
         }
+
+        public static void NewMessage(LogType type, string format, params object[] objects)
+        {
+            if ((LogMessage != null) & (type <= LogLevel))
+                LogMessage(type, DateTime.Now + @"\ " + LogLevel + ": " + String.Format(format,objects));
+        }
     }
 }

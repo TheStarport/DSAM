@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using DSAccountManager_v2.GD.DB;
 using FLDataFile;
 using System.Linq;
+using LogDispatcher;
 
 namespace DSAccountManager_v2.GD
 {
@@ -43,12 +45,13 @@ namespace DSAccountManager_v2.GD
         /// <summary>
         /// Resource dlls containing strings.
         /// </summary>
-        readonly List<IntPtr> _vDlLs = new List<IntPtr>();
+// ReSharper disable once InconsistentNaming
+        readonly List<IntPtr> _vDLLs = new List<IntPtr>();
 
         private void LoadLibrary(string dllPath)
         {
-            IntPtr hInstance = LoadLibraryExA(dllPath, 0, DontResolveDllReferences | LoadLibraryAsDatafile);
-            _vDlLs.Add(hInstance);
+            var hInstance = LoadLibraryExA(dllPath, 0, DontResolveDllReferences | LoadLibraryAsDatafile);
+            _vDLLs.Add(hInstance);
         }
 
         #endregion
@@ -59,17 +62,73 @@ namespace DSAccountManager_v2.GD
 
         private readonly string _flDataPath;
 
-        public readonly GameInfoSet.BasesDataTable Bases = new GameInfoSet.BasesDataTable();
-        public readonly GameInfoSet.SystemsDataTable Systems = new GameInfoSet.SystemsDataTable();
+        private readonly Dictionary<string,EquipTypes> _hpMap = new Dictionary<string, EquipTypes>();
 
+        /// <summary>
+        /// Mapper for DataMaps.ini. Used for determining hardpoint types and gun types.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private EquipTypes MapStringToType(string str)
+        {
+            switch (str)
+            {
+                case "misc":
+                    return EquipTypes.Misc;
+                case "countermeasuredropper":
+                    return EquipTypes.CountermeasureDropper;
+                case "turret":
+                    return EquipTypes.Turret;
+                case "minedropper":
+                    return EquipTypes.MineDropper;
+                case "projectile":
+                    return EquipTypes.Projectile;
+                case "thruster":
+                    return EquipTypes.Thruster;
+                case "shield":
+                    return EquipTypes.ShieldGen;
+                case "gun":
+                    return EquipTypes.Gun;
+                case "engine":
+                    return EquipTypes.Engine;
+                case "light":
+                    return EquipTypes.Light;
+                case "power":
+                    return EquipTypes.Powerplant;
+            }
+            return EquipTypes.Misc;
+        }
+
+        //public readonly GameInfoSet.BasesDataTable Bases = new GameInfoSet.BasesDataTable();
+        //public readonly GameInfoSet.SystemsDataTable Systems = new GameInfoSet.SystemsDataTable();
+        //public readonly GameInfoSet.EquipmentDataTable Equipment = new GameInfoSet.EquipmentDataTable();
+        //public readonly GameInfoSet.FactionDataTable Factions = new GameInfoSet.FactionDataTable();
+        public readonly GameInfoSet Gis = new GameInfoSet();
         /// <summary>
         /// Initiates the Universe DB. FLPath is the path to the Freelancer directory, not DATA\EXE etc.
         /// </summary>
         /// <param name="flPath"></param>
         public Universe(string flPath)
         {
+
+            LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing file {0} ...", flPath + @"\DataMaps.ini");
+            if (!File.Exists(flPath + @"\DataMaps.ini"))
+            {
+                LogDispatcher.LogDispatcher.NewMessage(LogType.Fatal, "Can't find DataMaps.ini!");
+                throw new Exception("Can't load DataMaps.ini!");
+            }
+            var dMapIni = new DataFile(flPath + @"\DataMaps.ini");
+
+            foreach (var set in dMapIni.GetSettings("HPMap", "map"))
+            {
+                _hpMap.Add(set[0], MapStringToType(set[1]));
+            }
+
+
+            LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing file {0} ...", flPath + @"\EXE\Freelancer.ini");
             if (!File.Exists(flPath + @"\EXE\Freelancer.ini"))
             {
+                LogDispatcher.LogDispatcher.NewMessage(LogType.Fatal, "Can't find Freelancer.ini!");
                 throw new Exception("Can't load Freelancer.ini!");
             }
             var flIni = new DataFile(flPath + @"\EXE\Freelancer.ini");
@@ -80,15 +139,20 @@ namespace DSAccountManager_v2.GD
                 foreach (var set in ini.Sections.SelectMany(section => section.Settings))
                 {
                     uint map0, map1;
-                    if (!uint.TryParse(set[0], out map0) || !uint.TryParse(set[1], out map1)) 
-                        //TODO: change to log
-                        throw new Exception("Can't parse infocard map: " + set.String());
+                    if (!uint.TryParse(set[0], out map0) || !uint.TryParse(set[1], out map1))
+                    {
+                        LogDispatcher.LogDispatcher.NewMessage(LogType.Error, "Can't parse infocard map: {0}", set.String());
+                        continue;
+                    }
+                        
+                        //throw new Exception("Can't parse infocard map: " + set.String());
                     _infocardMap[map0] = map1;
                 }
 
 
                 // Load the string dlls.
                 LoadLibrary(flPath + @"\EXE\" + @"resources.dll");
+
                 foreach (var flResName in flIni.GetSettings("Resources", "DLL"))
                     LoadLibrary(flPath + @"\EXE\" + flResName[0]);
 
@@ -103,6 +167,7 @@ namespace DSAccountManager_v2.GD
                 //Load bases
                 foreach (var baseSection in universeIni.GetSections("Base"))
                 {
+                    
                     LoadBase(baseSection);
                 }
 
@@ -119,113 +184,45 @@ namespace DSAccountManager_v2.GD
 
                 foreach (var eqSection in equipFile.Sections)
                 {
-                    switch (eqSection.Name)
-                    {
-                        case "engine":
-                            LoadEquip(eqSection,EquipTypes.Engine);
-                            break;
-                        case "power":
-                            LoadEquip(eqSection, EquipTypes.Powerplant);
-                            break;
-                        case "scanner":
-                            LoadEquip(eqSection, EquipTypes.Scanner);
-                            break;
-                        case "tractor":
-                            LoadEquip(eqSection, EquipTypes.Tractor);
-                            break;
-                        case "cloakingdevice":
-                            LoadEquip(eqSection, EquipTypes.Cloak);
-                            break;
-                        case "armor":
-                            LoadEquip(eqSection, EquipTypes.Armor);
-                            break;
-                        case "internalfx":
-                            //if (section.SettingExists("use_sound"))
-                            //{
-                            //    AddGameData(DataStore.HashList, section, GAMEDATA_SOUND, false);
-                            //}
-                            break;
-                        case "attachedfx":
-                            LoadEquip(eqSection, EquipTypes.AttachedFX);
-                            break;
-                        case "light":
-                            LoadEquip(eqSection, EquipTypes.Light);
-                            break;
-                        case "gun":
-                            //if (section.SettingExists("hp_gun_type"))
-                            //{
-                            //    string hpType = section.GetSetting("hp_gun_type").Str(0);
-                            //    AddGameData(DataStore.HashList, section, HardpointClassToGameDataClass(hpType), true);
-                            //    DataStore.EquipInfoList.AddEquipInfoListRow(
-                            //        FLUtility.CreateID(section.GetSetting("nickname").Str(0)),
-                            //        HardpointClassToGameDataClass(hpType), hpType);
-                            //}
-                            //// Probably an npc gun
-                            //else
-                            //{
-                            //    AddGameData(DataStore.HashList, section, GAMEDATA_GEN, false);
-                            //}
-                            break;
-                        case "shieldgenerator":
-                            //if (section.SettingExists("hp_type"))
-                            //{
-                            //    string hpType = section.GetSetting("hp_type").Str(0);
-                            //    AddGameData(DataStore.HashList, section, HardpointClassToGameDataClass(hpType), true);
-                            //    DataStore.EquipInfoList.AddEquipInfoListRow(
-                            //        FLUtility.CreateID(section.GetSetting("nickname").Str(0)),
-                            //        HardpointClassToGameDataClass(hpType), hpType);
-                            //}
-                            //// Probably an npc shield
-                            //else
-                            //{
-                            //    AddGameData(DataStore.HashList, section, GAMEDATA_GEN, false);
-                            //}
-                            break;
-                        case "countermeasuredropper":
-                            LoadEquip(eqSection, EquipTypes.CountermeasureDropper);
-                            break;
-                        case "thruster":
-                            LoadEquip(eqSection, EquipTypes.Thruster);
-                            break;
-                        case "minedropper":
-                            LoadEquip(eqSection, EquipTypes.MineDropper);
-                            break;
-                        case "munition":
-                            LoadEquip(eqSection, EquipTypes.Munition);
-                            break;
-                        case "repairkit":
-                            LoadEquip(eqSection, EquipTypes.RepairKit);
-                            break;
-                        case "countermeasure":
-                            LoadEquip(eqSection, EquipTypes.Countermeasure);
-                            break;
-                        case "shieldbattery":
-                            LoadEquip(eqSection, EquipTypes.ShieldBattery);
-                            break;
-                        case "mine":
-                            LoadEquip(eqSection, EquipTypes.Mine);
-                            break;
-                        case "commodity":
-                            LoadEquip(eqSection, EquipTypes.Cargo);
-                            break;
-
-                    }
-
+                    LoadEquipSection(eqSection);
                 }
             }
 
+            foreach (var entry in flIni.GetSettings("Data", "groups"))
+            {
+                var facFile = new DataFile(_flDataPath + @"\" + entry[0]);
+
+                foreach (var faSection in facFile.GetSections("Group"))
+                {
+                    LoadFaction(faSection);
+                }
+            }
+
+            foreach (var entry in flIni.GetSettings("Data", "ships"))
+            {
+                var shFile = new DataFile(_flDataPath + @"\" + entry[0]);
+
+                foreach (var shSection in shFile.GetSections("Ship"))
+                {
+                    LoadShip(shSection);
+                }
+            }
+
+            //TODO: Line 473, default loadouts
+
 
         }
+
 
 
         private void LoadBase(Section sec)
         {
             var nickname = sec.GetFirstOf("nickname")[0];
             //var file = _flDataPath + sec.GetFirstOf("file");
-
+            LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing base {0}", nickname);
             var stIDSName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
 
-            Bases.AddBasesRow(nickname, stIDSName,"");
+            Gis.Bases.AddBasesRow(nickname, stIDSName,"");
 
             //TODO: do we rly need room data?
             //FLGameData:Ln 191
@@ -234,8 +231,10 @@ namespace DSAccountManager_v2.GD
         private void LoadSystem(Section sec)
         {
             var sysNick = sec.GetFirstOf("nickname")[0].ToLowerInvariant();
+            LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing system {0}", sysNick);
+
             var stIDSName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
-            Systems.AddSystemsRow(sysNick, stIDSName);
+            Gis.Systems.AddSystemsRow(sysNick, stIDSName);
 
 
             //string file = Directory.GetParent(ini.filePath).FullName + "\\" + section.GetSetting("file").Str(0);
@@ -259,7 +258,7 @@ namespace DSAccountManager_v2.GD
                     uint id;
                     if (!uint.TryParse(curset[0], out id))
                     {
-                        //TODO: log error, return to next foreach
+                        LogDispatcher.LogDispatcher.NewMessage(LogType.Warning, "Can't find ID for object: {0}",curset[0]);
                     }
 
                     idsInfo = GetIDString(id);
@@ -270,7 +269,7 @@ namespace DSAccountManager_v2.GD
                 //add the icard to the base if object is base
                 if (obj.TryGetFirstOf("base", out curset))
                     //TODO: really join the stuff, infos are in XML format.
-                    Bases.FindByNickname(curset[0]).Infocard = idsInfo + idsInfo1;
+                    Gis.Bases.FindByNickname(curset[0]).Infocard = idsInfo + idsInfo1;
                 
             }
 
@@ -280,24 +279,238 @@ namespace DSAccountManager_v2.GD
 
         private void LoadEquip(Section sec, EquipTypes equipType)
         {
+            var nickname = sec.GetFirstOf("nickname")[0];
+            LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing equipment {0}", nickname);
+            var hash = CreateID(nickname.ToLowerInvariant());
+
+            // fail if equip already presents
+            if (Gis.Equipment.FindByHash(hash) != null) return;
+
+            var stIDSName = "";
+            if (sec.ContainsAnyOf("ids_name", "strid_name"))
+                stIDSName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
+
+            // TODO: ignore empty IDS based on setting
+            if (stIDSName == "") return;
+
+           
+            var infocard = "";
+            if (sec.ContainsAnyOf("ids_info"))
+                infocard = GetIDSParm(sec.GetFirstOf("ids_info")[0]);
+
+            // Tested on Disco 4.87.6, no hits beyond this line.
+            //var stIDSInfo1 = "";
+            //if (sec.ContainsAnyOf("ids_info1","ids_short_name"))
+            //    stIDSInfo1 = GetIDSParm(sec.GetAnySetting("ids_info1", "ids_short_name")[0]);
+
+            // Careful with this one below!
+            //if (stIDSInfo1 == "") return;
+            //var stIDSInfo2 = "";
+            //if (sec.ContainsAnyOf("ids_info2"))
+            //    stIDSInfo2 = GetIDSParm(sec.GetFirstOf("ids_info2")[0]);
+
+            //var stIDSInfo3 = "";
+            //if (sec.ContainsAnyOf("ids_info3"))
+            //    stIDSInfo3 = GetIDSParm(sec.GetFirstOf("ids_info3")[0]);
+
+            //string keys = hash.ToString() + " 0x" + hash.ToString("X");
+
+            var hpType = "";
             switch (equipType)
             {
                 case EquipTypes.Gun:
-                    Setting s;
-                    if ((s = sec.GetFirstOf("hp_gun_type")) != null)
+
+                        hpType = sec.GetFirstOf("hp_gun_type")[0];
+                    equipType = _hpMap[hpType];
+                    break;
+               case EquipTypes.ShieldGen:
+                    hpType = sec.GetFirstOf("hp_type")[0];
+                    equipType = _hpMap[hpType];
+                    break;
+                default:
+                    break;
+            }
+
+            Gis.Equipment.AddEquipmentRow(hash, equipType.ToString(), hpType, nickname, infocard);
+        }
+
+        private void LoadEquipSection(Section eqSection)
+        {
+            switch (eqSection.Name)
+            {
+                case "Engine":
+                    LoadEquip(eqSection, EquipTypes.Engine);
+                    break;
+                case "Power":
+                    LoadEquip(eqSection, EquipTypes.Powerplant);
+                    break;
+                case "Scanner":
+                    LoadEquip(eqSection, EquipTypes.Scanner);
+                    break;
+                case "Tractor":
+                    LoadEquip(eqSection, EquipTypes.Tractor);
+                    break;
+                case "CloakingDevice":
+                    LoadEquip(eqSection, EquipTypes.Cloak);
+                    break;
+                case "Armor":
+                    LoadEquip(eqSection, EquipTypes.Armor);
+                    break;
+                case "InternalFX":
+                    if (eqSection.ContainsAnyOf("use_sound"))
                     {
-                        string hpType = s[0];
-                        //AddGameData(DataStore.HashList, section, HardpointClassToGameDataClass(hpType), true);
-                        //DataStore.EquipInfoList.AddEquipInfoListRow(
-                            //FLUtility.CreateID(section.GetSetting("nickname").Str(0)),
-                            //HardpointClassToGameDataClass(hpType), hpType);
-                    }
-                    // Probably an npc gun
-                    else
-                    {
-                        //AddGameData(DataStore.HashList, section, GAMEDATA_GEN, false);
+                        LoadEquip(eqSection, EquipTypes.InternalFX);
                     }
                     break;
+                case "AttachedFX":
+                    LoadEquip(eqSection, EquipTypes.AttachedFX);
+                    break;
+                case "Light":
+                    LoadEquip(eqSection, EquipTypes.Light);
+                    break;
+                case "Gun":
+                    if (eqSection.ContainsAnyOf("hp_gun_type"))
+                    {
+                        LoadEquip(eqSection, EquipTypes.Gun);
+                    }
+
+                    //if (section.SettingExists("hp_gun_type"))
+                    //{
+                    //    string hpType = section.GetSetting("hp_gun_type").Str(0);
+                    //    AddGameData(DataStore.HashList, section, HardpointClassToGameDataClass(hpType), true);
+                    //    DataStore.EquipInfoList.AddEquipInfoListRow(
+                    //        FLUtility.CreateID(section.GetSetting("nickname").Str(0)),
+                    //        HardpointClassToGameDataClass(hpType), hpType);
+                    //}
+                    //// Probably an npc gun
+                    //else
+                    //{
+                    //    AddGameData(DataStore.HashList, section, GAMEDATA_GEN, false);
+                    //}
+                    break;
+                case "ShieldGenerator":
+                    if (eqSection.ContainsAnyOf("hp_type"))
+                    {
+                        LoadEquip(eqSection, EquipTypes.ShieldGen);
+                    }
+                    //if (section.SettingExists("hp_type"))
+                    //{
+                    //    string hpType = section.GetSetting("hp_type").Str(0);
+                    //    AddGameData(DataStore.HashList, section, HardpointClassToGameDataClass(hpType), true);
+                    //    DataStore.EquipInfoList.AddEquipInfoListRow(
+                    //        FLUtility.CreateID(section.GetSetting("nickname").Str(0)),
+                    //        HardpointClassToGameDataClass(hpType), hpType);
+                    //}
+                    //// Probably an npc shield
+                    //else
+                    //{
+                    //    AddGameData(DataStore.HashList, section, GAMEDATA_GEN, false);
+                    //}
+                    break;
+                case "CounterMeasureDropper":
+                    LoadEquip(eqSection, EquipTypes.CountermeasureDropper);
+                    break;
+                case "Thruster":
+                    LoadEquip(eqSection, EquipTypes.Thruster);
+                    break;
+                case "MineDropper":
+                    LoadEquip(eqSection, EquipTypes.MineDropper);
+                    break;
+                case "Munition":
+                    LoadEquip(eqSection, EquipTypes.Munition);
+                    break;
+                case "RepairKit":
+                    LoadEquip(eqSection, EquipTypes.RepairKit);
+                    break;
+                case "CounterMeasure":
+                    LoadEquip(eqSection, EquipTypes.Countermeasure);
+                    break;
+                case "ShieldBattery":
+                    LoadEquip(eqSection, EquipTypes.ShieldBattery);
+                    break;
+                case "Mine":
+                    LoadEquip(eqSection, EquipTypes.Mine);
+                    break;
+                case "Commodity":
+                    LoadEquip(eqSection, EquipTypes.Cargo);
+                    break;
+                case "CargoPod":
+                    break;
+                case "LootCrate":
+                    break;
+                case "TradeLane":
+                    break;
+                case "Shield":
+                    break;
+                case "LOD":
+                    break;
+                case "Motor":
+                    break;
+                case "Explosion":
+                    break;
+                //default:
+                //break;
+
+            }
+        }
+
+        private void LoadFaction(Section sec)
+        {
+            var nickname = sec.GetFirstOf("nickname")[0];
+            LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing faction {0}", nickname);
+            var hash = CreateFactionID(nickname);
+
+
+            if (Gis.Factions.FindByHash(hash) != null) return;
+
+            var factionName = "";
+            if (sec.ContainsAnyOf("ids_name", "strid_name"))
+                factionName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
+
+            // TODO: ignore empty IDS based on setting
+            if (factionName == "") return;
+
+            var shortName = "";
+            if (sec.ContainsAnyOf("ids_info1", "ids_short_name"))
+                shortName = GetIDSParm(sec.GetAnySetting("ids_info1", "ids_short_name")[0]);
+
+            var infocard = "";
+            if (sec.ContainsAnyOf("ids_info"))
+                infocard = GetIDSParm(sec.GetFirstOf("ids_info")[0]);
+
+            Gis.Factions.AddFactionsRow(hash, nickname, factionName, shortName, infocard);
+        }
+
+        private void LoadShip(Section sec)
+        {
+            var nickname = sec.GetFirstOf("nickname")[0];
+            LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing equipment {0}", nickname);
+            var hash = CreateID(nickname.ToLowerInvariant());
+
+            // fail if equip already presents
+            if (Gis.Ships.FindByHash(hash) != null) return;
+
+
+            var shipReadableName = "";
+            if (sec.ContainsAnyOf("ids_name", "strid_name"))
+                shipReadableName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
+
+            var infocard = "";
+            if (sec.ContainsAnyOf("ids_info"))
+                infocard = GetIDSParm(sec.GetFirstOf("ids_info")[0]);
+
+            Gis.Ships.AddShipsRow(hash, nickname,shipReadableName, infocard);
+
+            foreach (var hpSet in sec.GetSettings("hp_type"))
+            {
+                var type = _hpMap[hpSet[0]];
+                //todo FLGameData:432 (cloaks)
+                foreach (var hp in hpSet.Skip(1))
+                {
+                    var ghr = Gis.Ships.FindByHash(hash).GetHardpointsRows();
+                    if (ghr.Any(hpS => hpS.Name == hp)) continue;
+                    Gis.Hardpoints.AddHardpointsRow(Gis.Ships.FindByHash(hash), hp, type.ToString());
+                }
             }
         }
 
@@ -338,17 +551,17 @@ namespace DSAccountManager_v2.GD
             var iDLL = (int)(iIDS / 0x10000);
             var resId = (int)iIDS - (iDLL * 0x10000);
 
-            if (_vDlLs.Count <= iDLL) return null;
+            if (_vDLLs.Count <= iDLL) return null;
 
 
-            var hInstance = _vDlLs[iDLL];
+            var hInstance = _vDLLs[iDLL];
             if (hInstance == IntPtr.Zero) return null;
 
             var bufName = new byte[10000];
             var len = LoadString(hInstance, resId, bufName, bufName.Length);
             if (len > 0)
             {
-                return System.Text.Encoding.ASCII.GetString(bufName, 0, len);
+                return Encoding.ASCII.GetString(bufName, 0, len);
             }
 
             var hFindRes = FindResource(hInstance, resId, 23);
@@ -360,13 +573,104 @@ namespace DSAccountManager_v2.GD
             var size = SizeofResource(hInstance, hFindRes);
             var bufInfo = new byte[size];
             Marshal.Copy(resContent, bufInfo, 0, size);
-            return System.Text.Encoding.Unicode.GetString(bufInfo, 0, size);
+            return Encoding.Unicode.GetString(bufInfo, 0, size);
         }
 
         public void Dispose()
         {
-            Bases.Dispose();
-            Systems.Dispose();
+            Gis.Dispose();
         }
+
+
+        /// <summary>
+        /// Look up table for id creation.
+        /// </summary>
+        private static uint[] _crcIDTable;
+
+        public static uint CreateID(string nickName)
+        {
+            const uint flhashPolynomial = 0xA001;
+            const int logicalBits = 30;
+            const int physicalBits = 32;
+
+            // Build the crc lookup table if it hasn't been created
+            if (_crcIDTable == null)
+            {
+                _crcIDTable = new uint[256];
+                for (uint i = 0; i < 256; i++)
+                {
+                    uint x = i;
+                    for (uint bit = 0; bit < 8; bit++)
+                        x = ((x & 1) == 1) ? (x >> 1) ^ (flhashPolynomial << (logicalBits - 16)) : x >> 1;
+                    _crcIDTable[i] = x;
+                }
+                //TODO: move that to unit tests
+                if (2926433351 != CreateID("st01_to_st03_hole")) throw new Exception("Create ID hash algoritm is broken!");
+                if (2460445762 != CreateID("st02_to_st01_hole")) throw new Exception("Create ID hash algoritm is broken!");
+                if (2263303234 != CreateID("st03_to_st01_hole")) throw new Exception("Create ID hash algoritm is broken!");
+                if (2284213505 != CreateID("li05_to_li01")) throw new Exception("Create ID hash algoritm is broken!");
+                if (2293678337 != CreateID("li01_to_li05")) throw new Exception("Create ID hash algoritm is broken!");
+            }
+
+            byte[] tNickName = Encoding.ASCII.GetBytes(nickName.ToLowerInvariant());
+
+            // Calculate the hash.
+            uint hash = 0;
+            for (int i = 0; i < tNickName.Length; i++)
+                hash = (hash >> 8) ^ _crcIDTable[(byte)hash ^ tNickName[i]];
+            // b0rken because byte swapping is not the same as bit reversing, but 
+            // that's just the way it is; two hash bits are shifted out and lost
+            hash = (hash >> 24) | ((hash >> 8) & 0x0000FF00) | ((hash << 8) & 0x00FF0000) | (hash << 24);
+            hash = (hash >> (physicalBits - logicalBits)) | 0x80000000;
+
+            return hash;
+        }
+
+        /// <summary>
+        /// Look up table for faction id creation.
+        /// </summary>
+        private static uint[] _crcFactionIDTable;
+
+        /// <summary>
+        /// Function for calculating the Freelancer data nickname hash.
+        /// Algorithm from flfachash.c by Haenlomal (October 2006).
+        /// </summary>
+        /// <param name="nickName"></param>
+        /// <returns></returns>
+        public static uint CreateFactionID(string nickName)
+        {
+            const uint FLFACHASH_POLYNOMIAL = 0x1021;
+            const uint NUM_BITS = 8;
+            const int HASH_TABLE_SIZE = 256;
+
+            if (_crcFactionIDTable == null)
+            {
+                // The hash table used is the standard CRC-16-CCITT Lookup table 
+                // using the standard big-endian polynomial of 0x1021.
+                _crcFactionIDTable = new uint[HASH_TABLE_SIZE];
+                for (uint i = 0; i < HASH_TABLE_SIZE; i++)
+                {
+                    uint x = i << (16 - (int)NUM_BITS);
+                    for (uint j = 0; j < NUM_BITS; j++)
+                    {
+                        x = ((x & 0x8000) == 0x8000) ? (x << 1) ^ FLFACHASH_POLYNOMIAL : (x << 1);
+                        x &= 0xFFFF;
+                    }
+                    _crcFactionIDTable[i] = x;
+                }
+            }
+
+            byte[] tNickName = Encoding.ASCII.GetBytes(nickName.ToLowerInvariant());
+
+            uint hash = 0xFFFF;
+            for (uint i = 0; i < tNickName.Length; i++)
+            {
+                uint y = (hash & 0xFF00) >> 8;
+                hash = y ^ (_crcFactionIDTable[(hash & 0x00FF) ^ tNickName[i]]);
+            }
+
+            return hash;
+        }
+
     }
 }

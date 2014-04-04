@@ -15,11 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogDispatcher", "LogDispatc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FLHookTransport", "FLHookTransport\FLHookTransport.csproj", "{530A2A36-8E9B-4680-9EBE-8DD9BD2F67A5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{13B48FF7-D63D-48E4-869C-AEC44D8A0A01}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaitWindow", "WaitWindow\WaitWindow.csproj", "{8184954C-059F-4AC4-86B0-EAE797889425}"
 EndProject
 Global
