@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using DSAccountManager_v2.FileTypes;
 using DSAccountManager_v2.GD.DB;
 using FLDataFile;
 using System.Linq;
@@ -501,10 +502,22 @@ namespace DSAccountManager_v2.GD
 
             Gis.Ships.AddShipsRow(hash, nickname,shipReadableName, infocard);
 
+            foreach (var set in sec.GetSettings("da_archetype"))
+            {
+                var utf = new UtfFile(_flDataPath + Path.DirectorySeparatorChar + set[0]);
+                foreach (var hp in utf.Hardpoints.Where(hp => hp.ToLowerInvariant().Contains("cloak")))
+                {
+                    var ghr = Gis.Ships.FindByHash(hash).GetHardpointsRows();
+                    if (ghr.Any(hpS => hpS.Name == hp)) continue;
+                    Gis.Hardpoints.AddHardpointsRow(Gis.Ships.FindByHash(hash), hp, EquipTypes.Cloak.ToString());
+                }
+            }
+
             foreach (var hpSet in sec.GetSettings("hp_type"))
             {
                 var type = _hpMap[hpSet[0]];
-                //todo FLGameData:432 (cloaks)
+
+                
                 foreach (var hp in hpSet.Skip(1))
                 {
                     var ghr = Gis.Ships.FindByHash(hash).GetHardpointsRows();
