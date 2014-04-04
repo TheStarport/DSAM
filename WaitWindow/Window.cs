@@ -16,6 +16,8 @@ namespace WaitWindow
             InitializeComponent();
             button1.Visible = supportsCancellation;
 
+            StartPosition = FormStartPosition.CenterParent;
+            //Parent = parentForm;
             eventFinished(EventFinished);
             eventCancelled(EventCancelled);
 
@@ -34,6 +36,7 @@ namespace WaitWindow
         {
             _timer.Enabled = false;
             _timer.Stop();
+            if (IsDisposed) return;
             ShowDialog(_ownerForm);
             
         }
