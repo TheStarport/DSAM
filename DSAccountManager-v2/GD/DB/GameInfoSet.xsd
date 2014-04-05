@@ -25,6 +25,7 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Nickname" msprop:Generator_ColumnVarNameInTable="columnNickname" msprop:Generator_ColumnPropNameInRow="Nickname" msprop:Generator_ColumnPropNameInTable="NicknameColumn" msprop:Generator_UserColumnName="Nickname" type="xs:string" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
               <xs:element name="Infocard" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Infocard" msprop:Generator_ColumnVarNameInTable="columnInfocard" msprop:Generator_ColumnPropNameInTable="InfocardColumn" msprop:Generator_UserColumnName="Infocard" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
@@ -36,6 +37,7 @@
               <xs:element name="Type" msprop:Generator_ColumnVarNameInTable="columnType" msprop:Generator_ColumnPropNameInRow="Type" msprop:Generator_ColumnPropNameInTable="TypeColumn" msprop:Generator_UserColumnName="Type" type="xs:string" minOccurs="0" />
               <xs:element name="Hardpoint" msprop:Generator_ColumnVarNameInTable="columnHardpoint" msprop:Generator_ColumnPropNameInRow="Hardpoint" msprop:Generator_ColumnPropNameInTable="HardpointColumn" msprop:Generator_UserColumnName="Hardpoint" type="xs:string" minOccurs="0" />
               <xs:element name="Nickname" msprop:Generator_ColumnVarNameInTable="columnNickname" msprop:Generator_ColumnPropNameInRow="Nickname" msprop:Generator_ColumnPropNameInTable="NicknameColumn" msprop:Generator_UserColumnName="Nickname" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
               <xs:element name="Infocard" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Infocard" msprop:Generator_ColumnVarNameInTable="columnInfocard" msprop:Generator_ColumnPropNameInTable="InfocardColumn" msprop:Generator_UserColumnName="Infocard" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>

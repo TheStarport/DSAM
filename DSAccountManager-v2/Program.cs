@@ -15,7 +15,7 @@ namespace DSAccountManager_v2
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //TODO: dis here for debug only!
-            var u = new Universe(@"g:\Games\freelancer\fl-Disc487\dev");
+            
             //Stopwatch sw = new Stopwatch();
             //sw.Start();
             //db.LoadDB();

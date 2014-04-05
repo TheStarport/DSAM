@@ -791,6 +791,8 @@ namespace DSAccountManager_v2.GD.DB {
             
             private global::System.Data.DataColumn columnNickname;
             
+            private global::System.Data.DataColumn columnName;
+            
             private global::System.Data.DataColumn columnInfocard;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -831,6 +833,14 @@ namespace DSAccountManager_v2.GD.DB {
             public global::System.Data.DataColumn NicknameColumn {
                 get {
                     return this.columnNickname;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NameColumn {
+                get {
+                    return this.columnName;
                 }
             }
             
@@ -879,10 +889,11 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SystemsRow AddSystemsRow(string Nickname, string Infocard) {
+            public SystemsRow AddSystemsRow(string Nickname, string Name, string Infocard) {
                 SystemsRow rowSystemsRow = ((SystemsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Nickname,
+                        Name,
                         Infocard};
                 rowSystemsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSystemsRow);
@@ -914,6 +925,7 @@ namespace DSAccountManager_v2.GD.DB {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnNickname = base.Columns["Nickname"];
+                this.columnName = base.Columns["Name"];
                 this.columnInfocard = base.Columns["Infocard"];
             }
             
@@ -922,6 +934,8 @@ namespace DSAccountManager_v2.GD.DB {
             private void InitClass() {
                 this.columnNickname = new global::System.Data.DataColumn("Nickname", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNickname);
+                this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnName);
                 this.columnInfocard = new global::System.Data.DataColumn("Infocard", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnInfocard);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("SystemsKey1", new global::System.Data.DataColumn[] {
@@ -1069,6 +1083,8 @@ namespace DSAccountManager_v2.GD.DB {
             
             private global::System.Data.DataColumn columnNickname;
             
+            private global::System.Data.DataColumn columnName;
+            
             private global::System.Data.DataColumn columnInfocard;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1138,6 +1154,14 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NameColumn {
+                get {
+                    return this.columnName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn InfocardColumn {
                 get {
                     return this.columnInfocard;
@@ -1181,13 +1205,14 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public EquipmentRow AddEquipmentRow(uint Hash, string Type, string Hardpoint, string Nickname, string Infocard) {
+            public EquipmentRow AddEquipmentRow(uint Hash, string Type, string Hardpoint, string Nickname, string Name, string Infocard) {
                 EquipmentRow rowEquipmentRow = ((EquipmentRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Hash,
                         Type,
                         Hardpoint,
                         Nickname,
+                        Name,
                         Infocard};
                 rowEquipmentRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowEquipmentRow);
@@ -1222,6 +1247,7 @@ namespace DSAccountManager_v2.GD.DB {
                 this.columnType = base.Columns["Type"];
                 this.columnHardpoint = base.Columns["Hardpoint"];
                 this.columnNickname = base.Columns["Nickname"];
+                this.columnName = base.Columns["Name"];
                 this.columnInfocard = base.Columns["Infocard"];
             }
             
@@ -1236,6 +1262,8 @@ namespace DSAccountManager_v2.GD.DB {
                 base.Columns.Add(this.columnHardpoint);
                 this.columnNickname = new global::System.Data.DataColumn("Nickname", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNickname);
+                this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnName);
                 this.columnInfocard = new global::System.Data.DataColumn("Infocard", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnInfocard);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
@@ -2661,6 +2689,22 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Name {
+                get {
+                    try {
+                        return ((string)(this[this.tableSystems.NameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Name\' in table \'Systems\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSystems.NameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Infocard {
                 get {
                     if (this.IsInfocardNull()) {
@@ -2673,6 +2717,18 @@ namespace DSAccountManager_v2.GD.DB {
                 set {
                     this[this.tableSystems.InfocardColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNameNull() {
+                return this.IsNull(this.tableSystems.NameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNameNull() {
+                this[this.tableSystems.NameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2763,6 +2819,22 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Name {
+                get {
+                    try {
+                        return ((string)(this[this.tableEquipment.NameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Name\' in table \'Equipment\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableEquipment.NameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Infocard {
                 get {
                     if (this.IsInfocardNull()) {
@@ -2811,6 +2883,18 @@ namespace DSAccountManager_v2.GD.DB {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetNicknameNull() {
                 this[this.tableEquipment.NicknameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNameNull() {
+                return this.IsNull(this.tableEquipment.NameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNameNull() {
+                this[this.tableEquipment.NameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

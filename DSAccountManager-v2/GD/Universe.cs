@@ -282,8 +282,13 @@ namespace DSAccountManager_v2.GD
             var sysNick = sec.GetFirstOf("nickname")[0].ToLowerInvariant();
             LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing system {0}", sysNick);
 
-            var stIDSName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
-            Gis.Systems.AddSystemsRow(sysNick, stIDSName);
+            var stIDSName = GetIDSParm(sec.GetAnySetting("strid_name")[0]);
+
+            var stIDSInfo1 = "";
+            if (sec.ContainsAnyOf("ids_info1","ids_short_name"))
+                stIDSInfo1 = GetIDSParm(sec.GetAnySetting("ids_info")[0]);
+
+            Gis.Systems.AddSystemsRow(sysNick, stIDSName,stIDSInfo1);
 
 
             //string file = Directory.GetParent(ini.filePath).FullName + "\\" + section.GetSetting("file").Str(0);
@@ -380,7 +385,7 @@ namespace DSAccountManager_v2.GD
                     break;
             }
 
-            Gis.Equipment.AddEquipmentRow(hash, equipType.ToString(), hpType, nickname, infocard);
+            Gis.Equipment.AddEquipmentRow(hash, equipType.ToString(), hpType, nickname,stIDSName, infocard);
         }
 
         private void LoadEquipSection(Section eqSection)

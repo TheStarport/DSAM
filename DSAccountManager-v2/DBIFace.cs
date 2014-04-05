@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using FLAccountDB;
 using FLAccountDB.NoSQL;
 using FLHookTransport;
 
@@ -39,7 +37,7 @@ namespace DSAccountManager_v2
             AccDB = new NoSQLDB(path1, path2);
             AccDB.ProgressChanged += _accDB_ProgressChanged;
             AccDB.StateChanged += _accDB_StateChanged;
-
+            AccDB.OnGetFinish += AccDB_OnGetFinish;
             AccDB.Queue.SetThreshold((int)Properties.Settings.Default.TuneQThreshold);
             AccDB.Queue.SetTimeout((int)Properties.Settings.Default.TuneQTimer);
             _path1 = path1;
@@ -61,6 +59,8 @@ namespace DSAccountManager_v2
             //Database is empty
             InitDB(Properties.Settings.Default.DBAggressiveScan);
         }
+
+        
         public static void PurgeDB()
         {
 
@@ -129,8 +129,8 @@ namespace DSAccountManager_v2
 
         #region "DB events"
 
-        public static event ProgressChanged DBPercentChanged;
-        public delegate void ProgressChanged(int percent, int qCount);
+        public static event NoSQLDB.PercentageChanged DBPercentChanged;
+        //public delegate void ProgressChanged(int percent, int qCount);
         private static void _accDB_ProgressChanged(int percent, int qcount)
         {
             if (DBPercentChanged != null)
@@ -138,33 +138,39 @@ namespace DSAccountManager_v2
         }
 
 
-        public static event StateChange DBStateChanged;
-        public delegate void StateChange(DBStates state);
+        public static event NoSQLDB.StateChange DBStateChanged;
+        //public delegate void StateChange(DBStates state);
 
         //TODO if you see me wipe dis
-        public static event WaitWindow.Event.WaitSimpleEvent DBRenew;
+        public static event EventHandler DBRenew;
         static void _accDB_StateChanged(DBStates state)
         {
             if (DBStateChanged != null)
                 DBStateChanged(state);
             if (state != DBStates.Ready) return;
             if (DBRenew != null)
-                DBRenew();
+                DBRenew(null,null);
         }
+
+        public static event NoSQLDB.RequestReady OnReadyRequest;
+        static void AccDB_OnGetFinish(System.Collections.Generic.List<FLAccountDB.Metadata> meta)
+        {
+            if (OnReadyRequest != null)
+                OnReadyRequest(meta);
+        }
+
         #endregion
 
-        public static List<Metadata> GetOnlineTable()
+        public static void GetOnlineTable()
         {
-            if (AccDB == null || HookTransport == null) return null;
+            if (AccDB == null || HookTransport == null) return;
 
             if (HookTransport.IsSocketOpen())
-                return AccDB.GetCharsByNames(
+                AccDB.GetMetasByNames(
                     HookTransport.GetPlayersOnline()
                         .Select(w => w.CharName)
                         .ToList()
                     );
-
-            return null;
         }
 
 

@@ -10,7 +10,7 @@ namespace WaitWindow
         private readonly Timer _timer;
         private readonly Form _ownerForm;
         public Window(Form parentForm,
-            Action<Event.WaitSimpleEvent> eventFinished, Action<Event.WaitSimpleEvent> eventCancelled,
+            Action<EventHandler> eventFinished, Action<EventHandler> eventCancelled,
             int timeout = 0,bool supportsCancellation = false)
         {
             InitializeComponent();
@@ -18,16 +18,11 @@ namespace WaitWindow
             button1.Visible = supportsCancellation;
 
             StartPosition = FormStartPosition.CenterParent;
-            //Parent = parentForm;
             eventFinished(EventFinished);
             eventCancelled(EventCancelled);
 
-            if (timeout == 0)
-            {
-                ShowDialog(parentForm);
-                return;
-            }
             _ownerForm = parentForm;
+            
             _timer = new Timer {Interval = timeout};
             _timer.Tick += _timer_Tick;
             _timer.Start();
@@ -46,13 +41,13 @@ namespace WaitWindow
         }
 
 
-        public void EventFinished()
+        public void EventFinished(object o,EventArgs e)
         {
             Close();
             Dispose();
         }
 
-        public void EventCancelled()
+        public void EventCancelled(object o, EventArgs e)
         {
             Close();
             Dispose();
