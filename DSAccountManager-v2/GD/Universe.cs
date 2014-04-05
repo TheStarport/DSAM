@@ -65,41 +65,6 @@ namespace DSAccountManager_v2.GD
 
         private readonly Dictionary<string,EquipTypes> _hpMap = new Dictionary<string, EquipTypes>();
 
-        /// <summary>
-        /// Mapper for DataMaps.ini. Used for determining hardpoint types and gun types.
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private EquipTypes MapStringToType(string str)
-        {
-            switch (str)
-            {
-                case "misc":
-                    return EquipTypes.Misc;
-                case "countermeasuredropper":
-                    return EquipTypes.CountermeasureDropper;
-                case "turret":
-                    return EquipTypes.Turret;
-                case "minedropper":
-                    return EquipTypes.MineDropper;
-                case "projectile":
-                    return EquipTypes.Projectile;
-                case "thruster":
-                    return EquipTypes.Thruster;
-                case "shield":
-                    return EquipTypes.ShieldGen;
-                case "gun":
-                    return EquipTypes.Gun;
-                case "engine":
-                    return EquipTypes.Engine;
-                case "light":
-                    return EquipTypes.Light;
-                case "power":
-                    return EquipTypes.Powerplant;
-            }
-            return EquipTypes.Misc;
-        }
-
         //public readonly GameInfoSet.BasesDataTable Bases = new GameInfoSet.BasesDataTable();
         //public readonly GameInfoSet.SystemsDataTable Systems = new GameInfoSet.SystemsDataTable();
         //public readonly GameInfoSet.EquipmentDataTable Equipment = new GameInfoSet.EquipmentDataTable();
@@ -122,7 +87,13 @@ namespace DSAccountManager_v2.GD
 
             foreach (var set in dMapIni.GetSettings("HPMap", "map"))
             {
-                _hpMap.Add(set[0], MapStringToType(set[1]));
+                EquipTypes eqType;
+                if (!Enum.TryParse(set[1], out eqType))
+                {
+                    LogDispatcher.LogDispatcher.NewMessage(LogType.Error, "Can't parse equipment type in DataMaps.ini: {0} {1}",set[0],set[1]);
+                    continue;
+                }
+                _hpMap.Add(set[0], eqType);
             }
 
 
@@ -228,10 +199,17 @@ namespace DSAccountManager_v2.GD
             var hullNickName = sec.GetFirstOf("hull")[0];
 
             //TODO: foreach or FirstOrDefault?
-            foreach (var shSection in file.GetSections("good").
-                                            Where(w => 
-                                                  w.GetFirstOf("category")[0] == "shiphull" && w.GetFirstOf("nickname")[0] == hullNickName))
+            var shSection = file.GetSections("Good").FirstOrDefault(w => 
+                (w.GetFirstOf("category")[0] == "shiphull") & 
+                (w.GetFirstOf("nickname")[0] == hullNickName)
+                );
+
+            if (shSection == null)
             {
+                LogDispatcher.LogDispatcher.NewMessage(LogType.Warning,"Can't find package for shiphull {0}!",hullNickName);
+                return;
+            }
+
                 var shipNickname = shSection.GetFirstOf("ship")[0];
                 var shiphash = CreateID(shipNickname);
 
@@ -284,8 +262,6 @@ namespace DSAccountManager_v2.GD
                 }
                 Gis.ShipDefaultInternals.AddShipDefaultInternalsRow(Gis.Ships.FindByHash(shiphash), defaultEngine,
                     defaultSound, defaultPowerPlant);
-            }
-
         }
 
         private void LoadBase(Section sec)
