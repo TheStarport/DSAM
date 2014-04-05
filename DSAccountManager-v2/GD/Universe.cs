@@ -211,10 +211,82 @@ namespace DSAccountManager_v2.GD
 
             //TODO: Line 473, default loadouts
 
+            LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing loadouts...");
+            var loFile = new DataFile(_flDataPath + @"\equipment\goods.ini");
+
+            foreach (var loSection in loFile.GetSections("Good").Where(w => w.GetFirstOf("category")[0] == "ship"))
+            {
+                LoadLoadout(loSection,loFile);
+            }
 
         }
 
+        private void LoadLoadout(Section sec,DataFile file)
+        {
+            //if (sec.GetFirstOf("category")[0] != "ship") return;
+            //done in LINQ
+            var hullNickName = sec.GetFirstOf("hull")[0];
 
+            //TODO: foreach or FirstOrDefault?
+            foreach (var shSection in file.GetSections("good").
+                                            Where(w => 
+                                                  w.GetFirstOf("category")[0] == "shiphull" && w.GetFirstOf("nickname")[0] == hullNickName))
+            {
+                var shipNickname = shSection.GetFirstOf("ship")[0];
+                var shiphash = CreateID(shipNickname);
+
+                uint defaultSound = 0;
+                uint defaultPowerPlant = 0;
+                uint defaultEngine = 0;
+
+                foreach (var set in sec.GetSettings("addon"))
+                {
+                    if (set.Count != 3)
+                    {
+                        LogDispatcher.LogDispatcher.NewMessage(LogType.Warning,
+                            "Package for ship {0}: addon {1} has wrong arg count", shipNickname, set[0]);
+                        continue;
+                    }
+
+                    var equipNick = set[0];
+                    var item = Gis.Equipment.FindByHash(CreateID(equipNick));
+                    if (item == null)
+                    {
+                        LogDispatcher.LogDispatcher.NewMessage(LogType.Warning, @"Can't find {0} in DB: from loadout {1} \ {2}", equipNick,
+                            hullNickName, shipNickname);
+                        continue;
+                    }
+
+                    EquipTypes eqType;
+                    Enum.TryParse(item.Type, out eqType);
+
+                    switch (eqType)
+                    {
+                        case EquipTypes.Engine:
+                            defaultEngine = item.Hash;
+                            break;
+                        case EquipTypes.Powerplant:
+                            defaultPowerPlant = item.Hash;
+                            break;
+                        case EquipTypes.InternalFX:
+                            defaultSound = item.Hash;
+                            break;
+                            case EquipTypes.Light:
+                            if (set[1] == "internal")
+                                LogDispatcher.LogDispatcher.NewMessage(LogType.Warning, "Invalid hardpoint for light {0} (internal): {1}",equipNick,hullNickName);
+                            break;
+                        case EquipTypes.AttachedFX:
+                             if (set[1] == "internal")
+                                LogDispatcher.LogDispatcher.NewMessage(LogType.Warning, "Invalid hardpoint for attachedFX {0} (internal): {1}",equipNick,hullNickName);
+                            break;
+                    }
+
+                }
+                Gis.ShipDefaultInternals.AddShipDefaultInternalsRow(Gis.Ships.FindByHash(shiphash), defaultEngine,
+                    defaultSound, defaultPowerPlant);
+            }
+
+        }
 
         private void LoadBase(Section sec)
         {

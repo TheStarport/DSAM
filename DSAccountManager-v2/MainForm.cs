@@ -88,6 +88,7 @@ namespace DSAccountManager_v2
 
         private void button1_Click(object sender, EventArgs e)
         {
+// ReSharper disable once ObjectCreationAsStatement
             var v = new WaitWindow.Window(this,
                 handler => DBiFace.DBRenew += handler,
                 handler => DBiFace.DBRenew += handler,

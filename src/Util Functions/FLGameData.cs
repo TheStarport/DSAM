@@ -472,7 +472,7 @@ namespace DAM
             // Scan goods.ini to retrieve "default" loadouts for the ships.
             try
             {
-                FLDataFile flGoodsIni = new FLDataFile(flDataPath + "\\equipment\\goods.ini", true);
+                var flGoodsIni = new FLDataFile(flDataPath + "\\equipment\\goods.ini", true);
                 bgw.ReportProgress(50, "Loading loadouts");
                 for (int si = 0; si < flGoodsIni.sections.Count; si++)
                 {
