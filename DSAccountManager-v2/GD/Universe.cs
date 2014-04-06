@@ -11,7 +11,7 @@ using LogDispatcher;
 
 namespace DSAccountManager_v2.GD
 {
-    class Universe : IDisposable
+    public static class Universe
     {
 
         #region "Unmanaged DLL load func"
@@ -47,9 +47,9 @@ namespace DSAccountManager_v2.GD
         /// Resource dlls containing strings.
         /// </summary>
 // ReSharper disable once InconsistentNaming
-        readonly List<IntPtr> _vDLLs = new List<IntPtr>();
+        static readonly List<IntPtr> _vDLLs = new List<IntPtr>();
 
-        private void LoadLibrary(string dllPath)
+        private static void LoadLibrary(string dllPath)
         {
             var hInstance = LoadLibraryExA(dllPath, 0, DontResolveDllReferences | LoadLibraryAsDatafile);
             _vDLLs.Add(hInstance);
@@ -59,24 +59,24 @@ namespace DSAccountManager_v2.GD
 
 
 
-        private readonly Dictionary<uint, uint> _infocardMap = new Dictionary<uint, uint>();
+        private static readonly Dictionary<uint, uint> InfocardMap = new Dictionary<uint, uint>();
 
-        private readonly string _flDataPath;
+        private static string _flDataPath;
 
-        private readonly Dictionary<string,EquipTypes> _hpMap = new Dictionary<string, EquipTypes>();
+        private static readonly Dictionary<string, EquipTypes> HpMap = new Dictionary<string, EquipTypes>();
 
         //public readonly GameInfoSet.BasesDataTable Bases = new GameInfoSet.BasesDataTable();
         //public readonly GameInfoSet.SystemsDataTable Systems = new GameInfoSet.SystemsDataTable();
         //public readonly GameInfoSet.EquipmentDataTable Equipment = new GameInfoSet.EquipmentDataTable();
         //public readonly GameInfoSet.FactionDataTable Factions = new GameInfoSet.FactionDataTable();
-        public readonly GameInfoSet Gis = new GameInfoSet();
+        public static readonly GameInfoSet Gis = new GameInfoSet();
         /// <summary>
         /// Initiates the Universe DB. FLPath is the path to the Freelancer directory, not DATA\EXE etc.
         /// </summary>
         /// <param name="flPath"></param>
-        public Universe(string flPath)
-        {
 
+        public static void Parse(string flPath)
+        {
             LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing file {0} ...", flPath + @"\DataMaps.ini");
             if (!File.Exists(flPath + @"\DataMaps.ini"))
             {
@@ -90,10 +90,10 @@ namespace DSAccountManager_v2.GD
                 EquipTypes eqType;
                 if (!Enum.TryParse(set[1], out eqType))
                 {
-                    LogDispatcher.LogDispatcher.NewMessage(LogType.Error, "Can't parse equipment type in DataMaps.ini: {0} {1}",set[0],set[1]);
+                    LogDispatcher.LogDispatcher.NewMessage(LogType.Error, "Can't parse equipment type in DataMaps.ini: {0} {1}", set[0], set[1]);
                     continue;
                 }
-                _hpMap.Add(set[0], eqType);
+                HpMap.Add(set[0], eqType);
             }
 
 
@@ -107,26 +107,26 @@ namespace DSAccountManager_v2.GD
             _flDataPath = Path.GetFullPath(Path.Combine(flPath + @"\EXE", flIni.GetSetting("Freelancer", "data path")[0]));
 
             // Load the infocard map
-                var ini = new DataFile(_flDataPath + @"\interface\infocardmap.ini");
-                foreach (var set in ini.Sections.SelectMany(section => section.Settings))
+            var ini = new DataFile(_flDataPath + @"\interface\infocardmap.ini");
+            foreach (var set in ini.Sections.SelectMany(section => section.Settings))
+            {
+                uint map0, map1;
+                if (!uint.TryParse(set[0], out map0) || !uint.TryParse(set[1], out map1))
                 {
-                    uint map0, map1;
-                    if (!uint.TryParse(set[0], out map0) || !uint.TryParse(set[1], out map1))
-                    {
-                        LogDispatcher.LogDispatcher.NewMessage(LogType.Error, "Can't parse infocard map: {0}", set.String());
-                        continue;
-                    }
-                        
-                        //throw new Exception("Can't parse infocard map: " + set.String());
-                    _infocardMap[map0] = map1;
+                    LogDispatcher.LogDispatcher.NewMessage(LogType.Error, "Can't parse infocard map: {0}", set.String());
+                    continue;
                 }
 
+                //throw new Exception("Can't parse infocard map: " + set.String());
+                InfocardMap[map0] = map1;
+            }
 
-                // Load the string dlls.
-                LoadLibrary(flPath + @"\EXE\" + @"resources.dll");
 
-                foreach (var flResName in flIni.GetSettings("Resources", "DLL"))
-                    LoadLibrary(flPath + @"\EXE\" + flResName[0]);
+            // Load the string dlls.
+            LoadLibrary(flPath + @"\EXE\" + @"resources.dll");
+
+            foreach (var flResName in flIni.GetSettings("Resources", "DLL"))
+                LoadLibrary(flPath + @"\EXE\" + flResName[0]);
 
             //Scan INIs and bases
             //TODO there's only one universe entry, so do we need foreach universe?
@@ -139,7 +139,7 @@ namespace DSAccountManager_v2.GD
                 //Load bases
                 foreach (var baseSection in universeIni.GetSections("Base"))
                 {
-                    
+
                     LoadBase(baseSection);
                 }
 
@@ -180,19 +180,16 @@ namespace DSAccountManager_v2.GD
                 }
             }
 
-            //TODO: Line 473, default loadouts
-
             LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing loadouts...");
             var loFile = new DataFile(_flDataPath + @"\equipment\goods.ini");
 
             foreach (var loSection in loFile.GetSections("Good").Where(w => w.GetFirstOf("category")[0] == "ship"))
             {
-                LoadLoadout(loSection,loFile);
+                LoadLoadout(loSection, loFile);
             }
-
         }
 
-        private void LoadLoadout(Section sec,DataFile file)
+        private static void LoadLoadout(Section sec, DataFile file)
         {
             //if (sec.GetFirstOf("category")[0] != "ship") return;
             //done in LINQ
@@ -264,7 +261,7 @@ namespace DSAccountManager_v2.GD
                     defaultSound, defaultPowerPlant);
         }
 
-        private void LoadBase(Section sec)
+        private static void LoadBase(Section sec)
         {
             var nickname = sec.GetFirstOf("nickname")[0];
             //var file = _flDataPath + sec.GetFirstOf("file");
@@ -277,7 +274,7 @@ namespace DSAccountManager_v2.GD
             //FLGameData:Ln 191
         }
 
-        private void LoadSystem(Section sec)
+        private static void LoadSystem(Section sec)
         {
             var sysNick = sec.GetFirstOf("nickname")[0].ToLowerInvariant();
             LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing system {0}", sysNick);
@@ -316,8 +313,8 @@ namespace DSAccountManager_v2.GD
                     }
 
                     idsInfo = GetIDString(id);
-                    if (_infocardMap.ContainsKey(id))
-                        idsInfo1 = GetIDString(_infocardMap[id]);
+                    if (InfocardMap.ContainsKey(id))
+                        idsInfo1 = GetIDString(InfocardMap[id]);
                 }
 
                 //add the icard to the base if object is base
@@ -331,7 +328,7 @@ namespace DSAccountManager_v2.GD
 
         }
 
-        private void LoadEquip(Section sec, EquipTypes equipType)
+        private static void LoadEquip(Section sec, EquipTypes equipType)
         {
             var nickname = sec.GetFirstOf("nickname")[0];
             LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing equipment {0}", nickname);
@@ -345,7 +342,7 @@ namespace DSAccountManager_v2.GD
                 stIDSName = GetIDSParm(sec.GetAnySetting("ids_name", "strid_name")[0]);
 
             // TODO: ignore empty IDS based on setting
-            if (stIDSName == "") return;
+            //if (stIDSName == "") return;
 
            
             var infocard = "";
@@ -372,14 +369,18 @@ namespace DSAccountManager_v2.GD
             var hpType = "";
             switch (equipType)
             {
+                case EquipTypes.Engine:
+                    if (sec.ContainsAnyOf("hp_type"))
+                        hpType = sec.GetFirstOf("hp_type")[0];
+                    break;
                 case EquipTypes.Gun:
 
                         hpType = sec.GetFirstOf("hp_gun_type")[0];
-                    equipType = _hpMap[hpType];
+                    equipType = HpMap[hpType];
                     break;
                case EquipTypes.ShieldGen:
                     hpType = sec.GetFirstOf("hp_type")[0];
-                    equipType = _hpMap[hpType];
+                    equipType = HpMap[hpType];
                     break;
                 default:
                     break;
@@ -388,7 +389,7 @@ namespace DSAccountManager_v2.GD
             Gis.Equipment.AddEquipmentRow(hash, equipType.ToString(), hpType, nickname,stIDSName, infocard);
         }
 
-        private void LoadEquipSection(Section eqSection)
+        private static void LoadEquipSection(Section eqSection)
         {
             switch (eqSection.Name)
             {
@@ -508,7 +509,7 @@ namespace DSAccountManager_v2.GD
             }
         }
 
-        private void LoadFaction(Section sec)
+        private static void LoadFaction(Section sec)
         {
             var nickname = sec.GetFirstOf("nickname")[0];
             LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing faction {0}", nickname);
@@ -535,7 +536,7 @@ namespace DSAccountManager_v2.GD
             Gis.Factions.AddFactionsRow(hash, nickname, factionName, shortName, infocard);
         }
 
-        private void LoadShip(Section sec)
+        private static void LoadShip(Section sec)
         {
             var nickname = sec.GetFirstOf("nickname")[0];
             LogDispatcher.LogDispatcher.NewMessage(LogType.Debug, "Parsing equipment {0}", nickname);
@@ -562,20 +563,21 @@ namespace DSAccountManager_v2.GD
                 {
                     var ghr = Gis.Ships.FindByHash(hash).GetHardpointsRows();
                     if (ghr.Any(hpS => hpS.Name == hp)) continue;
-                    Gis.Hardpoints.AddHardpointsRow(Gis.Ships.FindByHash(hash), hp, EquipTypes.Cloak.ToString());
+                    //TODO cloak names
+                    Gis.Hardpoints.AddHardpointsRow(Gis.Ships.FindByHash(hash), hp, EquipTypes.Cloak.ToString(),"cloak");
                 }
             }
 
             foreach (var hpSet in sec.GetSettings("hp_type"))
             {
-                var type = _hpMap[hpSet[0]];
+                var type = HpMap[hpSet[0]];
 
                 
                 foreach (var hp in hpSet.Skip(1))
                 {
                     var ghr = Gis.Ships.FindByHash(hash).GetHardpointsRows();
                     if (ghr.Any(hpS => hpS.Name == hp)) continue;
-                    Gis.Hardpoints.AddHardpointsRow(Gis.Ships.FindByHash(hash), hp, type.ToString());
+                    Gis.Hardpoints.AddHardpointsRow(Gis.Ships.FindByHash(hash), hp, type.ToString(),hpSet[0]);
                 }
             }
         }
@@ -585,7 +587,7 @@ namespace DSAccountManager_v2.GD
         /// </summary>
         /// <param name="idName"></param>
         /// <returns></returns>
-        private string GetIDSParm(string idName)
+        private static string GetIDSParm(string idName)
         {
             var stInfo = "";
             if (idName == null) return stInfo;
@@ -611,7 +613,7 @@ namespace DSAccountManager_v2.GD
         /// </summary>
         /// <param name="iIDS"></param>
         /// <returns>The string or null if it cannot be found.</returns>
-        private string GetIDString(uint iIDS)
+        private static string GetIDString(uint iIDS)
         {
             //TODO: i think it can be optimized as well, leaving the legacy version for now
             var iDLL = (int)(iIDS / 0x10000);
@@ -641,12 +643,6 @@ namespace DSAccountManager_v2.GD
             Marshal.Copy(resContent, bufInfo, 0, size);
             return Encoding.Unicode.GetString(bufInfo, 0, size);
         }
-
-        public void Dispose()
-        {
-            Gis.Dispose();
-        }
-
 
         /// <summary>
         /// Look up table for id creation.
@@ -705,21 +701,21 @@ namespace DSAccountManager_v2.GD
         /// <returns></returns>
         public static uint CreateFactionID(string nickName)
         {
-            const uint FLFACHASH_POLYNOMIAL = 0x1021;
-            const uint NUM_BITS = 8;
-            const int HASH_TABLE_SIZE = 256;
+            const uint flfachashPolynomial = 0x1021;
+            const uint numBits = 8;
+            const int hashTableSize = 256;
 
             if (_crcFactionIDTable == null)
             {
                 // The hash table used is the standard CRC-16-CCITT Lookup table 
                 // using the standard big-endian polynomial of 0x1021.
-                _crcFactionIDTable = new uint[HASH_TABLE_SIZE];
-                for (uint i = 0; i < HASH_TABLE_SIZE; i++)
+                _crcFactionIDTable = new uint[hashTableSize];
+                for (uint i = 0; i < hashTableSize; i++)
                 {
-                    uint x = i << (16 - (int)NUM_BITS);
-                    for (uint j = 0; j < NUM_BITS; j++)
+                    uint x = i << (16 - (int)numBits);
+                    for (uint j = 0; j < numBits; j++)
                     {
-                        x = ((x & 0x8000) == 0x8000) ? (x << 1) ^ FLFACHASH_POLYNOMIAL : (x << 1);
+                        x = ((x & 0x8000) == 0x8000) ? (x << 1) ^ flfachashPolynomial : (x << 1);
                         x &= 0xFFFF;
                     }
                     _crcFactionIDTable[i] = x;

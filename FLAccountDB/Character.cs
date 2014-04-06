@@ -5,12 +5,25 @@ using FLAccountDB.NoSQL;
 
 namespace FLAccountDB
 {
+
+    public class ReputationItem
+    {
+        public ReputationItem(string nickname, float rep)
+        {
+            Nickname = nickname;
+            Value = rep;
+        }
+        public string Nickname { get; set; }
+        public float Value { get; set; }
+    }
+
     public class Character : Metadata
     {
         public bool IsAdmin;
         public bool IsBanned;
         public bool IsOnline;
-        public Dictionary<string, float> Reputation = new Dictionary<string, float>();
+        public List<ReputationItem> Reputation = new List<ReputationItem>();
+        //Dictionary<string, float>
 
         /// <summary>
         /// Player's primary IFF\Faction

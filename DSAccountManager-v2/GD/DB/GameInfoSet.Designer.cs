@@ -505,7 +505,7 @@ namespace DSAccountManager_v2.GD.DB {
             
             private global::System.Data.DataColumn columnNickname;
             
-            private global::System.Data.DataColumn columnIDString;
+            private global::System.Data.DataColumn columnName;
             
             private global::System.Data.DataColumn columnInfocard;
             
@@ -552,9 +552,9 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn IDStringColumn {
+            public global::System.Data.DataColumn NameColumn {
                 get {
-                    return this.columnIDString;
+                    return this.columnName;
                 }
             }
             
@@ -603,11 +603,11 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public BasesRow AddBasesRow(string Nickname, string IDString, string Infocard) {
+            public BasesRow AddBasesRow(string Nickname, string Name, string Infocard) {
                 BasesRow rowBasesRow = ((BasesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Nickname,
-                        IDString,
+                        Name,
                         Infocard};
                 rowBasesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowBasesRow);
@@ -639,7 +639,7 @@ namespace DSAccountManager_v2.GD.DB {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnNickname = base.Columns["Nickname"];
-                this.columnIDString = base.Columns["IDString"];
+                this.columnName = base.Columns["Name"];
                 this.columnInfocard = base.Columns["Infocard"];
             }
             
@@ -648,8 +648,8 @@ namespace DSAccountManager_v2.GD.DB {
             private void InitClass() {
                 this.columnNickname = new global::System.Data.DataColumn("Nickname", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNickname);
-                this.columnIDString = new global::System.Data.DataColumn("IDString", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIDString);
+                this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnName);
                 this.columnInfocard = new global::System.Data.DataColumn("Infocard", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnInfocard);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("BasesKey1", new global::System.Data.DataColumn[] {
@@ -2021,7 +2021,9 @@ namespace DSAccountManager_v2.GD.DB {
             
             private global::System.Data.DataColumn columnName;
             
-            private global::System.Data.DataColumn columnType;
+            private global::System.Data.DataColumn columnEquipType;
+            
+            private global::System.Data.DataColumn columnHPType;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -2074,9 +2076,17 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn TypeColumn {
+            public global::System.Data.DataColumn EquipTypeColumn {
                 get {
-                    return this.columnType;
+                    return this.columnEquipType;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HPTypeColumn {
+                get {
+                    return this.columnHPType;
                 }
             }
             
@@ -2117,12 +2127,13 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public HardpointsRow AddHardpointsRow(ShipsRow parentShipsRowByShips_Hardpoints, string Name, string Type) {
+            public HardpointsRow AddHardpointsRow(ShipsRow parentShipsRowByShips_Hardpoints, string Name, string EquipType, string HPType) {
                 HardpointsRow rowHardpointsRow = ((HardpointsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Name,
-                        Type};
+                        EquipType,
+                        HPType};
                 if ((parentShipsRowByShips_Hardpoints != null)) {
                     columnValuesArray[0] = parentShipsRowByShips_Hardpoints[0];
                 }
@@ -2150,7 +2161,8 @@ namespace DSAccountManager_v2.GD.DB {
             internal void InitVars() {
                 this.columnShipHash = base.Columns["ShipHash"];
                 this.columnName = base.Columns["Name"];
-                this.columnType = base.Columns["Type"];
+                this.columnEquipType = base.Columns["EquipType"];
+                this.columnHPType = base.Columns["HPType"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2160,8 +2172,10 @@ namespace DSAccountManager_v2.GD.DB {
                 base.Columns.Add(this.columnShipHash);
                 this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnName);
-                this.columnType = new global::System.Data.DataColumn("Type", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnType);
+                this.columnEquipType = new global::System.Data.DataColumn("EquipType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEquipType);
+                this.columnHPType = new global::System.Data.DataColumn("HPType", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHPType);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2607,17 +2621,17 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string IDString {
+            public string Name {
                 get {
-                    if (this.IsIDStringNull()) {
+                    if (this.IsNameNull()) {
                         return string.Empty;
                     }
                     else {
-                        return ((string)(this[this.tableBases.IDStringColumn]));
+                        return ((string)(this[this.tableBases.NameColumn]));
                     }
                 }
                 set {
-                    this[this.tableBases.IDStringColumn] = value;
+                    this[this.tableBases.NameColumn] = value;
                 }
             }
             
@@ -2639,14 +2653,14 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsIDStringNull() {
-                return this.IsNull(this.tableBases.IDStringColumn);
+            public bool IsNameNull() {
+                return this.IsNull(this.tableBases.NameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetIDStringNull() {
-                this[this.tableBases.IDStringColumn] = global::System.Convert.DBNull;
+            public void SetNameNull() {
+                this[this.tableBases.NameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3228,17 +3242,33 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Type {
+            public string EquipType {
                 get {
                     try {
-                        return ((string)(this[this.tableHardpoints.TypeColumn]));
+                        return ((string)(this[this.tableHardpoints.EquipTypeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Type\' in table \'Hardpoints\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'EquipType\' in table \'Hardpoints\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableHardpoints.TypeColumn] = value;
+                    this[this.tableHardpoints.EquipTypeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string HPType {
+                get {
+                    try {
+                        return ((string)(this[this.tableHardpoints.HPTypeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HPType\' in table \'Hardpoints\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableHardpoints.HPTypeColumn] = value;
                 }
             }
             
@@ -3279,14 +3309,26 @@ namespace DSAccountManager_v2.GD.DB {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsTypeNull() {
-                return this.IsNull(this.tableHardpoints.TypeColumn);
+            public bool IsEquipTypeNull() {
+                return this.IsNull(this.tableHardpoints.EquipTypeColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetTypeNull() {
-                this[this.tableHardpoints.TypeColumn] = global::System.Convert.DBNull;
+            public void SetEquipTypeNull() {
+                this[this.tableHardpoints.EquipTypeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHPTypeNull() {
+                return this.IsNull(this.tableHardpoints.HPTypeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHPTypeNull() {
+                this[this.tableHardpoints.HPTypeColumn] = global::System.Convert.DBNull;
             }
         }
         

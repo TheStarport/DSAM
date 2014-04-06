@@ -39,6 +39,7 @@
             this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -47,14 +48,23 @@
             this.toolDBQueue = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.radioSearchLocName = new System.Windows.Forms.RadioButton();
+            this.radioSearchLocNickname = new System.Windows.Forms.RadioButton();
+            this.buttonSearchLocation = new System.Windows.Forms.Button();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.radioSearchSystem = new System.Windows.Forms.RadioButton();
+            this.radioSearchBase = new System.Windows.Forms.RadioButton();
+            this.comboSearchLocation = new System.Windows.Forms.ComboBox();
+            this.systemsSearchBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.comboSearchItem = new System.Windows.Forms.ComboBox();
-            this.equipmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gameInfoSet = new DSAccountManager_v2.GD.DB.GameInfoSet();
+            this.equipmentSearchBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -65,9 +75,21 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textCreatedAt = new System.Windows.Forms.TextBox();
+            this.buttonLastOReset = new System.Windows.Forms.Button();
+            this.buttonKick = new System.Windows.Forms.Button();
+            this.checkIsOnline = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.shipsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dateLastOnline = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
             this.comboBoxSystem = new System.Windows.Forms.ComboBox();
             this.systemsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.button6 = new System.Windows.Forms.Button();
             this.textBoxMoney = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -79,24 +101,48 @@
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.label4 = new System.Windows.Forms.Label();
-            this.dateLastOnline = new System.Windows.Forms.DateTimePicker();
+            this.olvRep = new BrightIdeasSoftware.ObjectListView();
+            this.numericRep = new System.Windows.Forms.NumericUpDown();
+            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.olvColumn10 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn11 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn12 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.dlvEquipment = new BrightIdeasSoftware.DataListView();
+            this.olvColumn7 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn8 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.olvLog = new BrightIdeasSoftware.FastObjectListView();
+            this.olvColumn9 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fastObjectListView1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.flowLayoutPanel4.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.systemsSearchBindingSource)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.equipmentBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gameInfoSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.equipmentSearchBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shipsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.systemsBindingSource)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvRep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericRep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dlvEquipment)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.olvLog)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -215,6 +261,14 @@
             this.olvColumn3.Text = "Money";
             this.olvColumn3.Width = 100;
             // 
+            // olvColumn6
+            // 
+            this.olvColumn6.AspectName = "ShipArch";
+            this.olvColumn6.CellPadding = null;
+            this.olvColumn6.IsEditable = false;
+            this.olvColumn6.Text = "Ship";
+            this.olvColumn6.Width = 120;
+            // 
             // olvColumn4
             // 
             this.olvColumn4.AspectName = "Base";
@@ -266,6 +320,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Right;
             this.tabControl1.Location = new System.Drawing.Point(614, 24);
             this.tabControl1.Name = "tabControl1";
@@ -275,6 +330,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -284,6 +340,111 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Filter";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.flowLayoutPanel4);
+            this.groupBox3.Controls.Add(this.buttonSearchLocation);
+            this.groupBox3.Controls.Add(this.flowLayoutPanel3);
+            this.groupBox3.Controls.Add(this.comboSearchLocation);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox3.Location = new System.Drawing.Point(3, 161);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(453, 125);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Search by Location";
+            // 
+            // flowLayoutPanel4
+            // 
+            this.flowLayoutPanel4.Controls.Add(this.radioSearchLocName);
+            this.flowLayoutPanel4.Controls.Add(this.radioSearchLocNickname);
+            this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 45);
+            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(447, 29);
+            this.flowLayoutPanel4.TabIndex = 7;
+            // 
+            // radioSearchLocName
+            // 
+            this.radioSearchLocName.AutoSize = true;
+            this.radioSearchLocName.Checked = true;
+            this.radioSearchLocName.Location = new System.Drawing.Point(3, 3);
+            this.radioSearchLocName.Name = "radioSearchLocName";
+            this.radioSearchLocName.Size = new System.Drawing.Size(100, 17);
+            this.radioSearchLocName.TabIndex = 0;
+            this.radioSearchLocName.TabStop = true;
+            this.radioSearchLocName.Text = "Readable name";
+            this.radioSearchLocName.UseVisualStyleBackColor = true;
+            this.radioSearchLocName.CheckedChanged += new System.EventHandler(this.radioSearchLocName_CheckedChanged);
+            // 
+            // radioSearchLocNickname
+            // 
+            this.radioSearchLocNickname.AutoSize = true;
+            this.radioSearchLocNickname.Location = new System.Drawing.Point(109, 3);
+            this.radioSearchLocNickname.Name = "radioSearchLocNickname";
+            this.radioSearchLocNickname.Size = new System.Drawing.Size(73, 17);
+            this.radioSearchLocNickname.TabIndex = 1;
+            this.radioSearchLocNickname.Text = "Nickname";
+            this.radioSearchLocNickname.UseVisualStyleBackColor = true;
+            this.radioSearchLocNickname.CheckedChanged += new System.EventHandler(this.radioSearchLocNickname_CheckedChanged);
+            // 
+            // buttonSearchLocation
+            // 
+            this.buttonSearchLocation.Location = new System.Drawing.Point(369, 80);
+            this.buttonSearchLocation.Name = "buttonSearchLocation";
+            this.buttonSearchLocation.Size = new System.Drawing.Size(75, 23);
+            this.buttonSearchLocation.TabIndex = 6;
+            this.buttonSearchLocation.Text = "Go";
+            this.buttonSearchLocation.UseVisualStyleBackColor = true;
+            this.buttonSearchLocation.Click += new System.EventHandler(this.buttonSearchLocation_Click);
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.radioSearchSystem);
+            this.flowLayoutPanel3.Controls.Add(this.radioSearchBase);
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(447, 29);
+            this.flowLayoutPanel3.TabIndex = 5;
+            // 
+            // radioSearchSystem
+            // 
+            this.radioSearchSystem.AutoSize = true;
+            this.radioSearchSystem.Checked = true;
+            this.radioSearchSystem.Location = new System.Drawing.Point(3, 3);
+            this.radioSearchSystem.Name = "radioSearchSystem";
+            this.radioSearchSystem.Size = new System.Drawing.Size(59, 17);
+            this.radioSearchSystem.TabIndex = 0;
+            this.radioSearchSystem.TabStop = true;
+            this.radioSearchSystem.Text = "System";
+            this.radioSearchSystem.UseVisualStyleBackColor = true;
+            this.radioSearchSystem.CheckedChanged += new System.EventHandler(this.radioSearchSystem_CheckedChanged);
+            // 
+            // radioSearchBase
+            // 
+            this.radioSearchBase.AutoSize = true;
+            this.radioSearchBase.Location = new System.Drawing.Point(68, 3);
+            this.radioSearchBase.Name = "radioSearchBase";
+            this.radioSearchBase.Size = new System.Drawing.Size(49, 17);
+            this.radioSearchBase.TabIndex = 1;
+            this.radioSearchBase.Text = "Base";
+            this.radioSearchBase.UseVisualStyleBackColor = true;
+            this.radioSearchBase.CheckedChanged += new System.EventHandler(this.radioSearchBase_CheckedChanged);
+            // 
+            // comboSearchLocation
+            // 
+            this.comboSearchLocation.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboSearchLocation.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.comboSearchLocation.DataSource = this.systemsSearchBindingSource;
+            this.comboSearchLocation.DisplayMember = "Name";
+            this.comboSearchLocation.FormattingEnabled = true;
+            this.comboSearchLocation.Location = new System.Drawing.Point(3, 80);
+            this.comboSearchLocation.Name = "comboSearchLocation";
+            this.comboSearchLocation.Size = new System.Drawing.Size(360, 21);
+            this.comboSearchLocation.TabIndex = 4;
+            this.comboSearchLocation.ValueMember = "Nickname";
             // 
             // groupBox2
             // 
@@ -321,6 +482,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(3, 3);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(100, 17);
@@ -337,7 +499,6 @@
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(73, 17);
             this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Nickname";
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
@@ -346,7 +507,7 @@
             // 
             this.comboSearchItem.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboSearchItem.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.comboSearchItem.DataSource = this.equipmentBindingSource;
+            this.comboSearchItem.DataSource = this.equipmentSearchBindingSource;
             this.comboSearchItem.DisplayMember = "Name";
             this.comboSearchItem.FormattingEnabled = true;
             this.comboSearchItem.Location = new System.Drawing.Point(3, 51);
@@ -354,16 +515,6 @@
             this.comboSearchItem.Size = new System.Drawing.Size(360, 21);
             this.comboSearchItem.TabIndex = 0;
             this.comboSearchItem.ValueMember = "Hash";
-            // 
-            // equipmentBindingSource
-            // 
-            this.equipmentBindingSource.DataMember = "Equipment";
-            this.equipmentBindingSource.DataSource = this.gameInfoSet;
-            // 
-            // gameInfoSet
-            // 
-            this.gameInfoSet.DataSetName = "GameInfoSet";
-            this.gameInfoSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // groupBox1
             // 
@@ -390,9 +541,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(0, 45);
+            this.textBox1.Location = new System.Drawing.Point(3, 45);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(363, 20);
+            this.textBox1.Size = new System.Drawing.Size(360, 20);
             this.textBox1.TabIndex = 1;
             // 
             // flowLayoutPanel1
@@ -409,6 +560,7 @@
             // radioCharname
             // 
             this.radioCharname.AutoSize = true;
+            this.radioCharname.Checked = true;
             this.radioCharname.Location = new System.Drawing.Point(3, 3);
             this.radioCharname.Name = "radioCharname";
             this.radioCharname.Size = new System.Drawing.Size(73, 17);
@@ -424,7 +576,6 @@
             this.radioAccID.Name = "radioAccID";
             this.radioAccID.Size = new System.Drawing.Size(79, 17);
             this.radioAccID.TabIndex = 1;
-            this.radioAccID.TabStop = true;
             this.radioAccID.Text = "Account ID";
             this.radioAccID.UseVisualStyleBackColor = true;
             // 
@@ -435,7 +586,6 @@
             this.radioCharCode.Name = "radioCharCode";
             this.radioCharCode.Size = new System.Drawing.Size(98, 17);
             this.radioCharCode.TabIndex = 2;
-            this.radioCharCode.TabStop = true;
             this.radioCharCode.Text = "Character code";
             this.radioCharCode.UseVisualStyleBackColor = true;
             // 
@@ -454,6 +604,7 @@
             // 
             this.tabControl2.Controls.Add(this.tabPage3);
             this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Controls.Add(this.tabPage5);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(3, 3);
             this.tabControl2.Name = "tabControl2";
@@ -463,10 +614,19 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button6);
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.objectListView1);
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.textCreatedAt);
+            this.tabPage3.Controls.Add(this.buttonLastOReset);
+            this.tabPage3.Controls.Add(this.buttonKick);
+            this.tabPage3.Controls.Add(this.checkIsOnline);
+            this.tabPage3.Controls.Add(this.label5);
+            this.tabPage3.Controls.Add(this.comboBox1);
             this.tabPage3.Controls.Add(this.dateLastOnline);
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.comboBoxSystem);
-            this.tabPage3.Controls.Add(this.button6);
             this.tabPage3.Controls.Add(this.textBoxMoney);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.label2);
@@ -485,34 +645,128 @@
             this.tabPage3.Text = "Main";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(364, 120);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 20);
+            this.button6.TabIndex = 24;
+            this.button6.Text = "Open Map";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(31, 280);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(114, 13);
+            this.label7.TabIndex = 23;
+            this.label7.Text = "Known Login IDs \\ IPs";
+            // 
+            // objectListView1
+            // 
+            this.objectListView1.Location = new System.Drawing.Point(34, 296);
+            this.objectListView1.Name = "objectListView1";
+            this.objectListView1.Size = new System.Drawing.Size(316, 160);
+            this.objectListView1.TabIndex = 22;
+            this.objectListView1.UseCompatibleStateImageBehavior = false;
+            this.objectListView1.View = System.Windows.Forms.View.Details;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(31, 229);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 13);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "Created";
+            // 
+            // textCreatedAt
+            // 
+            this.textCreatedAt.Location = new System.Drawing.Point(88, 226);
+            this.textCreatedAt.Name = "textCreatedAt";
+            this.textCreatedAt.Size = new System.Drawing.Size(218, 20);
+            this.textCreatedAt.TabIndex = 20;
+            // 
+            // buttonLastOReset
+            // 
+            this.buttonLastOReset.Location = new System.Drawing.Point(364, 200);
+            this.buttonLastOReset.Name = "buttonLastOReset";
+            this.buttonLastOReset.Size = new System.Drawing.Size(75, 20);
+            this.buttonLastOReset.TabIndex = 19;
+            this.buttonLastOReset.Text = "Reset";
+            this.buttonLastOReset.UseVisualStyleBackColor = true;
+            // 
+            // buttonKick
+            // 
+            this.buttonKick.Location = new System.Drawing.Point(275, 46);
+            this.buttonKick.Name = "buttonKick";
+            this.buttonKick.Size = new System.Drawing.Size(75, 23);
+            this.buttonKick.TabIndex = 18;
+            this.buttonKick.Text = "Kick";
+            this.buttonKick.UseVisualStyleBackColor = true;
+            // 
+            // checkIsOnline
+            // 
+            this.checkIsOnline.AutoSize = true;
+            this.checkIsOnline.Enabled = false;
+            this.checkIsOnline.Location = new System.Drawing.Point(213, 50);
+            this.checkIsOnline.Name = "checkIsOnline";
+            this.checkIsOnline.Size = new System.Drawing.Size(56, 17);
+            this.checkIsOnline.TabIndex = 17;
+            this.checkIsOnline.Text = "Online";
+            this.checkIsOnline.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(47, 176);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(28, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Ship";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DataSource = this.shipsBindingSource;
+            this.comboBox1.DisplayMember = "Name";
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(88, 173);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(218, 21);
+            this.comboBox1.TabIndex = 15;
+            this.comboBox1.ValueMember = "Hash";
+            // 
+            // dateLastOnline
+            // 
+            this.dateLastOnline.Location = new System.Drawing.Point(88, 200);
+            this.dateLastOnline.Name = "dateLastOnline";
+            this.dateLastOnline.Size = new System.Drawing.Size(218, 20);
+            this.dateLastOnline.TabIndex = 14;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(15, 204);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(60, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Last Online";
+            // 
             // comboBoxSystem
             // 
             this.comboBoxSystem.DataSource = this.systemsBindingSource;
             this.comboBoxSystem.DisplayMember = "Name";
             this.comboBoxSystem.FormattingEnabled = true;
-            this.comboBoxSystem.Location = new System.Drawing.Point(77, 125);
+            this.comboBoxSystem.Location = new System.Drawing.Point(88, 146);
             this.comboBoxSystem.Name = "comboBoxSystem";
             this.comboBoxSystem.Size = new System.Drawing.Size(218, 21);
             this.comboBoxSystem.TabIndex = 12;
             this.comboBoxSystem.ValueMember = "Nickname";
             // 
-            // systemsBindingSource
-            // 
-            this.systemsBindingSource.DataMember = "Systems";
-            this.systemsBindingSource.DataSource = this.gameInfoSet;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(356, 125);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 22);
-            this.button6.TabIndex = 11;
-            this.button6.Text = "Change";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
             // textBoxMoney
             // 
-            this.textBoxMoney.Location = new System.Drawing.Point(77, 99);
+            this.textBoxMoney.Location = new System.Drawing.Point(88, 120);
             this.textBoxMoney.Name = "textBoxMoney";
             this.textBoxMoney.Size = new System.Drawing.Size(218, 20);
             this.textBoxMoney.TabIndex = 9;
@@ -520,7 +774,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 128);
+            this.label3.Location = new System.Drawing.Point(36, 149);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 13);
             this.label3.TabIndex = 8;
@@ -529,7 +783,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 102);
+            this.label2.Location = new System.Drawing.Point(36, 123);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 7;
@@ -538,27 +792,27 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(120, 51);
+            this.checkBox1.Location = new System.Drawing.Point(47, 50);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(74, 17);
+            this.checkBox1.Size = new System.Drawing.Size(73, 17);
             this.checkBox1.TabIndex = 6;
-            this.checkBox1.Text = "Is Banned";
+            this.checkBox1.Text = "is Banned";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // checkBoxAdmin
             // 
             this.checkBoxAdmin.AutoSize = true;
             this.checkBoxAdmin.BackColor = System.Drawing.Color.Transparent;
-            this.checkBoxAdmin.Location = new System.Drawing.Point(47, 52);
+            this.checkBoxAdmin.Location = new System.Drawing.Point(47, 73);
             this.checkBoxAdmin.Name = "checkBoxAdmin";
-            this.checkBoxAdmin.Size = new System.Drawing.Size(66, 17);
+            this.checkBoxAdmin.Size = new System.Drawing.Size(65, 17);
             this.checkBoxAdmin.TabIndex = 5;
-            this.checkBoxAdmin.Text = "Is Admin";
+            this.checkBoxAdmin.Text = "is Admin";
             this.checkBoxAdmin.UseVisualStyleBackColor = false;
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(275, 46);
+            this.button5.Location = new System.Drawing.Point(364, 46);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 4;
@@ -567,7 +821,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(275, 17);
+            this.button4.Location = new System.Drawing.Point(364, 17);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 3;
@@ -576,7 +830,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(356, 17);
+            this.button3.Location = new System.Drawing.Point(275, 17);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 2;
@@ -602,37 +856,182 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.olvRep);
+            this.tabPage4.Controls.Add(this.numericRep);
+            this.tabPage4.Controls.Add(this.trackBar2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(445, 392);
+            this.tabPage4.Size = new System.Drawing.Size(445, 462);
             this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.Text = "Factions";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // olvColumn6
+            // olvRep
             // 
-            this.olvColumn6.AspectName = "ShipArch";
-            this.olvColumn6.CellPadding = null;
-            this.olvColumn6.IsEditable = false;
-            this.olvColumn6.Text = "Ship";
-            this.olvColumn6.Width = 120;
+            this.olvRep.AllColumns.Add(this.olvColumn10);
+            this.olvRep.AllColumns.Add(this.olvColumn11);
+            this.olvRep.AllColumns.Add(this.olvColumn12);
+            this.olvRep.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
+            this.olvRep.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn10,
+            this.olvColumn11,
+            this.olvColumn12});
+            this.olvRep.Cursor = System.Windows.Forms.Cursors.Default;
+            this.olvRep.Dock = System.Windows.Forms.DockStyle.Top;
+            this.olvRep.FullRowSelect = true;
+            this.olvRep.Location = new System.Drawing.Point(3, 3);
+            this.olvRep.Name = "olvRep";
+            this.olvRep.ShowGroups = false;
+            this.olvRep.Size = new System.Drawing.Size(439, 400);
+            this.olvRep.TabIndex = 11;
+            this.olvRep.UseCompatibleStateImageBehavior = false;
+            this.olvRep.UseHotItem = true;
+            this.olvRep.UseTranslucentHotItem = true;
+            this.olvRep.UseTranslucentSelection = true;
+            this.olvRep.View = System.Windows.Forms.View.Details;
+            this.olvRep.SelectionChanged += new System.EventHandler(this.olvRep_SelectionChanged);
             // 
-            // label4
+            // numericRep
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 169);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 13);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "Last Online";
+            this.numericRep.DecimalPlaces = 2;
+            this.numericRep.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericRep.Location = new System.Drawing.Point(23, 415);
+            this.numericRep.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericRep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numericRep.Name = "numericRep";
+            this.numericRep.Size = new System.Drawing.Size(69, 20);
+            this.numericRep.TabIndex = 10;
+            this.numericRep.ValueChanged += new System.EventHandler(this.numericRep_ValueChanged);
             // 
-            // dateLastOnline
+            // trackBar2
             // 
-            this.dateLastOnline.Location = new System.Drawing.Point(77, 163);
-            this.dateLastOnline.Name = "dateLastOnline";
-            this.dateLastOnline.Size = new System.Drawing.Size(218, 20);
-            this.dateLastOnline.TabIndex = 14;
+            this.trackBar2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.trackBar2.AutoSize = false;
+            this.trackBar2.BackColor = System.Drawing.SystemColors.Control;
+            this.trackBar2.Location = new System.Drawing.Point(118, 409);
+            this.trackBar2.Maximum = 100;
+            this.trackBar2.Minimum = -100;
+            this.trackBar2.Name = "trackBar2";
+            this.trackBar2.Size = new System.Drawing.Size(104, 27);
+            this.trackBar2.TabIndex = 9;
+            this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar2_ValueChanged);
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.dlvEquipment);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(445, 462);
+            this.tabPage5.TabIndex = 2;
+            this.tabPage5.Text = "Equipment";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // olvColumn10
+            // 
+            this.olvColumn10.AspectName = "Nickname";
+            this.olvColumn10.CellPadding = null;
+            this.olvColumn10.FillsFreeSpace = true;
+            this.olvColumn10.Text = "Faction";
+            // 
+            // olvColumn11
+            // 
+            this.olvColumn11.AspectName = "Nickname";
+            this.olvColumn11.CellPadding = null;
+            this.olvColumn11.Text = "Nickname";
+            this.olvColumn11.Width = 80;
+            // 
+            // olvColumn12
+            // 
+            this.olvColumn12.AspectName = "Value";
+            this.olvColumn12.AspectToStringFormat = "{0:0.00}";
+            this.olvColumn12.CellPadding = null;
+            this.olvColumn12.Text = "Rep";
+            this.olvColumn12.Width = 80;
+            // 
+            // dlvEquipment
+            // 
+            this.dlvEquipment.AllColumns.Add(this.olvColumn7);
+            this.dlvEquipment.AllColumns.Add(this.olvColumn8);
+            this.dlvEquipment.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn7,
+            this.olvColumn8});
+            this.dlvEquipment.DataSource = null;
+            this.dlvEquipment.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dlvEquipment.Location = new System.Drawing.Point(0, 0);
+            this.dlvEquipment.Name = "dlvEquipment";
+            this.dlvEquipment.ShowGroups = false;
+            this.dlvEquipment.Size = new System.Drawing.Size(445, 408);
+            this.dlvEquipment.TabIndex = 0;
+            this.dlvEquipment.UseCompatibleStateImageBehavior = false;
+            this.dlvEquipment.View = System.Windows.Forms.View.Details;
+            // 
+            // olvColumn7
+            // 
+            this.olvColumn7.AspectName = "HPName";
+            this.olvColumn7.CellPadding = null;
+            this.olvColumn7.Text = "Hardpoint";
+            // 
+            // olvColumn8
+            // 
+            this.olvColumn8.AspectName = "Equipment";
+            this.olvColumn8.CellPadding = null;
+            this.olvColumn8.Text = "Equipment";
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.olvLog);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(459, 494);
+            this.tabPage6.TabIndex = 2;
+            this.tabPage6.Text = "Log";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // olvLog
+            // 
+            this.olvLog.AllColumns.Add(this.olvColumn9);
+            this.olvLog.AllColumns.Add(this.olvColumn13);
+            this.olvLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.olvColumn9,
+            this.olvColumn13});
+            this.olvLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.olvLog.FullRowSelect = true;
+            this.olvLog.Location = new System.Drawing.Point(3, 3);
+            this.olvLog.Name = "olvLog";
+            this.olvLog.ShowGroups = false;
+            this.olvLog.Size = new System.Drawing.Size(453, 488);
+            this.olvLog.TabIndex = 0;
+            this.olvLog.UseAlternatingBackColors = true;
+            this.olvLog.UseCompatibleStateImageBehavior = false;
+            this.olvLog.View = System.Windows.Forms.View.Details;
+            this.olvLog.VirtualMode = true;
+            // 
+            // olvColumn9
+            // 
+            this.olvColumn9.AspectName = "Type";
+            this.olvColumn9.CellPadding = null;
+            this.olvColumn9.Text = "Type";
+            // 
+            // olvColumn13
+            // 
+            this.olvColumn13.AspectName = "Message";
+            this.olvColumn13.CellPadding = null;
+            this.olvColumn13.Text = "Message";
             // 
             // MainForm
             // 
@@ -655,11 +1054,16 @@
             this.statusStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.flowLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel4.PerformLayout();
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.systemsSearchBindingSource)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.equipmentBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gameInfoSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.equipmentSearchBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -668,7 +1072,17 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.shipsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.systemsBindingSource)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.olvRep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericRep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dlvEquipment)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.olvLog)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -704,8 +1118,7 @@
         private System.Windows.Forms.RadioButton radioCharCode;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox comboSearchItem;
-        private System.Windows.Forms.BindingSource equipmentBindingSource;
-        private GD.DB.GameInfoSet gameInfoSet;
+        private System.Windows.Forms.BindingSource equipmentSearchBindingSource;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.RadioButton radioButton1;
@@ -713,7 +1126,6 @@
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.ComboBox comboBoxSystem;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBoxMoney;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -729,6 +1141,41 @@
         private BrightIdeasSoftware.OLVColumn olvColumn6;
         private System.Windows.Forms.DateTimePicker dateLastOnline;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
+        private System.Windows.Forms.RadioButton radioSearchLocName;
+        private System.Windows.Forms.RadioButton radioSearchLocNickname;
+        private System.Windows.Forms.Button buttonSearchLocation;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.RadioButton radioSearchSystem;
+        private System.Windows.Forms.RadioButton radioSearchBase;
+        private System.Windows.Forms.ComboBox comboSearchLocation;
+        private System.Windows.Forms.BindingSource systemsSearchBindingSource;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.BindingSource shipsBindingSource;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button buttonKick;
+        private System.Windows.Forms.CheckBox checkIsOnline;
+        private System.Windows.Forms.Button buttonLastOReset;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textCreatedAt;
+        private System.Windows.Forms.Label label7;
+        private BrightIdeasSoftware.ObjectListView objectListView1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.NumericUpDown numericRep;
+        private BrightIdeasSoftware.ObjectListView olvRep;
+        private BrightIdeasSoftware.OLVColumn olvColumn10;
+        private BrightIdeasSoftware.OLVColumn olvColumn11;
+        private BrightIdeasSoftware.OLVColumn olvColumn12;
+        private BrightIdeasSoftware.DataListView dlvEquipment;
+        private BrightIdeasSoftware.OLVColumn olvColumn7;
+        private BrightIdeasSoftware.OLVColumn olvColumn8;
+        private System.Windows.Forms.TabPage tabPage6;
+        private BrightIdeasSoftware.FastObjectListView olvLog;
+        private BrightIdeasSoftware.OLVColumn olvColumn9;
+        private BrightIdeasSoftware.OLVColumn olvColumn13;
     }
 }
 

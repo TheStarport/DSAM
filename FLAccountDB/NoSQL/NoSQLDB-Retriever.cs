@@ -73,6 +73,7 @@ namespace FLAccountDB.NoSQL
         private const string SelectGroupByNames = "SELECT * FROM Accounts WHERE CharName IN (@CharNames)";
         private const string SelectGroupByName = "SELECT * FROM Accounts WHERE CharName LIKE '%@CharName%'";
         private const string SelectGroupByAccount = "SELECT * FROM Accounts WHERE AccID = '@AccID'";
+        private const string SelectGroupBySystem = "SELECT * FROM Accounts WHERE Location LIKE '%@System%'";
         private const string SelectGroupByItem = "SELECT * FROM Accounts WHERE Equipment LIKE '%@Equip%'";
 
 
@@ -142,6 +143,16 @@ namespace FLAccountDB.NoSQL
             bgw.DoWork += _bgw_DoWork;
             bgw.RunWorkerAsync(SelectGroupByName.Replace("@CharName", name));
             //return GetMeta();
+        }
+
+        public void GetMetasBySystem(string system)
+        {
+            system = EscapeString(system);
+            var bgw = new BackgroundWorker();
+            _isGetBusy = true;
+            bgw.RunWorkerCompleted += _bgw_RunWorkerCompleted;
+            bgw.DoWork += _bgw_DoWork;
+            bgw.RunWorkerAsync(SelectGroupBySystem.Replace("@System", system));
         }
 
         public int CountRows(string table)

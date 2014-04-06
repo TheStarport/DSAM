@@ -66,13 +66,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountHelper\equipTable.cs" />
     <Compile Include="DBIFace.cs" />
     <Compile Include="FileTypes\UtfFile.cs" />
+    <Compile Include="Forms\nudFloat.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\uiTables.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>uiTables.xsd</DependentUpon>
     </Compile>
     <Compile Include="GD\DB\GameInfoSet.cs">
       <DependentUpon>GameInfoSet.xsd</DependentUpon>
@@ -83,6 +92,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameInfoSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="LogMessage.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +120,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="App.config" />
+    <None Include="Forms\uiTables.xsc">
+      <DependentUpon>uiTables.xsd</DependentUpon>
+    </None>
+    <None Include="Forms\uiTables.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>uiTables.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Forms\uiTables.xss">
+      <DependentUpon>uiTables.xsd</DependentUpon>
+    </None>
     <None Include="GD\DB\GameInfoSet.xsc">
       <DependentUpon>GameInfoSet.xsd</DependentUpon>
     </None>

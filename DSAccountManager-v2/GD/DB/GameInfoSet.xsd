@@ -16,7 +16,7 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Nickname" msprop:Generator_ColumnVarNameInTable="columnNickname" msprop:Generator_ColumnPropNameInRow="Nickname" msprop:Generator_ColumnPropNameInTable="NicknameColumn" msprop:Generator_UserColumnName="Nickname" type="xs:string" />
-              <xs:element name="IDString" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="IDString" msprop:Generator_ColumnVarNameInTable="columnIDString" msprop:Generator_ColumnPropNameInTable="IDStringColumn" msprop:Generator_UserColumnName="IDString" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
               <xs:element name="Infocard" msprop:nullValue="_empty" msprop:Generator_ColumnPropNameInRow="Infocard" msprop:Generator_ColumnVarNameInTable="columnInfocard" msprop:Generator_ColumnPropNameInTable="InfocardColumn" msprop:Generator_UserColumnName="Infocard" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
@@ -68,7 +68,8 @@
             <xs:sequence>
               <xs:element name="ShipHash" msprop:Generator_ColumnVarNameInTable="columnShipHash" msprop:Generator_ColumnPropNameInRow="ShipHash" msprop:Generator_ColumnPropNameInTable="ShipHashColumn" msprop:Generator_UserColumnName="ShipHash" type="xs:unsignedInt" minOccurs="0" />
               <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
-              <xs:element name="Type" msprop:Generator_ColumnVarNameInTable="columnType" msprop:Generator_ColumnPropNameInRow="Type" msprop:Generator_ColumnPropNameInTable="TypeColumn" msprop:Generator_UserColumnName="Type" type="xs:string" minOccurs="0" />
+              <xs:element name="EquipType" msprop:Generator_ColumnVarNameInTable="columnEquipType" msprop:Generator_ColumnPropNameInRow="EquipType" msprop:Generator_ColumnPropNameInTable="EquipTypeColumn" msprop:Generator_UserColumnName="EquipType" type="xs:string" minOccurs="0" />
+              <xs:element name="HPType" msprop:Generator_ColumnVarNameInTable="columnHPType" msprop:Generator_ColumnPropNameInRow="HPType" msprop:Generator_ColumnPropNameInTable="HPTypeColumn" msprop:Generator_UserColumnName="HPType" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
