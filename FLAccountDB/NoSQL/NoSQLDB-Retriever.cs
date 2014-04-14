@@ -51,7 +51,6 @@ namespace FLAccountDB.NoSQL
             return ret;
         }
 
-        private bool _isGetBusy;
         public event RequestReady OnGetFinish;
         public event EventHandler OnGetFinishWindow;
         public delegate void RequestReady(List<Metadata> meta); 
@@ -82,7 +81,6 @@ namespace FLAccountDB.NoSQL
         {
             accID = EscapeString(accID);
             var bgw = new BackgroundWorker();
-            _isGetBusy = true;
             bgw.RunWorkerCompleted += _bgw_RunWorkerCompleted;
             bgw.DoWork += _bgw_DoWork;
             bgw.RunWorkerAsync(SelectGroupByAccount.Replace("@AccID", accID));
@@ -96,7 +94,6 @@ namespace FLAccountDB.NoSQL
 
         void _bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            _isGetBusy = false;
             if (OnGetFinish != null)
                 OnGetFinish((List<Metadata>)e.Result);
 
@@ -107,7 +104,6 @@ namespace FLAccountDB.NoSQL
         public void GetMetasByItem(uint hash)
         {
             var bgw = new BackgroundWorker();
-            _isGetBusy = true;
             bgw.RunWorkerCompleted += _bgw_RunWorkerCompleted;
             bgw.DoWork += _bgw_DoWork;
             bgw.RunWorkerAsync(
@@ -128,7 +124,6 @@ namespace FLAccountDB.NoSQL
                 );
 
             var bgw = new BackgroundWorker();
-            _isGetBusy = true;
             bgw.RunWorkerCompleted += _bgw_RunWorkerCompleted;
             bgw.DoWork += _bgw_DoWork;
             bgw.RunWorkerAsync(str);
@@ -138,7 +133,6 @@ namespace FLAccountDB.NoSQL
         {
             name = EscapeString(name);
             var bgw = new BackgroundWorker();
-            _isGetBusy = true;
             bgw.RunWorkerCompleted += _bgw_RunWorkerCompleted;
             bgw.DoWork += _bgw_DoWork;
             bgw.RunWorkerAsync(SelectGroupByName.Replace("@CharName", name));
@@ -149,7 +143,6 @@ namespace FLAccountDB.NoSQL
         {
             system = EscapeString(system);
             var bgw = new BackgroundWorker();
-            _isGetBusy = true;
             bgw.RunWorkerCompleted += _bgw_RunWorkerCompleted;
             bgw.DoWork += _bgw_DoWork;
             bgw.RunWorkerAsync(SelectGroupBySystem.Replace("@System", system));

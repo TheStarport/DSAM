@@ -382,6 +382,9 @@ namespace DSAccountManager_v2.GD
                     hpType = sec.GetFirstOf("hp_type")[0];
                     equipType = HpMap[hpType];
                     break;
+                    case EquipTypes.CountermeasureDropper:
+                    hpType = "hp_countermeasure_dropper";
+                    break;
                 default:
                     break;
             }
@@ -575,8 +578,12 @@ namespace DSAccountManager_v2.GD
                 
                 foreach (var hp in hpSet.Skip(1))
                 {
-                    var ghr = Gis.Ships.FindByHash(hash).GetHardpointsRows();
-                    if (ghr.Any(hpS => hpS.Name == hp)) continue;
+                    var hp1 = hp;
+                    var ghr = Gis.Ships.FindByHash(hash).GetHardpointsRows().FirstOrDefault(hpS => hpS.Name == hp1);
+                    if (ghr != null)
+                    {
+                        ghr.HPType += String.Format(" {0}", hpSet[0]);
+                    }
                     Gis.Hardpoints.AddHardpointsRow(Gis.Ships.FindByHash(hash), hp, type.ToString(),hpSet[0]);
                 }
             }

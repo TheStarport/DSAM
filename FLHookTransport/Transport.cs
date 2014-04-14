@@ -67,6 +67,7 @@ namespace FLHookTransport
 
         public bool IsOnServer(string name)
         {
+            if (!IsSocketOpen()) return false;
             var ret = _socket.SendReader(String.Format("isonserver {0}", name));
             if (ret != null)
                 return ret.Substring(ret.IndexOf('=')) == "yes";

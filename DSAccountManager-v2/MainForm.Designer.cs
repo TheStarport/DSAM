@@ -102,12 +102,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.olvRep = new BrightIdeasSoftware.ObjectListView();
-            this.numericRep = new System.Windows.Forms.NumericUpDown();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.olvColumn10 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn11 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn12 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.numericRep = new System.Windows.Forms.NumericUpDown();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.dlvEquipment = new BrightIdeasSoftware.DataListView();
             this.olvColumn7 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn8 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
@@ -115,6 +114,13 @@
             this.olvLog = new BrightIdeasSoftware.FastObjectListView();
             this.olvColumn9 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.olvColumn13 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.equipmentListBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.gameInfoSet = new DSAccountManager_v2.GD.DB.GameInfoSet();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.olvColumn14 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.olvColumn15 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fastObjectListView1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -138,11 +144,16 @@
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvRep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericRep)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dlvEquipment)).BeginInit();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.olvLog)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.equipmentListBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gameInfoSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -201,9 +212,6 @@
             this.fastObjectListView1.AllColumns.Add(this.olvColumn6);
             this.fastObjectListView1.AllColumns.Add(this.olvColumn4);
             this.fastObjectListView1.AllColumns.Add(this.olvColumn5);
-            this.fastObjectListView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.fastObjectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
             this.olvColumn2,
@@ -212,17 +220,18 @@
             this.olvColumn4,
             this.olvColumn5});
             this.fastObjectListView1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.fastObjectListView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fastObjectListView1.EmptyListMsg = "The list is empty.";
             this.fastObjectListView1.FullRowSelect = true;
             this.fastObjectListView1.HasCollapsibleGroups = false;
             this.fastObjectListView1.HeaderUsesThemes = false;
-            this.fastObjectListView1.Location = new System.Drawing.Point(0, 27);
+            this.fastObjectListView1.Location = new System.Drawing.Point(0, 0);
             this.fastObjectListView1.MultiSelect = false;
             this.fastObjectListView1.Name = "fastObjectListView1";
             this.fastObjectListView1.ShowCommandMenuOnRightClick = true;
             this.fastObjectListView1.ShowFilterMenuOnRightClick = false;
             this.fastObjectListView1.ShowGroups = false;
-            this.fastObjectListView1.Size = new System.Drawing.Size(608, 517);
+            this.fastObjectListView1.Size = new System.Drawing.Size(605, 520);
             this.fastObjectListView1.TabIndex = 1;
             this.fastObjectListView1.UseAlternatingBackColors = true;
             this.fastObjectListView1.UseCompatibleStateImageBehavior = false;
@@ -321,11 +330,11 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tabControl1.Location = new System.Drawing.Point(614, 24);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(467, 520);
+            this.tabControl1.Size = new System.Drawing.Size(472, 520);
             this.tabControl1.TabIndex = 3;
             // 
             // tabPage1
@@ -336,7 +345,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(459, 494);
+            this.tabPage1.Size = new System.Drawing.Size(464, 494);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Filter";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -350,7 +359,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(3, 161);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(453, 125);
+            this.groupBox3.Size = new System.Drawing.Size(458, 125);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Search by Location";
@@ -362,7 +371,7 @@
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 45);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(447, 29);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(452, 29);
             this.flowLayoutPanel4.TabIndex = 7;
             // 
             // radioSearchLocName
@@ -406,7 +415,7 @@
             this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(447, 29);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(452, 29);
             this.flowLayoutPanel3.TabIndex = 5;
             // 
             // radioSearchSystem
@@ -445,6 +454,7 @@
             this.comboSearchLocation.Size = new System.Drawing.Size(360, 21);
             this.comboSearchLocation.TabIndex = 4;
             this.comboSearchLocation.ValueMember = "Nickname";
+            this.comboSearchLocation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboSearchLocation_KeyPress);
             // 
             // groupBox2
             // 
@@ -454,7 +464,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Location = new System.Drawing.Point(3, 77);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(453, 84);
+            this.groupBox2.Size = new System.Drawing.Size(458, 84);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Search by Item";
@@ -476,7 +486,7 @@
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(447, 29);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(452, 29);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // radioButton1
@@ -524,7 +534,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(453, 74);
+            this.groupBox1.Size = new System.Drawing.Size(458, 74);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "String Search";
@@ -545,6 +555,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(360, 20);
             this.textBox1.TabIndex = 1;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // flowLayoutPanel1
             // 
@@ -554,7 +565,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(447, 23);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(452, 23);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // radioCharname
@@ -595,7 +606,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(459, 494);
+            this.tabPage2.Size = new System.Drawing.Size(464, 494);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Character";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -609,7 +620,7 @@
             this.tabControl2.Location = new System.Drawing.Point(3, 3);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(453, 488);
+            this.tabControl2.Size = new System.Drawing.Size(458, 488);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage3
@@ -640,7 +651,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(445, 462);
+            this.tabPage3.Size = new System.Drawing.Size(450, 462);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Main";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -858,11 +869,10 @@
             // 
             this.tabPage4.Controls.Add(this.olvRep);
             this.tabPage4.Controls.Add(this.numericRep);
-            this.tabPage4.Controls.Add(this.trackBar2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(445, 462);
+            this.tabPage4.Size = new System.Drawing.Size(450, 462);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Factions";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -872,18 +882,20 @@
             this.olvRep.AllColumns.Add(this.olvColumn10);
             this.olvRep.AllColumns.Add(this.olvColumn11);
             this.olvRep.AllColumns.Add(this.olvColumn12);
+            this.olvRep.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.olvRep.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
             this.olvRep.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn10,
             this.olvColumn11,
             this.olvColumn12});
             this.olvRep.Cursor = System.Windows.Forms.Cursors.Default;
-            this.olvRep.Dock = System.Windows.Forms.DockStyle.Top;
             this.olvRep.FullRowSelect = true;
             this.olvRep.Location = new System.Drawing.Point(3, 3);
             this.olvRep.Name = "olvRep";
             this.olvRep.ShowGroups = false;
-            this.olvRep.Size = new System.Drawing.Size(439, 400);
+            this.olvRep.Size = new System.Drawing.Size(439, 427);
             this.olvRep.TabIndex = 11;
             this.olvRep.UseCompatibleStateImageBehavior = false;
             this.olvRep.UseHotItem = true;
@@ -891,54 +903,6 @@
             this.olvRep.UseTranslucentSelection = true;
             this.olvRep.View = System.Windows.Forms.View.Details;
             this.olvRep.SelectionChanged += new System.EventHandler(this.olvRep_SelectionChanged);
-            // 
-            // numericRep
-            // 
-            this.numericRep.DecimalPlaces = 2;
-            this.numericRep.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numericRep.Location = new System.Drawing.Point(23, 415);
-            this.numericRep.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericRep.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.numericRep.Name = "numericRep";
-            this.numericRep.Size = new System.Drawing.Size(69, 20);
-            this.numericRep.TabIndex = 10;
-            this.numericRep.ValueChanged += new System.EventHandler(this.numericRep_ValueChanged);
-            // 
-            // trackBar2
-            // 
-            this.trackBar2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.trackBar2.AutoSize = false;
-            this.trackBar2.BackColor = System.Drawing.SystemColors.Control;
-            this.trackBar2.Location = new System.Drawing.Point(118, 409);
-            this.trackBar2.Maximum = 100;
-            this.trackBar2.Minimum = -100;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(104, 27);
-            this.trackBar2.TabIndex = 9;
-            this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar2.ValueChanged += new System.EventHandler(this.trackBar2_ValueChanged);
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.dlvEquipment);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(445, 462);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "Equipment";
-            this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // olvColumn10
             // 
@@ -962,15 +926,58 @@
             this.olvColumn12.Text = "Rep";
             this.olvColumn12.Width = 80;
             // 
+            // numericRep
+            // 
+            this.numericRep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericRep.DecimalPlaces = 2;
+            this.numericRep.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericRep.Location = new System.Drawing.Point(373, 436);
+            this.numericRep.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericRep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numericRep.Name = "numericRep";
+            this.numericRep.Size = new System.Drawing.Size(69, 20);
+            this.numericRep.TabIndex = 10;
+            this.numericRep.ValueChanged += new System.EventHandler(this.numericRep_ValueChanged);
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.button8);
+            this.tabPage5.Controls.Add(this.button7);
+            this.tabPage5.Controls.Add(this.dlvEquipment);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(450, 462);
+            this.tabPage5.TabIndex = 2;
+            this.tabPage5.Text = "Equipment";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
             // dlvEquipment
             // 
             this.dlvEquipment.AllColumns.Add(this.olvColumn7);
             this.dlvEquipment.AllColumns.Add(this.olvColumn8);
+            this.dlvEquipment.AllColumns.Add(this.olvColumn14);
+            this.dlvEquipment.AllColumns.Add(this.olvColumn15);
+            this.dlvEquipment.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dlvEquipment.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.SingleClick;
             this.dlvEquipment.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn7,
-            this.olvColumn8});
+            this.olvColumn8,
+            this.olvColumn15});
             this.dlvEquipment.DataSource = null;
-            this.dlvEquipment.Dock = System.Windows.Forms.DockStyle.Top;
             this.dlvEquipment.Location = new System.Drawing.Point(0, 0);
             this.dlvEquipment.Name = "dlvEquipment";
             this.dlvEquipment.ShowGroups = false;
@@ -978,18 +985,23 @@
             this.dlvEquipment.TabIndex = 0;
             this.dlvEquipment.UseCompatibleStateImageBehavior = false;
             this.dlvEquipment.View = System.Windows.Forms.View.Details;
+            this.dlvEquipment.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.dlvEquipment_CellEditStarting);
             // 
             // olvColumn7
             // 
             this.olvColumn7.AspectName = "HPName";
             this.olvColumn7.CellPadding = null;
+            this.olvColumn7.IsEditable = false;
             this.olvColumn7.Text = "Hardpoint";
+            this.olvColumn7.Width = 125;
             // 
             // olvColumn8
             // 
             this.olvColumn8.AspectName = "Equipment";
             this.olvColumn8.CellPadding = null;
+            this.olvColumn8.FillsFreeSpace = true;
             this.olvColumn8.Text = "Equipment";
+            this.olvColumn8.Width = 175;
             // 
             // tabPage6
             // 
@@ -1033,14 +1045,73 @@
             this.olvColumn13.CellPadding = null;
             this.olvColumn13.Text = "Message";
             // 
+            // gameInfoSet
+            // 
+            this.gameInfoSet.DataSetName = "GameInfoSet";
+            this.gameInfoSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.fastObjectListView1);
+            this.splitContainer1.Panel1MinSize = 75;
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel2MinSize = 120;
+            this.splitContainer1.Size = new System.Drawing.Size(1081, 520);
+            this.splitContainer1.SplitterDistance = 605;
+            this.splitContainer1.TabIndex = 4;
+            // 
+            // olvColumn14
+            // 
+            this.olvColumn14.AspectName = "HPNickname";
+            this.olvColumn14.CellPadding = null;
+            this.olvColumn14.DisplayIndex = 2;
+            this.olvColumn14.IsEditable = false;
+            this.olvColumn14.IsVisible = false;
+            this.olvColumn14.Text = "HP Nickname";
+            // 
+            // olvColumn15
+            // 
+            this.olvColumn15.AspectName = "EquipType";
+            this.olvColumn15.CellPadding = null;
+            this.olvColumn15.Text = "Type";
+            this.olvColumn15.Width = 110;
+            // 
+            // button7
+            // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button7.Location = new System.Drawing.Point(347, 414);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(98, 23);
+            this.button7.TabIndex = 1;
+            this.button7.Text = "Add internal HP";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button8.Location = new System.Drawing.Point(222, 414);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(119, 23);
+            this.button8.TabIndex = 2;
+            this.button8.Text = "Remove internal HP";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1081, 566);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.fastObjectListView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -1078,11 +1149,16 @@
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.olvRep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericRep)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dlvEquipment)).EndInit();
             this.tabPage6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.olvLog)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.equipmentListBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gameInfoSet)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1163,7 +1239,6 @@
         private BrightIdeasSoftware.ObjectListView objectListView1;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TrackBar trackBar2;
         private System.Windows.Forms.NumericUpDown numericRep;
         private BrightIdeasSoftware.ObjectListView olvRep;
         private BrightIdeasSoftware.OLVColumn olvColumn10;
@@ -1176,6 +1251,13 @@
         private BrightIdeasSoftware.FastObjectListView olvLog;
         private BrightIdeasSoftware.OLVColumn olvColumn9;
         private BrightIdeasSoftware.OLVColumn olvColumn13;
+        private System.Windows.Forms.BindingSource equipmentListBindingSource;
+        private GD.DB.GameInfoSet gameInfoSet;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private BrightIdeasSoftware.OLVColumn olvColumn14;
+        private BrightIdeasSoftware.OLVColumn olvColumn15;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button7;
     }
 }
 

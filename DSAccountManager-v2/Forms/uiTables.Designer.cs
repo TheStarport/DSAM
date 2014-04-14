@@ -285,6 +285,8 @@ namespace DSAccountManager_v2.Forms {
             
             private global::System.Data.DataColumn columnEquipment;
             
+            private global::System.Data.DataColumn columnHPNickname;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public ShipEquipDataTable() {
@@ -344,6 +346,14 @@ namespace DSAccountManager_v2.Forms {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HPNicknameColumn {
+                get {
+                    return this.columnHPNickname;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -379,12 +389,13 @@ namespace DSAccountManager_v2.Forms {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ShipEquipRow AddShipEquipRow(string HPName, string EquipType, string Equipment) {
+            public ShipEquipRow AddShipEquipRow(string HPName, string EquipType, string Equipment, string HPNickname) {
                 ShipEquipRow rowShipEquipRow = ((ShipEquipRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         HPName,
                         EquipType,
-                        Equipment};
+                        Equipment,
+                        HPNickname};
                 rowShipEquipRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowShipEquipRow);
                 return rowShipEquipRow;
@@ -410,6 +421,7 @@ namespace DSAccountManager_v2.Forms {
                 this.columnHPName = base.Columns["HPName"];
                 this.columnEquipType = base.Columns["EquipType"];
                 this.columnEquipment = base.Columns["Equipment"];
+                this.columnHPNickname = base.Columns["HPNickname"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -421,6 +433,8 @@ namespace DSAccountManager_v2.Forms {
                 base.Columns.Add(this.columnEquipType);
                 this.columnEquipment = new global::System.Data.DataColumn("Equipment", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEquipment);
+                this.columnHPNickname = new global::System.Data.DataColumn("HPNickname", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHPNickname);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -611,6 +625,22 @@ namespace DSAccountManager_v2.Forms {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string HPNickname {
+                get {
+                    if (this.IsHPNicknameNull()) {
+                        return string.Empty;
+                    }
+                    else {
+                        return ((string)(this[this.tableShipEquip.HPNicknameColumn]));
+                    }
+                }
+                set {
+                    this[this.tableShipEquip.HPNicknameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsHPNameNull() {
                 return this.IsNull(this.tableShipEquip.HPNameColumn);
             }
@@ -643,6 +673,18 @@ namespace DSAccountManager_v2.Forms {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetEquipmentNull() {
                 this[this.tableShipEquip.EquipmentColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHPNicknameNull() {
+                return this.IsNull(this.tableShipEquip.HPNicknameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHPNicknameNull() {
+                this[this.tableShipEquip.HPNicknameColumn] = global::System.Convert.DBNull;
             }
         }
         

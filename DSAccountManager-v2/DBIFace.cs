@@ -175,7 +175,10 @@ namespace DSAccountManager_v2
 
 
 
-
+        public static bool IsHookAvailable()
+        {
+            return HookTransport != null && HookTransport.IsSocketOpen();
+        }
 
         #region "Hook jobs"
         /// <summary>
