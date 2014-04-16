@@ -1,7 +1,0 @@
-G:\flworks\dsam\ObjectListView-LibraryOnly\ObjectListView\bin\Release\ObjectListView.dll
-G:\flworks\dsam\ObjectListView-LibraryOnly\ObjectListView\bin\Release\ObjectListView.pdb
-G:\flworks\dsam\ObjectListView-LibraryOnly\ObjectListView\obj\Release\BrightIdeasSoftware.Properties.Resources.resources
-G:\flworks\dsam\ObjectListView-LibraryOnly\ObjectListView\obj\Release\BrightIdeasSoftware.ColumnSelectionForm.resources
-G:\flworks\dsam\ObjectListView-LibraryOnly\ObjectListView\obj\Release\ObjectListView2010.csproj.GenerateResource.Cache
-G:\flworks\dsam\ObjectListView-LibraryOnly\ObjectListView\obj\Release\ObjectListView.dll
-G:\flworks\dsam\ObjectListView-LibraryOnly\ObjectListView\obj\Release\ObjectListView.pdb
